@@ -1,6 +1,17 @@
 Sms Api React version.
 Uses React JS version 16.6.3 (was released on 23/10/2018),  last version is 16.13.1 
+
+Content
+1. Install
+2.How to uplift var value from child component to Parent state, triggered on direct onClick action
+3.How to uplift var value from child component to Parent state manually(without onClick), triggered in some child function by direct function calling:
+4.How to pass state from Parent to Child
+5.
+8.React Work with Form input, how to set state
+9. Set state considering setState is asynchronous
+
 ===============================
+1. Install
 Install React (NB: in fact,this project is installed via simple copying of old react project, because of some outdated npm features)
 1. Having NPM globally installed, go 1 folder up of desired react app
 2.CLI => 
@@ -26,19 +37,27 @@ which contains all the rest component { <Header nameX = "ReactJS"/> , <ButtonsLa
 2. All core logic is in <TextAreaX/> Component.
 
 3.3 <TextArea/> - core component
+
+
+
+
  
 ==================================================
 
-How to uplift var value from child component to Parent state, triggered on direct onClick action:
+2.How to uplift var value from child component to Parent state, triggered on direct onClick action:
 1. In Child comp add to render section => {  render() { var handleToUpdate  = this.props.handleToUpdate;}
 2. In Child comp add to return section => {<button onClick={() => handleToUpdate('some var to lift')}>}
 3. In Parent comp add to constructor(props){} =>  var handleToUpdate = this.handleToUpdate.bind(this);
 4. In Parent comp add to constructor(props){} the body of method/func  => handleToUpdate(someArg){this.setState({arg1:someArg});}
 5. In Parent comp call the Child component itself => <LiftedFrom_Component handleToUpdate = {handleToUpdate.bind(this)}/>
 
-==========
 
-How to uplift var value from child component to Parent state manually(without onClick), triggered in some child function by direct function calling:
+
+
+
+============================================================
+
+3.How to uplift var value from child component to Parent state manually(without onClick), triggered in some child function by direct function calling:
 1. In Child comp in a place u want, call the parent method and pass to its arg neccessary values data {this.props.liftFinalCoordsHandler(this.state.coordinateArray[0])}
 2. In Parent comp add  binding to constructor(props){} =>var liftFinalCoordsHandler = this.liftFinalCoordsHandler.bind(this);  //for catching lifted state from TextArea Comp
 3. In Parent comp describe the method and what to do with passed argument=>
@@ -50,9 +69,14 @@ How to uplift var value from child component to Parent state manually(without on
 4. In Parent comp add to render section => var liftFinalCoordsHandler =  this.liftFinalCoordsHandler ;
 5. In Parent comp call/declare Child Component itself with params=> <TextAreaX liftFinalCoordsHandler = {liftFinalCoordsHandler.bind(this)}/>, no matter it is not triggered on click
 
+
+
+
+
 ====================================================
 
-How to pass state from Parent to Child=> {<LiftedTo_Component liftedValue={this.state.arg1}}, then in Componenent dispaly by {this.props.liftedValue}
+4.How to pass state from Parent to Child=> 
+   {<LiftedTo_Component liftedValue={this.state.arg1}}, then in Componenent dispaly by {this.props.liftedValue}
 
 
 
@@ -83,3 +107,33 @@ If input is empty Error Loader is triggered in <TextArea/>:
   "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+
+	
+	
+====================================================
+8.React Work with Form input, how to set state
+
+   handleChange(event){
+     this.setState({smsTextChild: event.target.value})  //event.target.value -> input value
+  }
+  
+  render() {
+    return <input type=”text” name=”title” value={this.state.smsTextChild} onChange={this.handleChange.bind(this)}/>
+	
+	
+  }	
+  
+  
+=======================================================	
+9. Set state considering setState is asynchronous
+#Remember that setState is asynchronous, so if you want to print the new state, you have to use the callback parameter. 
+
+  handleChange(event){
+     this.setState({smsTextChild: event.target.value}
+	     , () => {
+          //Do something here...for instance send{this.state.smsTextChild} to parent <App/>, send it as callback
+	      this.props.liftSmsTextHandler(this.state.smsTextChild);
+       });
+	   
+	   
+	   

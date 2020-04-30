@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import swal from 'sweetalert';
-/*import error from '../../images/error.gif';
 import '../../css/TextArea.css';
+/*import error from '../../images/error.gif';
 import axios from 'axios';
 import CopyLayout from '../Copy/CopyLayout';
 */
@@ -13,14 +13,18 @@ class TextAreaX extends Component {
 	constructor(props) {
     super(props);
     this.state = {
-		addressArray: [],  //this state will hold array with separ addresses from textarea input
-		coordinateArray: [],  //this state will hold array with ready coordinates returned by axios
+		phoneNumberChild : "I am set manually in state in child <Textarea/>",
+		smsTextChild : "I am set manually in state in child <Textarea/>",
+		//addressArray: [],  //this state will hold array with separ addresses from textarea input
+		//coordinateArray: [],  //this state will hold array with ready coordinates returned by axios
     };
  
     // This binding is necessary to make `this` work in the callback
 	this.run_This_Component_Functions_In_Queue = this.run_This_Component_Functions_In_Queue.bind(this); //runs all functions together
-	/*this.getFormValue = this.getFormValue.bind(this);
-    this.runAjax = this.runAjax.bind(this);
+	this.getFormValue = this.getFormValue.bind(this);
+	this.handlePhoneNumberKeyPress = this.handlePhoneNumberKeyPress.bind(this); //sends this.state.phoneNumberChild to parent <App/> to set it in parent's state {state.phoneNumber}
+	this.handleTextAreaKeyPress = this.handleTextAreaKeyPress.bind(this); //sends this.state.smsTextChild to parent <App/> to set it in parent's state {state.smsText}
+    /*this.runAjax = this.runAjax.bind(this);
 	this.drawResult = this.drawResult.bind(this);
 	this.htmlAnyResult = this.htmlAnyResult.bind(this);
 	*/
@@ -44,10 +48,11 @@ class TextAreaX extends Component {
 	  //if texarea is empty, stop anything further, show/hide <Error/> component
 	  if(this.getFormValue(/*promises,temp*/) === false)
 	  {
-		   $("html, body").animate({ scrollTop: 0 }, "slow"); //scroll the page to top(mostly for mobile convenience)
-		   
-           $('.App').addClass('blur');  //blur the background
-		   $(".error-parent").fadeIn(2500); //show error gif from <Error/>
+		  setTimeout(function(){
+		    $("html, body").animate({ scrollTop: 0 }, "slow"); //scroll the page to top(mostly for mobile convenience)
+            $('.App').addClass('blur');  //blur the background
+		    $(".error-parent").fadeIn(2500); //show error gif from <Error/>
+		  }, 2000); // A delay of 1000ms
 		
 		   setTimeout(function(){
               $('.App').removeClass('blur'); //removes blur from background
@@ -98,14 +103,14 @@ class TextAreaX extends Component {
 	 
 
 		 
-	  if ($("#coordsInput").val().trim()===""){
+	  if ($("#coordsInput").val().trim() === ""){
 		 //Display error
 		 //alert("empty");
 		 swal("Stop!", "No sms text!", "error");
          return false;		 
 	   }
 	   
-	    if ($("#cellNumberInput").val().trim()===""){
+	    if ($("#cellNumberInput").val().trim()=== ""){
 		 //Display error
 		 swal("Stop!", "No cell number!", "error");
          return false;		 
@@ -183,6 +188,40 @@ class TextAreaX extends Component {
   
   
   
+  //On key press in phone number input, take its value, set it to {this.state.phoneNumberChild} and send it to parent component's state in <App/>
+  // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
+   handlePhoneNumberKeyPress (event){
+	   // Remember that setState is asynchronous, so if you want to print the new state, you have to use the callback parameter
+       this.setState({phoneNumberChild: event.target.value}
+	     , () => {
+          //sends {this.state.smsTextChild} to parent <App/>, send it as callback
+	      this.props.liftPhoneNumberHandler(this.state.phoneNumberChild);
+       });
+	   
+	   
+   }
+   
+  
+  //On key press in sms textarea, take texterea value, set it to {this.state.smsTextChild} and send it to parent component's state{state.smsText} in <App/>
+  // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
+   handleTextAreaKeyPress (event){
+	   // Remember that setState is asynchronous, so if you want to print the new state, you have to use the callback parameter
+       this.setState({smsTextChild: event.target.value}
+	     , () => {
+          //sends {this.state.smsTextChild} to parent <App/>, send it as callback
+	      this.props.liftSmsTextHandler(this.state.smsTextChild);
+       });
+	   
+	   
+   }
+   // **                                                                                  **
+   // **                                                                                  **
+   // **************************************************************************************
+   // **************************************************************************************
   
   //RENDER ------------------------------------------------
   render() {
@@ -195,15 +234,15 @@ class TextAreaX extends Component {
 	         <form className="textarea-my">
 			     
 				 <div className="form-group">
-                     <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control" /> 
+                     <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control" value={this.state.phoneNumberChild} onChange={this.handlePhoneNumberKeyPress}/> 
 				 </div>
 			 
 			     <div className="form-group">
-                     <textarea id="coordsInput" rows="8" cols="80" placeholder="Your sms..." className="form-control" /> 
+                     <textarea id="coordsInput" rows="8" cols="80" placeholder="Your sms..." className="form-control" value={this.state.smsTextChild}  onChange={this.handleTextAreaKeyPress}/> 
 				 </div>
 				 
 				 <div className="form-group">
-                      <input type="button" className="btn btn-primary btn-lg" value="Send" id="splitButton" onClick={this.run_This_Component_Functions_In_Queue} />
+                      <input type="button" className="btn btn-primary btn-lg" value="Send" id="splitButton" onClick={this.run_This_Component_Functions_In_Queue}  />
 				     {/*<input type="button"  value="Lift Coords" onClick={() => liftFinalCoordsHandler('Lifted_TextArea')}/> */}
 				</div>
 				  

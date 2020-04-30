@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './css/App.css';
 import TextAreaX from './MyComponents/TextArea/TextArea';
 import ErrorLayout from './MyComponents/Error/ErrorLayout';  //display error gif
+import TechnicalInfo from './MyComponents/Tech_Info/TechnicalInfo';  //displays info instead of alert
 
 /*import Header from './MyComponents/Header/Header';
 import ButtonsLayout from './MyComponents/Buttons/ButtonsLayout';
@@ -11,7 +12,7 @@ import Results from './MyComponents/Result/Results';
 import TextAreaX from './MyComponents/TextArea/TextArea';
 import LiftedFrom_Component from './MyComponents/LiftUpComponent/LiftedFrom_Component';
 
-import Technical_Info from './MyComponents/Tech_Info/Technical_Info';  //displays info instead of alert
+
 */
 
 
@@ -20,12 +21,16 @@ class App extends Component {
         super(props);
 		
 		this.state = {
-		    arg1: [],  //this state will hold lifted up var(onClick) or  array with coordinates
-		    finalCoords:[], //not used???
-			techInfoState:[], //state to store alert info
-			baseState : []
+			phoneNumber : "Phone number: I am set manually in state in parent <App/>",
+			smsText : "Sms text:I am set manually in state in parent <App/>",
+		    //arg1: [],  //this state will hold lifted up var(onClick) or  array with coordinates
+		    //finalCoords:[], //not used???
+			//techInfoState:[], //state to store alert info
+			//baseState : []
         };
 	   
+	    var liftPhoneNumberHandler = this.liftPhoneNumberHandler.bind(this); //gets state (phone number) from child <Textarea/> and sets as state here, in this class
+	    var liftSmsTextHandler = this.liftSmsTextHandler.bind(this); //gets state (sms text) from child <Textarea/> and sets as state here, in this class
 	   /*
         var handleToUpdate = this.handleToUpdate.bind(this);  //for catching lifted state from LiftedFrom_Component
 		var liftFinalCoordsHandler = this.liftFinalCoordsHandler.bind(this);  //for catching lifted state from TextArea Comp
@@ -42,6 +47,23 @@ class App extends Component {
         this.initialState = this.state
     } */
 	
+	
+	
+	
+	//method for catching lifted state from TextArea.js Component, triggered manually by {this.props.liftFinalCoordsHandler(this.state.coordinateArray[0])} in TerxArea.js
+    liftPhoneNumberHandler(somePhoneNumber){
+           this.setState({phoneNumber:somePhoneNumber});
+    }
+	
+	
+	//method for catching lifted state from TextArea.js Component, triggered manually by {this.props.liftFinalCoordsHandler(this.state.coordinateArray[0])} in TerxArea.js
+    liftSmsTextHandler(someSmsText){
+            //alert('TextArea value data lifted from Child(TextArea.js) to Parent(App.js): ' + someArgCoords);
+			//instead of alert, it calls parent method from child {this.props. + method}-> passing/uplifting alert info to method techInfoHandler described in Parent App.js
+	       //this.techInfoHandler('TextArea value data lifted from Child(TextArea.js) to Parent(App.js): ' + someArgCoords); 
+			
+           this.setState({smsText:someSmsText});
+    }
 	
 	
 	
@@ -93,6 +115,9 @@ class App extends Component {
 	
 	
   render() {
+	  var liftPhoneNumberHandler  =   this.liftPhoneNumberHandler; //for catching lifted state from TextArea.js Component
+	  var liftSmsTextHandler  =   this.liftSmsTextHandler; //for catching lifted state from TextArea.js Component
+	  
 	 /* var handleToUpdate =  this.handleToUpdate; //for catching lifted state from LiftedFrom_Component
 	  var liftFinalCoordsHandler  =   this.liftFinalCoordsHandler; //for catching lifted state from TextArea.js Component
 	  var clearStateHandler =  this.clearStateHandler ; //for lifting and clearing the state up in the parent
@@ -110,8 +135,11 @@ class App extends Component {
 						    <img src={logo}  className="react-logo-static" alt="logo" />
 						</h4>
 			            
-						<TextAreaX/>
+						<TextAreaX liftPhoneNumberHandler = {liftPhoneNumberHandler.bind(this)}  liftSmsTextHandler = {liftSmsTextHandler.bind(this)} />
 		            </div>
+					
+				   <TechnicalInfo phoneNumberData={this.state.phoneNumber}  smsTextData={this.state.smsText} /> { /* displays info instead of alert */ }
+
 					
 			    </div>
 			</div>

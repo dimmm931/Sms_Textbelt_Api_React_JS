@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import errorIMG from '../../images/error.gif';
-//import '../../css/Error.css';
-import $ from 'jquery';
+import '../../css/Error.css';
+//import $ from 'jquery';
 //import axios from 'axios';
 
 class ErrorLayout extends Component {
