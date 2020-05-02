@@ -1,3 +1,13 @@
+.buttonsX{margin-top:1em;  float: left;}
+.buttonsX .el{margin-left:0.1em;margin-bottom:0.2em;}
+
+
+/* Not working */
+.buttonsX :after {
+    clear: both;
+}
+
+
 .textarea-my{
 	width:100%;
 	margin-top:0;

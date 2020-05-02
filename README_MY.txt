@@ -9,6 +9,9 @@ Content
 5.
 8.React Work with Form input, how to set state
 9. Set state considering setState is asynchronous
+10. Add event on button click
+11. Import function from other file
+99. Troubleshoots
 
 ===============================
 1. Install
@@ -134,6 +137,38 @@ If input is empty Error Loader is triggered in <TextArea/>:
           //Do something here...for instance send{this.state.smsTextChild} to parent <App/>, send it as callback
 	      this.props.liftSmsTextHandler(this.state.smsTextChild);
        });
+
 	   
 	   
 	   
+	   
+=========================================================
+10. Add event on button click  
+ 1.In render => <input type="button" className="btn btn-primary btn-lg" value="Reset" id="reset" onClick={this.resetFields} />	   
+ 2. In constructor(props) { => this.resetFields = this.resetFields.bind(this);
+ 3. Between {constructor(props) and  render => resetFields(){}
+	   
+	   
+=========================================	
+11. Import function from other file
+
+  //slideshow.js
+export const plusSlides = (n)=>{
+    showSlides(slideIndex += n);
+}
+
+ //and import it where you need to
+ //Homepage.js
+import {plusSlides} from './slideshow'
+
+handleClick (event) {
+        plusSlides(1); 
+    }	
+	   
+	
+
+# To run smth at start => componentDidMount(){}, place after constructor(props) {	
+	   
+=================================================
+99. Troubleshoots
+1. If 	   

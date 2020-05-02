@@ -9,6 +9,7 @@ import LiftedFrom_Component from '../LiftUpComponent/LiftedFrom_Component';
 //import $ from 'jquery';
 
 
+
 class TechnicalInfo extends Component {
 	constructor(props) {
     super(props);

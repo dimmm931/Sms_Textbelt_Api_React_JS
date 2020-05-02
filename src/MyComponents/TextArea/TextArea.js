@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import swal from 'sweetalert';
 import '../../css/TextArea.css';
+import {myValidate} from './Validate_RegExp'; //import function
+
+//import 'jquery-ui';
+//import 'jquery-ui/themes/base/autocomplete.css';  //according to folder stucture in node_modules
+import {AutocompleteFunction} from './Autocomplete';
+
 /*import error from '../../images/error.gif';
 import axios from 'axios';
 import CopyLayout from '../Copy/CopyLayout';
@@ -12,9 +18,15 @@ import CopyLayout from '../Copy/CopyLayout';
 class TextAreaX extends Component {
 	constructor(props) {
     super(props);
+	
+	this.RegExp_Phone = /^[+][\d]{8,9}[0-9]+$/; //phone number regExp for world wide
+	this.RegExp_Phone_UA = /^[+]380[\d]{2}[0-9]{7}$/; //phone number regExp for Ukraine //must have strict +380 & 9 digits ///^[+]380[\d]{1,4}[0-9]+$/;
+
+	
     this.state = {
-		phoneNumberChild : "I am set manually in state in child <Textarea/>",
+		phoneNumberChild : "+380",
 		smsTextChild : "I am set manually in state in child <Textarea/>",
+		errorMessage : "error State message",
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
 		//coordinateArray: [],  //this state will hold array with ready coordinates returned by axios
     };
@@ -24,14 +36,22 @@ class TextAreaX extends Component {
 	this.getFormValue = this.getFormValue.bind(this);
 	this.handlePhoneNumberKeyPress = this.handlePhoneNumberKeyPress.bind(this); //sends this.state.phoneNumberChild to parent <App/> to set it in parent's state {state.phoneNumber}
 	this.handleTextAreaKeyPress = this.handleTextAreaKeyPress.bind(this); //sends this.state.smsTextChild to parent <App/> to set it in parent's state {state.smsText}
-    /*this.runAjax = this.runAjax.bind(this);
+    this.resetFields = this.resetFields.bind(this);
+	/*this.runAjax = this.runAjax.bind(this);
 	this.drawResult = this.drawResult.bind(this);
 	this.htmlAnyResult = this.htmlAnyResult.bind(this);
 	*/
 	//this.liftFinalCoordsHandler = this.liftFinalCoordsHandler.bind(this);
   }
   
-  
+   componentDidMount(){
+	   //AutocompleteFunction();
+   }
+   
+   
+   
+
+   
    //just runs all functions together
   // **************************************************************************************
   // **************************************************************************************
@@ -40,7 +60,7 @@ class TextAreaX extends Component {
 	  //var promises = [];  //array that will hold all promises
 	  //var temp = [];     // temp array to store found coordinates before assigning it to this.state.coordinateArray
 	  
-	  //temp.splice(0, temp.length);
+	
 	  
 	  
 	  
@@ -103,7 +123,7 @@ class TextAreaX extends Component {
 	 
 
 		 
-	  if ($("#coordsInput").val().trim() === ""){
+	  if ($("#smsTextInput").val().trim() === ""){
 		 //Display error
 		 //alert("empty");
 		 swal("Stop!", "No sms text!", "error");
@@ -116,7 +136,13 @@ class TextAreaX extends Component {
          return false;		 
 	   }
 	   
-	   
+	   //if cell number is incorrect, uses RegExp. Additionally RegExp checking is used on cell number keypress (js/validate_regExp.js)
+		if( !$("#cellNumberInput").val().match(this.RegExp_Phone)){
+            swal("Stop!", "Phone number incorrect", "warning");
+            return false;
+		}
+		
+		//??????????
 	   //check if "You submitted Empty Input" error sign exists and remove it if it does exists. it is done to prevent this sign to appear again if further input is not empty. Otherwise, new table coors result will appear, but error sign will remain on the screen
 	   if ($("#errorSign").length){
            //alert('Does exist!');
@@ -125,7 +151,7 @@ class TextAreaX extends Component {
 
 
 
-	   let textareaX = $("#coordsInput").val(); //alert(textarea);
+	   let textareaX = $("#smsTextInput").val(); //alert(textarea);
        textareaX = textareaX.trim();
 	   let arrayX2 = textareaX.split('\n');
 	   
@@ -185,7 +211,13 @@ class TextAreaX extends Component {
    // **************************************************************************************
    // **************************************************************************************
    
-  
+ 
+
+
+ 
+//===================================================================
+
+
   
   
   //On key press in phone number input, take its value, set it to {this.state.phoneNumberChild} and send it to parent component's state in <App/>
@@ -193,8 +225,22 @@ class TextAreaX extends Component {
   // **************************************************************************************
   //                                                                                     **
    handlePhoneNumberKeyPress (event){
+	   var inputPhone = event.target.value; //i.e == $("#cellNumberInput").val()
+	   
+	   if( inputPhone.match(/^\+380/)){  //if it is ua number use RegExp for ua numbers
+	        var regExpp = this.RegExp_Phone_UA; 
+		    var messageError = ' incomplete UA number';
+		    var messageOK = "UA";
+       } else {
+		    var regExpp = this.RegExp_Phone; 
+		    var messageError = ' incomplete EU number';
+		    var messageOK = "EU";
+	   }
+	 
+       myValidate(inputPhone, this.id, regExpp, 'sendButton', messageError, messageOK, event);   //{e} new must have arg, otherwise not visible
+	   
 	   // Remember that setState is asynchronous, so if you want to print the new state, you have to use the callback parameter
-       this.setState({phoneNumberChild: event.target.value}
+       this.setState({phoneNumberChild: event.target.value} //i.e == $("#cellNumberInput").val()
 	     , () => {
           //sends {this.state.smsTextChild} to parent <App/>, send it as callback
 	      this.props.liftPhoneNumberHandler(this.state.phoneNumberChild);
@@ -218,10 +264,22 @@ class TextAreaX extends Component {
 	   
 	   
    }
-   // **                                                                                  **
-   // **                                                                                  **
+   
+   
+   //clear this State, ie. fields
    // **************************************************************************************
-   // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
+   resetFields(){
+	   this.setState({phoneNumberChild: ""});
+	   this.setState({smsTextChild: ""});
+	   $('.phone-error').html("");
+           
+   }
+	  
+	   
+	
+
   
   //RENDER ------------------------------------------------
   render() {
@@ -234,15 +292,17 @@ class TextAreaX extends Component {
 	         <form className="textarea-my">
 			     
 				 <div className="form-group">
+				     <span className="phone-error">*</span>
                      <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control" value={this.state.phoneNumberChild} onChange={this.handlePhoneNumberKeyPress}/> 
 				 </div>
 			 
 			     <div className="form-group">
-                     <textarea id="coordsInput" rows="8" cols="80" placeholder="Your sms..." className="form-control" value={this.state.smsTextChild}  onChange={this.handleTextAreaKeyPress}/> 
+                     <textarea id="smsTextInput" rows="8" cols="80" placeholder="Your sms..." className="form-control" value={this.state.smsTextChild}  onChange={this.handleTextAreaKeyPress}/> 
 				 </div>
 				 
-				 <div className="form-group">
-                      <input type="button" className="btn btn-primary btn-lg" value="Send" id="splitButton" onClick={this.run_This_Component_Functions_In_Queue}  />
+				 <div className="form-group buttonsX">
+                      <input type="button" className="btn btn-success btn-md el" value="Send" id="sendButton" onClick={this.run_This_Component_Functions_In_Queue}  />
+					  <input type="button" className="btn btn-primary btn-md el" value="Reset" id="" onClick={this.resetFields} />
 				     {/*<input type="button"  value="Lift Coords" onClick={() => liftFinalCoordsHandler('Lifted_TextArea')}/> */}
 				</div>
 				  
