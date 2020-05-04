@@ -11,6 +11,8 @@ Content
 9. Set state considering setState is asynchronous
 10. Add event on button click
 11. Import function from other file
+12.	How disable a button with state
+
 99. Troubleshoots
 
 ===============================
@@ -92,7 +94,7 @@ Folder "BUILD" is for ready created app with all minified concatenated dependenc
 Created by CLI-> npm run build.
 
 Known Problem Issue: path to js,css in BUILD should be without "/" in beginning => 
- 1. "static/js/...", not "/static/js/"
+ 1. "static/js/...", not "/static/js/" (in index.html)
  2. "favicon"
  3.GIF imge was not loading => change to {e.exports=/*a.p+*/"static/media/loading2.f7ccc9e1.gif"} in build/static/js/main.91b5d174.chunk.js
 
@@ -148,27 +150,47 @@ If input is empty Error Loader is triggered in <TextArea/>:
  2. In constructor(props) { => this.resetFields = this.resetFields.bind(this);
  3. Between {constructor(props) and  render => resetFields(){}
 	   
-	   
+	  
+
+	  
 =========================================	
 11. Import function from other file
 
   //slideshow.js
-export const plusSlides = (n)=>{
-    showSlides(slideIndex += n);
+export function myValidate (thisX, id, regExp, butttonToDisable,  messageErr, messageSuccess, e) { 
+    //some code...
 }
 
  //and import it where you need to
  //Homepage.js
-import {plusSlides} from './slideshow'
+import {myValidate} from './slideshow'
+
+constructor(props) {
+  //....
+}
+this.myValidate = myValidate.bind(this);
 
 handleClick (event) {
-        plusSlides(1); 
+        this.myValidate(arg1, arg2....); 
     }	
-	   
 	
+	
+	
+=================================================
+	   
+12.	How disable a button with state
+1. in state =>   this.state = {isEnable: false }
+2. in some function (on some check) => this.setState({isEnable : true})
+3. in render => <button onClick ={this.someFunction} disabled = {this.state.isEnable} /> 
+
+
+
+
+======================================================
 
 # To run smth at start => componentDidMount(){}, place after constructor(props) {	
 	   
 =================================================
 99. Troubleshoots
-1. If 	   
+1. If 	  
+2. React autocomplete => https://github.com/reactjs/react-autocomplete 

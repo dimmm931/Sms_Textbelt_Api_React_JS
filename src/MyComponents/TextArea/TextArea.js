@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import swal from 'sweetalert';
 import '../../css/TextArea.css';
-import {myValidate} from './Validate_RegExp'; //import function
+import {myValidate} from './functions_injected/Validate_RegExp'; //import function
 
-//import 'jquery-ui';
-//import 'jquery-ui/themes/base/autocomplete.css';  //according to folder stucture in node_modules
-import {AutocompleteFunction} from './Autocomplete';
+import 'jquery-ui';
+import 'jquery-ui/themes/base/autocomplete.css';  //according to folder stucture in node_modules
+
+import {AutocompleteFunction} from './functions_injected/Autocomplete';
+//import Autocomplete from 'react-autocomplete'; //???
+
+import DisplayPhoneRegExpMessage from './child_components/DisplayPhoneRegExpMessage';
+import CountSmsText from './child_components/CountSmsText';
 
 /*import error from '../../images/error.gif';
 import axios from 'axios';
@@ -26,7 +31,8 @@ class TextAreaX extends Component {
     this.state = {
 		phoneNumberChild : "+380",
 		smsTextChild : "I am set manually in state in child <Textarea/>",
-		errorMessage : "error State message",
+		phoneNumberErrorMessage : "error State message",
+		isEnable: false, //fot submit button
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
 		//coordinateArray: [],  //this state will hold array with ready coordinates returned by axios
     };
@@ -37,6 +43,9 @@ class TextAreaX extends Component {
 	this.handlePhoneNumberKeyPress = this.handlePhoneNumberKeyPress.bind(this); //sends this.state.phoneNumberChild to parent <App/> to set it in parent's state {state.phoneNumber}
 	this.handleTextAreaKeyPress = this.handleTextAreaKeyPress.bind(this); //sends this.state.smsTextChild to parent <App/> to set it in parent's state {state.smsText}
     this.resetFields = this.resetFields.bind(this);
+	this.myValidate = myValidate.bind(this);
+	this.AutocompleteFunction = AutocompleteFunction.bind(this);
+	
 	/*this.runAjax = this.runAjax.bind(this);
 	this.drawResult = this.drawResult.bind(this);
 	this.htmlAnyResult = this.htmlAnyResult.bind(this);
@@ -45,9 +54,13 @@ class TextAreaX extends Component {
   }
   
    componentDidMount(){
-	   //AutocompleteFunction();
+	   //this.AutocompleteFunction();
    }
    
+   componentWillMount(){
+	   
+	   this.AutocompleteFunction();
+   }
    
    
 
@@ -225,6 +238,8 @@ class TextAreaX extends Component {
   // **************************************************************************************
   //                                                                                     **
    handlePhoneNumberKeyPress (event){
+	   
+	   
 	   var inputPhone = event.target.value; //i.e == $("#cellNumberInput").val()
 	   
 	   if( inputPhone.match(/^\+380/)){  //if it is ua number use RegExp for ua numbers
@@ -237,7 +252,7 @@ class TextAreaX extends Component {
 		    var messageOK = "EU";
 	   }
 	 
-       myValidate(inputPhone, this.id, regExpp, 'sendButton', messageError, messageOK, event);   //{e} new must have arg, otherwise not visible
+       this.myValidate(inputPhone, this.id, regExpp, 'sendButton', messageError, messageOK, event);   //{e} new must have arg, otherwise not visible
 	   
 	   // Remember that setState is asynchronous, so if you want to print the new state, you have to use the callback parameter
        this.setState({phoneNumberChild: event.target.value} //i.e == $("#cellNumberInput").val()
@@ -292,7 +307,8 @@ class TextAreaX extends Component {
 	         <form className="textarea-my">
 			     
 				 <div className="form-group">
-				     <span className="phone-error">*</span>
+				     <DisplayPhoneRegExpMessage status={this.state.isEnable} phoneNumberErrorMessageX={this.state.phoneNumberErrorMessage}/> {/* Message if RegExp founds cell number OK/or NOT*/}
+				     <span className={this.state.isEnable ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.state.phoneNumberErrorMessage} </span>  {/* Message if RegExp founds cell number OK/or NOT*/}
                      <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control" value={this.state.phoneNumberChild} onChange={this.handlePhoneNumberKeyPress}/> 
 				 </div>
 			 
@@ -301,12 +317,12 @@ class TextAreaX extends Component {
 				 </div>
 				 
 				 <div className="form-group buttonsX">
-                      <input type="button" className="btn btn-success btn-md el" value="Send" id="sendButton" onClick={this.run_This_Component_Functions_In_Queue}  />
+                      <input type="button" className="btn btn-success btn-md el" value="Send" id="sendButton" onClick={this.run_This_Component_Functions_In_Queue} disabled = {this.state.isEnable} />
 					  <input type="button" className="btn btn-primary btn-md el" value="Reset" id="" onClick={this.resetFields} />
 				     {/*<input type="button"  value="Lift Coords" onClick={() => liftFinalCoordsHandler('Lifted_TextArea')}/> */}
-				</div>
-				  
+				</div>  
              </form>
+			 <CountSmsText smsText={this.state.smsTextChild}/>
 		
 		</div>
 	  

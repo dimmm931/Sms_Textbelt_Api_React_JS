@@ -8,6 +8,10 @@
 }
 
 
+.err-mess-wrong {background:red;}
+.err-mess-ok    {background:#10e649;} /* green */
+.phone-error{ padding:0.1em 0.5em; margin-bottom:1em; border: 1px solid white;}
+
 .textarea-my{
 	width:100%;
 	margin-top:0;

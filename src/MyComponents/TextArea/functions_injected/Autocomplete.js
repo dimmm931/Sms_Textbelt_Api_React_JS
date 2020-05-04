@@ -19,22 +19,23 @@ import CopyLayout from '../Copy/CopyLayout';
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     ** 
-export const AutocompleteFunction =() =>{ 
+//export const AutocompleteFunction =() =>{ 
+export function AutocompleteFunction (){ 
 
-  
+  alert('autocomp');
    
-   var availablePhoneTags = [
-		                    {label: "+3809766", value : "Dm"},
+   var availablePhoneTags = ["+3809766", "+38097668888",
+		                    /*{label: "+3809766", value : "Dm"},
 							{label: "+3809785", value : "Sh"},
 							{label: "+453112",  value : "Cph"},
-							{label: "+44791755",  value : "UK"},
+							{label: "+44791755",  value : "UK"},*/
 
 							  
         ];
 		
 		
 		//Autocomplete itself
-		/*$("#cellNumberInput")*/document.getElementById('cellNumberInput').autocomplete({
+		$("#cellNumberInput").autocomplete({
            minLength: 1,
            source: availablePhoneTags, //array of objects for autocomplete
 		   
@@ -43,10 +44,10 @@ export const AutocompleteFunction =() =>{
             },
         })
 		//build custom hints display
-		.autocomplete( "instance" )._renderItem = function( ul, item ) {
+		/*.autocomplete( "instance" )._renderItem = function( ul, item ) {
         return $( "<li>" )
         .append( "<div>" + item.label + " => " + item.value + "</div>" )
         .appendTo( ul );
-      };
+      };*/
 }	
 	   
