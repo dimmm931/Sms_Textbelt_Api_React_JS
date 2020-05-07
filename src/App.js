@@ -4,6 +4,9 @@ import './css/App.css';
 import TextAreaX from './MyComponents/TextArea/TextArea';
 import ErrorLayout from './MyComponents/Error/ErrorLayout';  //display error gif
 import TechnicalInfo from './MyComponents/Tech_Info/TechnicalInfo';  //displays info instead of alert
+import TopSectionButtons from './MyComponents/TopSectionButtons/TopSectionButtons';  //displays buttons (change theme, test mode)
+
+
 
 /*import Header from './MyComponents/Header/Header';
 import ButtonsLayout from './MyComponents/Buttons/ButtonsLayout';
@@ -128,9 +131,10 @@ class App extends Component {
 	 
 	    <div className="wrapper grey">
             <div className="container"> {/*<!-- container-full -->*/}
+			
 	            <div className="row row1">
 				
-                    <div className="col-sm-12 col-xs-12 divX App"> 
+                    <div className="col-sm-12 col-xs-12 divX App change-head-style"> 
 		                <h4> {this.props.name} {/* props are set in index.js */}
 						    <img src={logo}  className="react-logo-static" alt="logo" />
 						</h4>
@@ -143,7 +147,9 @@ class App extends Component {
 					
 			    </div>
 			</div>
+			
 			<ErrorLayout/> { /* error gif animation component */ }  
+			<TopSectionButtons/> { /* displays buttons (change theme, test mode)*/ } 
 		</div>
 	
 	

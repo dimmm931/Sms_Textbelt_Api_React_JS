@@ -33,7 +33,8 @@ class CountSmsText extends Component {
       return (
 		<div className="col-sm-12 col-xs-12"> 	 
           <div className="">
-             Count: {160 - (this.props.smsText.length)}
+		  {/* Count: {160 - (this.props.smsText.length)}*/}
+		  Count: {this.props.smsText}
           </div>
 		</div>
 	  
