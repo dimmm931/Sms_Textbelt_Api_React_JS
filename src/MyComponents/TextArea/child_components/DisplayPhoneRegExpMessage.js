@@ -32,10 +32,10 @@ class DisplayPhoneRegExpMessage extends Component {
 	
 	  
       return (
-		<div className="col-sm-12 col-xs-12"> 	 
-          <div className="">
+		<div className="col-sm-12 col-xs-12 err-message-div"> 	 
+
               <span className={this.props.status ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.props.phoneNumberErrorMessageX} </span>  {/* Message if RegExp founds cell number OK/or NOT*/}
-          </div>
+
 		</div>
 	  
     );

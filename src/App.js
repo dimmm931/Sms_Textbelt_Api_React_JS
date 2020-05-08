@@ -135,7 +135,7 @@ class App extends Component {
 	            <div className="row row1">
 				
                     <div className="col-sm-12 col-xs-12 divX App change-head-style"> 
-		                <h4> {this.props.name} {/* props are set in index.js */}
+		                <h4 className="header-x"> {this.props.name} {/* props are set in index.js */} <i className="fa fa-envelope-o" ></i>
 						    <img src={logo}  className="react-logo-static" alt="logo" />
 						</h4>
 			            

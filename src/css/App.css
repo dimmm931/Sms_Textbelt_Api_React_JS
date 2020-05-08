@@ -56,15 +56,7 @@ body{
 
 .red-color{color:red;}
 
-/*  ----------------Mobile */
-@media screen and (max-width: 460px) {  
-    .divX{}
-	.row1{margin-top:0px;}
-	.select-my{margin-top:10px;}
-	/*.divX h4{display:none}*/
-	.react-logo-static{}
-}
-/*  ----------------Mobile */
+
 	
 
 .react-logo-static{
@@ -72,3 +64,18 @@ body{
 	animation: App-logo-spin infinite 20s linear;
     /*height: 40vmin;*/
   }
+  
+ .header-x{color:white; font-size:3em;}
+ 
+ 
+ /*  ----------------Mobile */
+@media screen and (max-width: 460px) {  
+    .divX{}
+	.row1{margin-top:0px;}
+	.select-my{margin-top:10px;}
+	/*.divX h4{display:none}*/
+	.react-logo-static{ width: 55%;}
+	
+    .header-x{font-size:2.2em;}
+}
+/*  ----------------Mobile */

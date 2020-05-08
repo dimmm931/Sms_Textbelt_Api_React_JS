@@ -119,21 +119,41 @@ export function changeThemeInjected () {
   
   
   
-  var counter = 0;
+  // var counter = 0;
+  
+
+	function makeCounter() {
+  
+        var currentCount = 0;
+
+        return function() {
+           return currentCount++;
+        };
+     }
+
+     
+	 
+  
   
 	
 	
-	//function changeBGColor() {
+	function changeBGColor() {
+		
+		var counterDo = makeCounter();
+		var counter = counterDo();
+		
 		if((counter + 1) == wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
 			counter = 0;
 		} else { 
-		    counter++;
+		    counterDo();//counter++; 
+			alert(counter);
 		}
 		
         var cols = document.getElementsByClassName('change-head-style');
 		
         for(var i = 0; i < cols.length; i++) {  
 		    
+			alert(counter); 
 			 var shooter = function(self_i) { // функция shooter
 			    alert(self_i);
 			//checks if URL with image is not broaken
@@ -154,12 +174,15 @@ export function changeThemeInjected () {
 			}
 			
         }
-     //}
+     }
 	 
 	 //alert("end");
 	 
 	 
 	 
+	 changeBGColor(); 
    
    
 }	
+
+//export default TopSectionButtons;

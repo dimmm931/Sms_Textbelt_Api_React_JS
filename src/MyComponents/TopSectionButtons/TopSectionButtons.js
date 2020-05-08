@@ -37,8 +37,8 @@ class TopSectionButtons extends Component {
 	  
       return (
 		<div className="col-sm-12 col-xs-12 top-buttons"> 	 
-           <button className="btn btn-my change-theme" onClick={this.runChangeThemeFunct} >Theme <i className="fa fa-repeat"></i></button>
-		   <button className="btn btn-my btn-next">Test mode <i className="fa fa-link"></i></button>
+           <button className="btn btn-sm btn-my shadowX change-theme" onClick={this.runChangeThemeFunct} >Theme <i className="fa fa-repeat"></i></button>
+		   <button className="btn btn-sm btn-my shadowX btn-next">Test mode <i className="fa fa-link"></i></button>
 		</div>
 	  
     );

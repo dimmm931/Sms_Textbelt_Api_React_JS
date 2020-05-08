@@ -29,7 +29,7 @@ class FlashMessage extends Component {
       return (
 		<div className="col-sm-12 col-xs-12 flash-message"> 	 
 
-		  Over the <br/> limit
+		  Left <br/> 0 chars
 
 		</div>
 	  

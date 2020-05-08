@@ -8,9 +8,11 @@
 }
 
 
-.err-mess-wrong {background:red;}
-.err-mess-ok    {background:#10e649;} /* green */
-.phone-error{ padding:0.1em 0.5em; margin-bottom:1em; border: 1px solid white;}
+.err-mess-wrong {background:red;} /* Message => {IMCOMPLETE UA NUMBER} */
+.err-mess-ok    {background:#10e649;} /* green */ /* Message => {NUMBER IS OK} */
+.phone-error{ padding:0.1em 0.5em; margin-bottom:3em; border: 1px solid white;}
+
+.err-message-div{margin-bottom: 0.6em;} /* Div with messages {IMCOMPLETE UA NUMBER}/{NUMBER IS OK} */
 
 .textarea-my{
 	width:100%;

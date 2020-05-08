@@ -1,6 +1,23 @@
 Sms Api React version.
 Uses React JS version 16.6.3 (was released on 23/10/2018),  last version is 16.13.1 
 
+Structure of this project
+
+ Index.js --|
+            |--- App.js ----|                     | -- <DisplayPhoneRegExpMessage/>
+			                | -- <TextAreaX/> ----| -- inputs (cell number, sms text)
+                            |					  |	-- <CountSmsText smsText
+							|                     | -- buttons (submit, reset)
+							|                     | -- <FlashMessage/> 
+                            |
+							| -- <TechnicalInfo/>
+							|
+							| -- <ErrorLayout/>
+							|
+							| -- <TopSectionButtons/>
+							
+=============================================================
+
 Content
 1. Install
 2.How to uplift var value from child component to Parent state, triggered on direct onClick action
@@ -12,6 +29,8 @@ Content
 10. Add event on button click
 11. Import function from other file
 12.	How disable a button with state
+13. Change CSS class based on state value
+14. Refs
 
 99. Troubleshoots
 
@@ -186,6 +205,46 @@ handleClick (event) {
 
 
 
+
+
+
+
+================================================
+13. Change CSS class based on state value
+1. Set flag state =>
+     this.state = {
+		isEnable: false, //true/false state for submit button }
+		
+2. in render =>
+   <DisplayPhoneRegExpMessage status={this.state.isEnable}
+   
+3. In component <DisplayPhoneRegExpMessage/>
+   <span className={this.props.status ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} >
+   
+4.Change this.state.isEnable somewhere in code, based on some condition => if (value.match(regExp)){  this.setState({isEnable : true});
+
+# OR instead of step#2 & step#3, you can just the following code in render directly (i.e if you don't use separate component like <DisplayPhoneRegExpMessage/>
+   <span className={this.state.isEnable ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.state.phoneNumberErrorMessage} </span>
+
+
+
+===========================================   
+14. Refs   
+Refs in React is a way of equivalent of document.getElementById  =>
+
+1. constructor(props) {
+     super(props);
+    // создадим реф в поле `textInput` для хранения DOM-элемента
+    this.textInput = React.createRef();
+  }
+2. in render =>
+   <input type="text" ref={this.textInput} />
+
+3. In some onClick function =>
+    // Установим фокус на текстовое поле с помощью чистого DOM API// Примечание: обращаемся к "current", чтобы получить DOM-узел
+    this.textInput.current.focus();   
+   
+   
 ======================================================
 
 # To run smth at start => componentDidMount(){}, place after constructor(props) {	

@@ -411,7 +411,7 @@ class TextAreaX extends Component {
 			     
 				 <div className="form-group">
 				     <DisplayPhoneRegExpMessage status={this.state.isEnable} phoneNumberErrorMessageX={this.state.phoneNumberErrorMessage}/> {/* Message if RegExp founds cell number OK/or NOT*/}
-				     <span className={this.state.isEnable ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.state.phoneNumberErrorMessage} </span>  {/* Message if RegExp founds cell number OK/or NOT*/}
+						 {/*<span className={this.state.isEnable ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.state.phoneNumberErrorMessage} </span> */ }  {/* Message if RegExp founds cell number OK/or NOT*/}
                      <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control" value={this.state.phoneNumberChild} onChange={this.handlePhoneNumberKeyPress}/> 
 				 </div>
 			 
@@ -419,6 +419,8 @@ class TextAreaX extends Component {
                      <textarea id="smsTextInput" rows="8" cols="80" placeholder="Your sms..." className="form-control" value={this.state.smsTextChild}  onChange={this.handleTextAreaKeyPress} onPaste={this.handleTextAreaPaste}/> 
 				 </div>
 				 
+				 <CountSmsText smsText={(this.state.limitForSmstext - this.state.smsTextChild.length)}/> {/* count chars left for smsText, i.e current limit - currentText length */}
+
 				 <div className="form-group buttonsX">
                       <input type="button" className="btn btn-success btn-md el" value="Send" id="sendButton" onClick={this.run_This_Component_Functions_In_Queue} disabled = {this.state.isEnable} />
 					  <input type="button" className="btn btn-primary btn-md el" value="Reset" id="" onClick={this.resetFields} />
@@ -426,8 +428,7 @@ class TextAreaX extends Component {
 				</div>  
              </form>
 			 
-			 <CountSmsText smsText={(this.state.limitForSmstext - this.state.smsTextChild.length)}/> {/* count chars left for smsText, i.e current limit - currentText length */}
-		     <FlashMessage/>
+		     <FlashMessage/>  {/* Left 0 chars */}
 		</div>
 	  
     );

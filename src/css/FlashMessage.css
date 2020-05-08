@@ -5,7 +5,7 @@
 	position:absolute;
 	top: 0px;
 	display:none;
-   text-shadow: 2px 2px #FFF;
+    text-shadow: 2px 2px #FFF;
 	} 
 
 
@@ -13,7 +13,13 @@
 	
 /*  ----------------Mobile */
 @media screen and (max-width: 640px) {
-	.flash-message{font-size:8em;}
+	
+	.flash-message{
+		position:absolute; top:1em;
+		font-size:4em;
+		left:0.1em;
+	}
+	
 
 }  
  
