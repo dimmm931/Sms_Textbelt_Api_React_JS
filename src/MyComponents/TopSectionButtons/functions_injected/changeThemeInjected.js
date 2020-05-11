@@ -119,15 +119,15 @@ export function changeThemeInjected () {
   
   
   
-  // var counter = 0;
+   var counterX = 0;
   
 
 	function makeCounter() {
-  
-        var currentCount = 0;
-
+        var currentCount = 1;
+        
         return function() {
            return currentCount++;
+
         };
      }
 
@@ -137,25 +137,37 @@ export function changeThemeInjected () {
   
 	
 	
-	function changeBGColor() {
+	//function changeBGColor() {
 		
-		var counterDo = makeCounter();
-		var counter = counterDo();
+		//var counter = makeCounter();
+		//var c = counter();
+		//alert(c);
+		//alert( counter() ); // 1
+
+
 		
-		if((counter + 1) == wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
-			counter = 0;
+		if((counterX + 1) == wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
+			counterX = 0;
 		} else { 
-		    counterDo();//counter++; 
-			alert(counter);
+		    //(makeCounter())();//
+		    this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }));
+            //alert("state " + this.state.wallPapperCount);
+
+			
+			//counterX++; 
+			//alert("Core " + counterX);
 		}
 		
         var cols = document.getElementsByClassName('change-head-style');
 		
         for(var i = 0; i < cols.length; i++) {  
 		    
-			alert(counter); 
-			 var shooter = function(self_i) { // функция shooter
-			    alert(self_i);
+			//alert(counterX); 
+			 /* var shooter = function(self_i) { // функция shooter
+			    alert('shooter  ' + self_i);
+	          };
+			 */
+				
 			//checks if URL with image is not broaken
 			  /*var img = new Image();        
               try {
@@ -165,22 +177,22 @@ export function changeThemeInjected () {
                    return false; alert('broaken');
               }*/ 
 			  
-			  };
+			  
 			//
 			try{
-               cols[i].style.backgroundImage = 'url(' + wallURL[counter] + ')';
+               cols[i].style.backgroundImage = 'url(' + wallURL[this.state.wallPapperCount] + ')';
 			} catch(err) {
 				alert(err.message);
 			}
 			
         }
-     }
+     //}
 	 
 	 //alert("end");
 	 
 	 
 	 
-	 changeBGColor(); 
+	// changeBGColor(); 
    
    
 }	

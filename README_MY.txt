@@ -9,12 +9,13 @@ Structure of this project
                             |					  |	-- <CountSmsText smsText
 							|                     | -- buttons (submit, reset)
 							|                     | -- <FlashMessage/> 
+							|                     | -- functions_injected --> Autocomplete + Validate_RegExp
                             |
 							| -- <TechnicalInfo/>
 							|
 							| -- <ErrorLayout/>
 							|
-							| -- <TopSectionButtons/>
+							| -- <TopSectionButtons/> ---- functions_injected + changeThemeInjected
 							
 =============================================================
 
@@ -31,6 +32,7 @@ Content
 12.	How disable a button with state
 13. Change CSS class based on state value
 14. Refs
+15. Counter with prevState
 
 99. Troubleshoots
 
@@ -244,6 +246,17 @@ Refs in React is a way of equivalent of document.getElementById  =>
     // Установим фокус на текстовое поле с помощью чистого DOM API// Примечание: обращаемся к "current", чтобы получить DOM-узел
     this.textInput.current.focus();   
    
+   
+   
+   
+   
+===============================================   
+15. Counter with prevState      
+this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }));
+
+
+
+
    
 ======================================================
 

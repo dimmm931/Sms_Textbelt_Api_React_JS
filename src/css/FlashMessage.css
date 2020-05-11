@@ -14,8 +14,8 @@
 /*  ----------------Mobile */
 @media screen and (max-width: 640px) {
 	
-	.flash-message{
-		position:absolute; top:1em;
+   .flash-message{
+		position:absolute; top:4.6em;
 		font-size:4em;
 		left:0.1em;
 	}

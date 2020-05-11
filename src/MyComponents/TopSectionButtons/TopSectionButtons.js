@@ -12,6 +12,7 @@ class TopSectionButtons extends Component {
 	constructor(props) {
     super(props);
     this.state = {
+		wallPapperCount : 0,
 		
     };
  

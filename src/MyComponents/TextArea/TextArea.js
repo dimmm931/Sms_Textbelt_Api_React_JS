@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import swal from 'sweetalert';
+import axios from 'axios';
 import '../../css/TextArea.css';
 import {myValidate} from './functions_injected/Validate_RegExp'; //import function
 
@@ -16,7 +17,6 @@ import FlashMessage from './child_components/FlashMessage';
 
 
 /*import error from '../../images/error.gif';
-import axios from 'axios';
 import CopyLayout from '../Copy/CopyLayout';
 */
 
@@ -36,7 +36,7 @@ class TextAreaX extends Component {
     this.state = {
 		phoneNumberChild : "+380",
 		smsTextChild : "I am set manually in state in child <Textarea/>",
-		phoneNumberErrorMessage : "error State message",
+		phoneNumberErrorMessage : "phone number message",
 		isEnable: false, //true/false state for submit button
 		limitForSmstext : this.limitLatin //limit for chats in sms text, set by ifCyrillicSmsCheck(), by default limit is 120
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
@@ -53,6 +53,7 @@ class TextAreaX extends Component {
 	this.AutocompleteFunction = AutocompleteFunction.bind(this); //for binding this class/file functions
 	this.ifCyrillicSmsCheck = this.ifCyrillicSmsCheck.bind(this);
 	this.handleTextAreaPaste = this.handleTextAreaPaste.bind(this);
+	this.sendSmsMessage = this.sendSmsMessage.bind(this);
 	
 	
 	/*this.runAjax = this.runAjax.bind(this);
@@ -101,20 +102,16 @@ class TextAreaX extends Component {
 			  $(".error-parent").fadeOut(1000); //hide error gif from <Error/>
            }, 4000); // A delay of 1000ms
 		   
-		   //display error text with function
-		   this.htmlAnyResult("<h2 class='red' id='errorSign'>You submitted Empty Input</h2>");
 		  
-		  // calling parent method from child {this.props. + method}-> passing/uplifting array with found coords to App.js, method is described in Parent App.js
-		   /*this.props.liftFinalCoordsHandler([]);*/ //sending empty array to reset this.state.arg1 in <App/>.js. Otherwise, when u found coordinates by texarea input and get the result and then solved to empty the input and click the "Geocode" button, the sign "Empty input" will appear, but table with prev coords result will stay
-
-		  return false; //must have to stop futher Action
-	  }
+		 
+		  
+	  } else if(this.getFormValue(/*promises,temp*/) === true) {
 	  
 	  
-	  
-       //Resetting state to Null ,calling parent method from child {this.props. + method}-> passing/uplifting alert info, described in Parent App.js
-	   //this.props.techInfoHandler("");   
-	   /* this.props.reset_techInfo_State("x"); */
+	      //send the sms message with axios if this.getFormValue == TRUE
+          this.sendSmsMessage();
+	 }
+	   
 		
 	
 
@@ -164,45 +161,8 @@ class TextAreaX extends Component {
             return false;
 		}
 		
-		//??????????
-	   //check if "You submitted Empty Input" error sign exists and remove it if it does exists. it is done to prevent this sign to appear again if further input is not empty. Otherwise, new table coors result will appear, but error sign will remain on the screen
-	   if ($("#errorSign").length){
-           //alert('Does exist!');
-	       $("#errorSign").remove();
-       }
-
-
-
-	   let textareaX = $("#smsTextInput").val(); //alert(textarea);
-       textareaX = textareaX.trim();
-	   let arrayX2 = textareaX.split('\n');
-	   
-	   //alert(arrayX2);  //reassigned to this.props.techInfoHandler
-	   //instead of alert, it calls parent method from child {this.props. + method}-> passing/uplifting alert info to method techInfoHandler described in Parent App.js
-	   /* this.props.techInfoHandler("arrayX2: " + arrayX2);  */
-	   
-	 
-	   
-	   //adding arraay with address to state---------!!!!!!!!!!!!! ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR=================================
-	   let addressTempArray = this.state.addressArray; //getting state to array
-	   /*addressTempArray.forEach(item => {  //this is var if u want to add existing array new values
-           addressTempArray.push(arrayX2); 
-       });
-	   */
-	   addressTempArray.unshift(arrayX2); //adds to array in this way: addressArray = [[arrayX2]]; //MEGA FIX, change push() to unshift()
-	   //alert("9999cccc addressTempArray[0].length " + addressTempArray[0].length + " consists=> " +  addressTempArray[0] );
-	   
-	   
-       this.setState({ //sets new value to state
-           addressArray:addressTempArray/*[0]*/ // arrayX2 //addressTempArray[0]
-       }); 
-	   
-	  
-		   
-	   
-	   //instead of alert, it calls parent method from child {this.props. + method}-> passing/uplifting alert info to method techInfoHandler described in Parent App.js
-	   //this.props.techInfoHandler("this.state.addressArray[0][0] => " + this.state.addressArray[0][0]); 
-
+		//if all is OK
+		return true;
  
   }
   // **                                                                                  **
@@ -212,28 +172,32 @@ class TextAreaX extends Component {
    
    
    
-   
-  
-
-   
-   
-   //Logik to Html the result with function
-  // **************************************************************************************
+   // **************************************************************************************
   // **************************************************************************************
   //                                                                                     **
-  htmlAnyResult(textX){
-	  $("#resultFinal").stop().fadeOut("slow",function(){ 
-            $(this).append( textX )   //use .append() instead of .html() to remove this <h2> error sign if texarea input is not empty
-       }).fadeIn(11000);
-
-       $("#resultFinal").css("border","1px solid red"); //  set  red  border  for  result  div 
-  }
-   // **                                                                                  **
-   // **                                                                                  **
-   // **************************************************************************************
-   // **************************************************************************************
    
- 
+   sendSmsMessage(){
+	   
+	    const headers = {
+        'Content-Type' : 'application/x-www-form-urlencoded'
+       };
+	   
+	   axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+	   
+       axios.post('http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',
+	   {
+		   serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild 
+	   },
+	   /* {headers} */)
+       .then(res => {
+		   //const posts = res.data.data.children.map(obj => obj.data);
+           //this.setState({ posts });
+          return res;
+       });
+	   
+   }
+  
+
 
 
  
