@@ -22,7 +22,7 @@ class LiftedTo_Component extends Component {
 	   <div className="lifted-to">
 		   <h5>
 		       <p className="underline">
-		           LiftedTo_Components (lifted from parent) are => 
+		           LiftedTo_Components (lifted from parent) are (displays parent App states, which are updated/uplifted from TextArea => 
 			   </p>
 			   
 			    <p>

@@ -64,12 +64,12 @@ class TextAreaX extends Component {
   }
   
    componentDidMount(){
-	   //this.AutocompleteFunction();
+	   //JQ UI autocomplete from injected function. Crashed in componentWillMount!!!!!
+	   this.AutocompleteFunction();
    }
    
    componentWillMount(){
-	   
-	   this.AutocompleteFunction();
+
    }
    
    
@@ -179,21 +179,62 @@ class TextAreaX extends Component {
    sendSmsMessage(){
 	   
 	    const headers = {
-        'Content-Type' : 'application/x-www-form-urlencoded'
+        //'Content-Type' : 'application/x-www-form-urlencoded',
+		'Content-Type':  'application/json',
+		//'Accept': 'application/json'
        };
 	   
-	   axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+	   //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 	   
+	   /*
        axios.post('http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',
 	   {
 		   serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild 
 	   },
-	   /* {headers} */)
+	    {headers} )
        .then(res => {
 		   //const posts = res.data.data.children.map(obj => obj.data);
            //this.setState({ posts });
           return res;
        });
+	   */
+	   
+	   
+	   /*
+	   axios({ 
+	       method: 'GET', url:'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', 
+		   crossDomain: true, 
+		   data: { serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild }, 
+		    headers: headers
+		   }) 
+	       .then(res => {
+		     //const posts = res.data.data.children.map(obj => obj.data);
+             //this.setState({ posts });
+			 console.log(res);
+            return res;
+       })
+	   .catch((error) => { console.log(error)});
+	   */
+	   
+	   
+	   $.ajax({
+            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
+            type: 'GET',
+			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
+			crossDomain: true,
+			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' },
+			//passing the city
+            data: { 
+			    //serverCity:window.cityX
+			},
+            success: function(data) {
+               
+			alert("OK");
+            },  //end success
+			error: function (error) {
+				alert("failed");
+            }	
+        });
 	   
    }
   

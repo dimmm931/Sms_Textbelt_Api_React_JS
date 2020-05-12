@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import $ from 'jquery';
+//import React, { Component } from 'react';
+//import $ from 'jquery';
 //import swal from 'sweetalert';
 
 /*import error from '../../images/error.gif';
@@ -119,9 +119,9 @@ export function changeThemeInjected () {
   
   
   
-   var counterX = 0;
+   
   
-
+   /*
 	function makeCounter() {
         var currentCount = 1;
         
@@ -131,7 +131,7 @@ export function changeThemeInjected () {
         };
      }
 
-     
+     */
 	 
   
   
@@ -144,10 +144,11 @@ export function changeThemeInjected () {
 		//alert(c);
 		//alert( counter() ); // 1
 
-
+        var counterX = this.state.wallPapperCount;
 		
-		if((counterX + 1) == wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
-			counterX = 0;
+		if((counterX + 1) === wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
+			//counterX = 0;
+			 this.setState({ wallPapperCount: 0}); //alert('Nulled');
 		} else { 
 		    //(makeCounter())();//
 		    this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }));

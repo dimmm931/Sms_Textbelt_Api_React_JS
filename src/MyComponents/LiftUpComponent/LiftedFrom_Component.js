@@ -1,3 +1,4 @@
+//NOT USED SO FAR!!!!!!!
 import React, { Component } from 'react';
 //import logo from '../../images/api.jpeg';
 //import '../../css/LiftedComponent.css';
