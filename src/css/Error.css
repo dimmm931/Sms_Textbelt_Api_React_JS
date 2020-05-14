@@ -3,6 +3,7 @@
 	display:none;
 	position:absolute;
 	top:3em; left:28%;
+	/*z-index:999999 !important;*/
 	overflow:hidden; /* no scroll to shake page */
 	} 
 

@@ -22,7 +22,7 @@ import CopyLayout from '../Copy/CopyLayout';
 //export const AutocompleteFunction =() =>{ 
 export function AutocompleteFunction (){ 
 
-  alert('autocomp');
+  alert('Autocomplete is ON');
    
    var availablePhoneTags = [ //"+38097664", "+38097854",
 		                    {label: "+3809766", value : "Dm"},

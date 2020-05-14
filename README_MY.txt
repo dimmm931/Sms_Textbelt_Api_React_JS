@@ -24,7 +24,9 @@ Content
 2.How to uplift var value from child component to Parent state, triggered on direct onClick action
 3.How to uplift var value from child component to Parent state manually(without onClick), triggered in some child function by direct function calling:
 4.How to pass state from Parent to Child
-5.
+5.How to BUILD/Pack APP for hosting server
+6.ERROR GIF LOADER:
+
 8.React Work with Form input, how to set state
 9. Set state considering setState is asynchronous
 10. Add event on button click
@@ -33,6 +35,9 @@ Content
 13. Change CSS class based on state value
 14. Refs
 15. Counter with prevState
+
+16. Axios
+17. Cors Same-Origin-Policy
 
 99. Troubleshoots
 
@@ -110,19 +115,19 @@ which contains all the rest component { <Header nameX = "ReactJS"/> , <ButtonsLa
 
 ====================================================
 
-How to BUILD/Pack APP for hosting server
+5.How to BUILD/Pack APP for hosting server
 Folder "BUILD" is for ready created app with all minified concatenated dependencies.
 Created by CLI-> npm run build.
 
 Known Problem Issue: path to js,css in BUILD should be without "/" in beginning => 
- 1. "static/js/...", not "/static/js/" (in index.html)
+ 1. "static/js/...", not "/static/js/" (in index.html) (4 times)
  2. "favicon"
  3.GIF imge was not loading => change to {e.exports=/*a.p+*/"static/media/loading2.f7ccc9e1.gif"} in build/static/js/main.91b5d174.chunk.js
 
 
 
 ========================================================
-ERROR GIF LOADER:
+6.ERROR GIF LOADER:
 Error Loader is located in <ErrorLayout/>, it is display:none by default.
 If input is empty Error Loader is triggered in <TextArea/>:
   $('.App').addClass('blur');  //blur the background
@@ -256,11 +261,55 @@ this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }))
 
 
 
+=============================================== 
+16. Axios
 
+
+
+
+
+
+=============================================== 
+17. Cors Same-Origin-Policy (see details at https://github.com/account931/miscellaneous_2018)
+1. Add on server =>
+   header("Access-Control-Allow-Origin: *");
+   
+This will work if your Ajax request is simple, i.e =>
+  Запросы: GET,POST
+  Тип содержимого следующего: 
+    text/plain
+    application/x-www-form-urlencoded
+    multipart/form-data
+
+Others request requires предварительного запроса (preflight request).
+   
+ --------  
+Working config =>
+$.ajax({
+  url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
+  type: 'GET',
+  //contentType: "application/json",
+  dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
+  crossDomain: true,  
+
+  Server => 
+header("Access-Control-Allow-Origin: *");
+//header('Content-Type: application/json); //header('Content-Type: application/json; charset=utf-8'); // <= MUST BE TURNED OFF, THIS CAUSED CRASH IN CORS JSON
+header("Access-Control-Allow-Headers", "Content-Type"); //DOES NOT MATTER
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+echo json_encode($result);
+
+
+
+
+   
+   
+   
    
 ======================================================
 
 # To run smth at start => componentDidMount(){}, place after constructor(props) {	
+# Comments in render can be only in this format => {/* Comments*/}
 	   
 =================================================
 99. Troubleshoots

@@ -75,7 +75,7 @@ class TextAreaX extends Component {
    
 
    
-   //just runs all functions together
+   //just runs all functions together on submit button click
   // **************************************************************************************
   // **************************************************************************************
   //                                                                                     **
@@ -83,8 +83,11 @@ class TextAreaX extends Component {
 	  //var promises = [];  //array that will hold all promises
 	  //var temp = [];     // temp array to store found coordinates before assigning it to this.state.coordinateArray
 	  
-	
-	  
+	  //Does not work
+	  if ($("#sendButton").is(":disabled"))  //($("#sendButton").attr('submit-button', 'disabled') == 'true') ////if ($(this).find('button.disabled').length > 0) {
+      {
+        swal("Stop!", "Button disabled, incorrect phone number");
+      }
 	  
 	 
 	  
@@ -94,13 +97,13 @@ class TextAreaX extends Component {
 		  setTimeout(function(){
 		    $("html, body").animate({ scrollTop: 0 }, "slow"); //scroll the page to top(mostly for mobile convenience)
             $('.App').addClass('blur');  //blur the background
-		    $(".error-parent").fadeIn(2500); //show error gif from <Error/>
+		    $(".error-parent").fadeIn(1500); //show error gif from <Error/>
 		  }, 2000); // A delay of 1000ms
 		
 		   setTimeout(function(){
               $('.App').removeClass('blur'); //removes blur from background
 			  $(".error-parent").fadeOut(1000); //hide error gif from <Error/>
-           }, 4000); // A delay of 1000ms
+           }, 3000); // A delay of 1000ms
 		   
 		  
 		 
@@ -155,8 +158,15 @@ class TextAreaX extends Component {
          return false;		 
 	   }
 	   
-	   //if cell number is incorrect, uses RegExp. Additionally RegExp checking is used on cell number keypress (js/validate_regExp.js)
-		if( !$("#cellNumberInput").val().match(this.RegExp_Phone)){
+	    //decides what regExt to use, if it is ua number use RegExp for ua numbers
+	   if( $("#cellNumberInput").val().match(/^\+380/)){  //if it is ua number use RegExp for ua numbers
+	        var regExpp = this.RegExp_Phone_UA; 
+       } else {
+		    var regExpp = this.RegExp_Phone; 
+	   }			
+			
+	   //checks if cell number is correct, uses regular expressions RegExp_Phone_UA or RegExp_Phone. Additionally RegExp checking is used on cell number keypress (js/validate_regExp.js)
+		if( !$("#cellNumberInput").val().match(regExpp)){
             swal("Stop!", "Phone number incorrect", "warning");
             return false;
 		}
@@ -214,27 +224,121 @@ class TextAreaX extends Component {
             return res;
        })
 	   .catch((error) => { console.log(error)});
+	   
+	   
 	   */
 	   
 	   
-	   $.ajax({
-            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
+	    //------ Variant_1 (ajax without contentType/dataType) => Works!!!! (but with text nly )
+	   
+	      $.ajax({
+            url: '../Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
             type: 'GET',
-			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
+			//contentType: "text/plain",
+			//dataType: 'text/html', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
+	
 			crossDomain: true,
-			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' },
-			//passing the city
+			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
+			//headers: { 'Content-Type': 'application/json' },
+			//passing some data.....
+            data: { 
+			    serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild 
+			},
+            success: function(data) {
+               
+			  alert("OK -> Variant_1");
+			  alert(data);
+			  alert("Variant_1 can work with plain text only, so it cant get JSON by keys");
+			  alert("Variant_1 " + data.status);
+            },  //end success
+			error: function (error) {
+				alert("Variant_1 failed");
+            }	
+        });
+		
+	   
+	   
+	   
+	   
+	   //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)
+	          //http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php
+	   
+	      $.ajax({
+            url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
+            type: 'GET',
+			//contentType: "application/json",
+			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
+	
+			crossDomain: true,
+			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
+			//headers: { 'Content-Type': 'application/json' }, //NO HEADERS -> it will crash
+			//passing some data.....
+            data: { 
+			    serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild 
+			},
+            success: function(data) {
+               
+			  alert("OK -> Variant_2");
+			  alert("Variant_2 " + data.cellar);
+            },  //end success
+			error: function (error) {
+				alert("Variant_2 failed");
+            }	
+        });
+		
+		
+		
+	   
+	   //------ Variant_3  JSONP1 => DOES NOT WORK!!!!
+	   $.ajax({
+            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php?callback=photos',//my ajax url //'https://textbelt.com/quota/textbelt',
+            type: 'GET',
+			contentType: "application/json; charset=utf-8",
+			dataType: 'JSONP', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
+			jsonpCallback: 'photos',
+            jsonp: 'callback',
+			crossDomain: true,
+			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
+			//headers: { 'Content-Type': 'application/json' },
+			//passing some data.....
             data: { 
 			    //serverCity:window.cityX
 			},
             success: function(data) {
                
-			alert("OK");
+			alert("OK Variant_3 JSONP1 ");
+			alert(data);
             },  //end success
 			error: function (error) {
-				alert("failed");
+				alert("Variant_3 JSONP1 failed");
             }	
         });
+		
+		
+		
+		
+		//---------Variant_4 JSONP2  => DOES NOT WORK!!!!
+		$.getJSON("http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php?jsoncallback=?",
+        {
+            format: "json"
+        },
+       //RETURNED RESPONSE DATA IS LOOPED AND ONLY IMAGE IS APPENDED TO IMAGE DIV
+       function(data) {
+       //$.each(data.items, function(i,item){
+		  alert("OK Variant_4 JSONP2 ");
+		  alert(data);
+       //$("<img/>").attr("src", item.media.m).appendTo("#images");
+       //});
+	   });
+		//-----------------
+		
+		
+		
+		
+		function photos (data) {
+          alert('photo is OK Variant_3 JSONP1 ');
+          console.log(data);
+       }
 	   
    }
   
@@ -256,7 +360,7 @@ class TextAreaX extends Component {
 	   
 	   var inputPhone = event.target.value; //i.e == $("#cellNumberInput").val()
 	   
-	   if( inputPhone.match(/^\+380/)){  //if it is ua number use RegExp for ua numbers
+	   if( inputPhone.match(/^\+380/)){  //decides what regExt to use, if it is ua number use RegExp for ua numbers
 	        var regExpp = this.RegExp_Phone_UA; 
 		    var messageError = ' incomplete UA number';
 		    var messageOK = "UA";
@@ -427,7 +531,7 @@ class TextAreaX extends Component {
 				 <CountSmsText smsText={(this.state.limitForSmstext - this.state.smsTextChild.length)}/> {/* count chars left for smsText, i.e current limit - currentText length */}
 
 				 <div className="form-group buttonsX">
-                      <input type="button" className="btn btn-success btn-md el" value="Send" id="sendButton" onClick={this.run_This_Component_Functions_In_Queue} disabled = {this.state.isEnable} />
+                      <input type="button" className="btn btn-success btn-md el" value="Send" id="sendButton" onClick={this.run_This_Component_Functions_In_Queue} /* disabled = {this.state.isEnable} */ /> {/* Functionality to disable button if cell number is not OK is TURNED OFF HERE */}
 					  <input type="button" className="btn btn-primary btn-md el" value="Reset" id="" onClick={this.resetFields} />
 				     {/*<input type="button"  value="Lift Coords" onClick={() => liftFinalCoordsHandler('Lifted_TextArea')}/> */}
 				</div>  
