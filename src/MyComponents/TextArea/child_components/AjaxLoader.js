@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import loaderX from '../../../images/loaddd.gif'
 //import '../../css/Technical_Info.css';
 //import LiftedTo_Component from '../LiftUpComponent/LiftedTo_Component';
 //import error from '../../images/error.gif';
@@ -10,7 +11,7 @@ import LiftedFrom_Component from '../LiftUpComponent/LiftedFrom_Component';
 
 
 
-class CountSmsText extends Component {
+class AjaxLoader extends Component {
 	constructor(props) {
     super(props);
     this.state = {
@@ -31,15 +32,14 @@ class CountSmsText extends Component {
 	
 	  
       return (
-		<div className="col-sm-12 col-xs-12"> 	 
-          <div className="">
-		  {/* Count: {160 - (this.props.smsText.length)}*/}
-		  <span className="text-shadow"> Count: {this.props.smsText}</span>
-          </div>
+		 
+        <div className='ajax-loader col-sm-12 col-xs-12'> 
+		    <img src={loaderX}  className="error-img" alt="logo" />  {/*  hidden by default */}
 		</div>
+
 	  
     );
   }
 }
 
-export default CountSmsText;
+export default AjaxLoader;

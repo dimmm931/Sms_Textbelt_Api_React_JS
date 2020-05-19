@@ -1,7 +1,7 @@
 
 .top-buttons{position:absolute; top:0.8em; left:-0.4em; font-size:0.2em;}
 
-.btn-my{}
+.btn-my{border:1px solid white;}
 .btn-next{margin-left:0.2em;}
 
 .shadowX {
@@ -22,3 +22,9 @@
     -o-transition: all 1.5s ease;
      transition: all 1.5s ease;
 }
+
+
+
+ /* Class for button "Test Mode" toggle */
+.btn-test-mode {background: red;    }
+.btn-dev-mode {background: #10e649; border:2px solid white;} /* green */

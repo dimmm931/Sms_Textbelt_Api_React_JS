@@ -37,7 +37,9 @@ Content
 15. Counter with prevState
 
 16. Axios
-17. Cors Same-Origin-Policy
+17. Cors in Ajax (Cross-origin resource sharing)(Same-Origin-Policy) 
+18. How to toggle boolean state of react component?
+19. How to change button text (any text) based on boolean state of react component
 
 99. Troubleshoots
 
@@ -217,7 +219,9 @@ handleClick (event) {
 
 
 ================================================
-13. Change CSS class based on state value
+13. Change CSS class based on state value, 
+see details at https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TextArea/TextArea.js
+
 1. Set flag state =>
      this.state = {
 		isEnable: false, //true/false state for submit button }
@@ -270,8 +274,9 @@ this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }))
 
 
 =============================================== 
-17. Cors Same-Origin-Policy (see details at https://github.com/account931/miscellaneous_2018)
-1. Add on server =>
+17. Cors in Ajax (Cross-origin resource sharing)(Same-Origin-Policy) 
+
+1. Add this on server side (if u create Resr Api via Yii2 headers are added by frameform and u won't encounter any CORS problems) =>
    header("Access-Control-Allow-Origin: *");
    
 This will work if your Ajax request is simple, i.e =>
@@ -281,7 +286,7 @@ This will work if your Ajax request is simple, i.e =>
     application/x-www-form-urlencoded
     multipart/form-data
 
-Others request requires предварительного запроса (preflight request).
+Others request requires preliminary requests (preflight request).
    
  --------  
 Working config =>
@@ -302,6 +307,43 @@ echo json_encode($result);
 
 
 
+
+
+======================================================
+18. How to toggle boolean state of react component?
+   this.setState(prevState => ({
+          ifTestMode: !prevState.ifTestMode
+      })); 
+   
+
+
+======================================================   
+19. How to change button text (any text) based on boolean state of react component 
+(see details at https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TopSectionButtons/TopSectionButtons.js)
+  1. Define the state for button text => 
+    constructor(props) {
+      this.state = { testButtonText : 'Some text'};
+	  //.....
+  2. Use in render this.state.testButtonText as text 
+    <button onClick={this.runChangeTestModeFunct}> {this.state.testButtonText } </button>
+	
+  3. On changes in other state, e.g this.state.ifTestMode, change the this.state.testButtonText => 
+  
+    //toogle the state 
+	  this.setState(prevState => ({
+          ifTestMode: !prevState.ifTestMode
+      })
+	  //as it async, then do...
+	  , () => {
+		   //change the text of button by state
+	       if(this.state.ifTestMode === true){
+		       this.setState({testButtonText: "Test Mode"}); 
+		   } else {
+			   this.setState({testButtonText: "Prod Mode"});
+		   };
+       });
+   
+   
    
    
    

@@ -14,6 +14,8 @@ import {AutocompleteFunction} from './functions_injected/Autocomplete'; //import
 import DisplayPhoneRegExpMessage from './child_components/DisplayPhoneRegExpMessage';
 import CountSmsText from './child_components/CountSmsText';
 import FlashMessage from './child_components/FlashMessage';
+import AjaxLoader from './child_components/AjaxLoader';
+
 
 
 /*import error from '../../images/error.gif';
@@ -38,7 +40,10 @@ class TextAreaX extends Component {
 		smsTextChild : "I am set manually in state in child <Textarea/>",
 		phoneNumberErrorMessage : "phone number message",
 		isEnable: false, //true/false state for submit button
-		limitForSmstext : this.limitLatin //limit for chats in sms text, set by ifCyrillicSmsCheck(), by default limit is 120
+		limitForSmstext : this.limitLatin, //limit for chats in sms text, set by ifCyrillicSmsCheck(), by default limit is 120
+		//testMode Status is uplifted from <TopSectionButtons/> to <App/> and passed there to <TerxAreaX/> as this.props.ifTestModeData
+		//testMode : true,  //true by default, updated/uplifted from <TopSectionButtons/> //used to switch between test/prod mode, when in test mode, Api uses on server side TextBelt test key {"textbelt_test"}
+		
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
 		//coordinateArray: [],  //this state will hold array with ready coordinates returned by axios
     };
@@ -228,12 +233,20 @@ class TextAreaX extends Component {
 	   
 	   */
 	   
+	   //data to send via ajax
+	   var myData = { 
+	      serverPhone: this.state.phoneNumberChild, 
+		  serverSms: this.state.smsTextChild, 
+		  serverIfTestStatus: this.props.ifTestModeData
+	   };
+	   
+	   
 	   
 	    //------ Variant_1 (ajax without contentType/dataType) => Works!!!! (but with text nly )
 	   
 	      $.ajax({
-            url: '../Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
-            type: 'GET',
+            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
+            type: 'POST',
 			//contentType: "text/plain",
 			//dataType: 'text/html', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
 	
@@ -241,9 +254,7 @@ class TextAreaX extends Component {
 			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
 			//headers: { 'Content-Type': 'application/json' },
 			//passing some data.....
-            data: { 
-			    serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild 
-			},
+            data: myData,
             success: function(data) {
                
 			  alert("OK -> Variant_1");
@@ -260,12 +271,13 @@ class TextAreaX extends Component {
 	   
 	   
 	   
-	   //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)
+	   //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)!!!!!!!!!!!!!!!!
 	          //http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php
-	   
+	      $(".ajax-loader").show().hide(3000);
+		  
 	      $.ajax({
-            url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
-            type: 'GET',
+            url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+            type: 'POST',
 			//contentType: "application/json",
 			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
 	
@@ -273,13 +285,18 @@ class TextAreaX extends Component {
 			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
 			//headers: { 'Content-Type': 'application/json' }, //NO HEADERS -> it will crash
 			//passing some data.....
-            data: { 
-			    serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild 
-			},
+            data: myData,
+			/*{ 
+			    serverPhone: this.state.phoneNumberChild, 
+				serverSms: this.state.smsTextChild, 
+				serverIfTestStatus: this.props.ifTestModeData //testMode Status is uplifted from <TopSectionButtons/> to <App/> and passed there to <TerxAreaX/> as this.props.ifTestModeData
+			},*/
             success: function(data) {
                
 			  alert("OK -> Variant_2");
 			  alert("Variant_2 " + data.cellar);
+			  alert(JSON.stringify(data));
+			  console.log(data);
             },  //end success
 			error: function (error) {
 				alert("Variant_2 failed");
@@ -292,22 +309,20 @@ class TextAreaX extends Component {
 	   //------ Variant_3  JSONP1 => DOES NOT WORK!!!!
 	   $.ajax({
             url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php?callback=photos',//my ajax url //'https://textbelt.com/quota/textbelt',
-            type: 'GET',
-			contentType: "application/json; charset=utf-8",
+            type: 'POST',
+			//contentType: "application/json; charset=utf-8",
 			dataType: 'JSONP', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
-			jsonpCallback: 'photos',
-            jsonp: 'callback',
+			//jsonpCallback: 'photos',
+            jsonp: 'photos',
 			crossDomain: true,
 			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
 			//headers: { 'Content-Type': 'application/json' },
 			//passing some data.....
-            data: { 
-			    //serverCity:window.cityX
-			},
+            data: myData,
             success: function(data) {
                
-			alert("OK Variant_3 JSONP1 ");
-			alert(data);
+			    alert("OK Variant_3 JSONP1 ");
+			    alert(data);
             },  //end success
 			error: function (error) {
 				alert("Variant_3 JSONP1 failed");
@@ -360,7 +375,7 @@ class TextAreaX extends Component {
 	   
 	   var inputPhone = event.target.value; //i.e == $("#cellNumberInput").val()
 	   
-	   if( inputPhone.match(/^\+380/)){  //decides what regExt to use, if it is ua number use RegExp for ua numbers
+	   if( inputPhone.match(/^\+3/)){  //decides what regExt to use, if it is ua number use RegExp for ua numbers //if( inputPhone.match(/^\+380/)){ 
 	        var regExpp = this.RegExp_Phone_UA; 
 		    var messageError = ' incomplete UA number';
 		    var messageOK = "UA";
@@ -521,11 +536,12 @@ class TextAreaX extends Component {
 				 <div className="form-group">
 				     <DisplayPhoneRegExpMessage status={this.state.isEnable} phoneNumberErrorMessageX={this.state.phoneNumberErrorMessage}/> {/* Message if RegExp founds cell number OK/or NOT*/}
 						 {/*<span className={this.state.isEnable ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.state.phoneNumberErrorMessage} </span> */ }  {/* Message if RegExp founds cell number OK/or NOT*/}
-                     <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control" value={this.state.phoneNumberChild} onChange={this.handlePhoneNumberKeyPress}/> 
+                     
+					 <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control shadow-xx shadow-text" value={this.state.phoneNumberChild} onChange={this.handlePhoneNumberKeyPress}/> 
 				 </div>
 			 
 			     <div className="form-group">
-                     <textarea id="smsTextInput" rows="8" cols="80" placeholder="Your sms..." className="form-control" value={this.state.smsTextChild}  onChange={this.handleTextAreaKeyPress} onPaste={this.handleTextAreaPaste}/> 
+                     <textarea id="smsTextInput" rows="8" cols="80" placeholder="Your sms..." className="form-control shadow-xx shadow-text" value={this.state.smsTextChild}  onChange={this.handleTextAreaKeyPress} onPaste={this.handleTextAreaPaste}/> 
 				 </div>
 				 
 				 <CountSmsText smsText={(this.state.limitForSmstext - this.state.smsTextChild.length)}/> {/* count chars left for smsText, i.e current limit - currentText length */}
@@ -534,8 +550,11 @@ class TextAreaX extends Component {
                       <input type="button" className="btn btn-success btn-md el" value="Send" id="sendButton" onClick={this.run_This_Component_Functions_In_Queue} /* disabled = {this.state.isEnable} */ /> {/* Functionality to disable button if cell number is not OK is TURNED OFF HERE */}
 					  <input type="button" className="btn btn-primary btn-md el" value="Reset" id="" onClick={this.resetFields} />
 				     {/*<input type="button"  value="Lift Coords" onClick={() => liftFinalCoordsHandler('Lifted_TextArea')}/> */}
-				</div>  
+				</div>  		
+				
              </form>
+			 
+			 <AjaxLoader/>
 			 
 		     <FlashMessage/>  {/* Left 0 chars */}
 		</div>

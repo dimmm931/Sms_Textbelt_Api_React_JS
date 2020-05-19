@@ -24,9 +24,11 @@ class App extends Component {
         super(props);
 		
 		this.state = {
-			phoneNumber : "Phone number: I am set manually in state in parent <App/>",
-			smsText : "Sms text:I am set manually in state in parent <App/>",
-		    //arg1: [],  //this state will hold lifted up var(onClick) or  array with coordinates
+			phoneNumber : "Phone number: I am set manually in state in parent <App/>", //this state is to display in <TechnicalInfo/> only, when sms is sent, value is taken from <TerxAreaX/> state => phoneNumberChild
+			smsText : "Sms text:I am set manually in state in parent <App/>",          //this state is to display in <TechnicalInfo/> only, when sms is sent, value is taken from <TerxAreaX/> state => smsTextChild
+		    ifTestMode : true, //true by default, it is uplifted from <TopSectionButtons/> and passed to <TerxAreaX/>, IT IS USED IN <TerxAreaX/> when sendinf Sms //used to switch between test/prod mode, when in test mode, Api uses on server side TextBelt test key {"textbelt_test"}
+			
+			//arg1: [],  //this state will hold lifted up var(onClick) or  array with coordinates
 		    //finalCoords:[], //not used???
 			//techInfoState:[], //state to store alert info
 			//baseState : []
@@ -34,6 +36,9 @@ class App extends Component {
 	   
 	    var liftPhoneNumberHandler = this.liftPhoneNumberHandler.bind(this); //gets state (phone number) from child <Textarea/> and sets as state here, in this class
 	    var liftSmsTextHandler = this.liftSmsTextHandler.bind(this); //gets state (sms text) from child <Textarea/> and sets as state here, in this class
+	   	var liftTestModeStatustHandler = this.liftTestModeStatustHandler.bind(this); //gets state (if Test button is ON) from child <TopSectionButtons/> and sets as state here, in this class
+
+	   
 	   /*
         var handleToUpdate = this.handleToUpdate.bind(this);  //for catching lifted state from LiftedFrom_Component
 		var liftFinalCoordsHandler = this.liftFinalCoordsHandler.bind(this);  //for catching lifted state from TextArea Comp
@@ -53,13 +58,13 @@ class App extends Component {
 	
 	
 	
-	//method for catching lifted state from TextArea.js Component, triggered manually by {this.props.liftFinalCoordsHandler(this.state.coordinateArray[0])} in TerxArea.js
+	//method for catching lifted state from TextArea.js Component, triggered manually by {this.props.liftPhoneNumberHandler(this.state.phoneNumberChild);} in TerxArea.js
     liftPhoneNumberHandler(somePhoneNumber){
            this.setState({phoneNumber:somePhoneNumber});
     }
 	
 	
-	//method for catching lifted state from TextArea.js Component, triggered manually by {this.props.liftFinalCoordsHandler(this.state.coordinateArray[0])} in TerxArea.js
+	//method for catching lifted state from TextArea.js Component, triggered manually by { this.props.liftSmsTextHandler(this.state.smsTextChild);} in TerxArea.js
     liftSmsTextHandler(someSmsText){
             //alert('TextArea value data lifted from Child(TextArea.js) to Parent(App.js): ' + someArgCoords);
 			//instead of alert, it calls parent method from child {this.props. + method}-> passing/uplifting alert info to method techInfoHandler described in Parent App.js
@@ -68,6 +73,12 @@ class App extends Component {
            this.setState({smsText:someSmsText});
     }
 	
+	
+	
+	//method for catching lifted state from TopSectionButtons.js Component, triggered manually by {this.props.liftTestModeStatustHandler(this.state.ifTestMode);} in TopSectionButtons.js
+    liftTestModeStatustHandler(someTestModeBoolValue){
+           this.setState({ifTestMode:someTestModeBoolValue});
+    }
 	
 	
 	/*
@@ -118,8 +129,9 @@ class App extends Component {
 	
 	
   render() {
-	  var liftPhoneNumberHandler  =   this.liftPhoneNumberHandler; //for catching lifted state from TextArea.js Component
-	  var liftSmsTextHandler  =   this.liftSmsTextHandler; //for catching lifted state from TextArea.js Component
+	  var liftPhoneNumberHandler  =   this.liftPhoneNumberHandler;          //for catching lifted state from TextArea.js Component
+	  var liftSmsTextHandler  =   this.liftSmsTextHandler;                  //for catching lifted state from TextArea.js Component
+	  var liftTestModeStatustHandler  =   this.liftTestModeStatustHandler; //for catching lifted state from TopSectionButtons.js Component
 	  
 	 /* var handleToUpdate =  this.handleToUpdate; //for catching lifted state from LiftedFrom_Component
 	  var liftFinalCoordsHandler  =   this.liftFinalCoordsHandler; //for catching lifted state from TextArea.js Component
@@ -139,17 +151,17 @@ class App extends Component {
 						    <img src={logo}  className="react-logo-static" alt="logo" />
 						</h4>
 			            
-						<TextAreaX liftPhoneNumberHandler = {liftPhoneNumberHandler.bind(this)}  liftSmsTextHandler = {liftSmsTextHandler.bind(this)} />
+						<TextAreaX ifTestModeData={this.state.ifTestMode } liftPhoneNumberHandler = {liftPhoneNumberHandler.bind(this)}  liftSmsTextHandler = {liftSmsTextHandler.bind(this)} />
 		            </div>
 					
-				   <TechnicalInfo phoneNumberData={this.state.phoneNumber}  smsTextData={this.state.smsText} /> { /* displays info instead of alert */ }
+				   <TechnicalInfo phoneNumberData={this.state.phoneNumber}  smsTextData={this.state.smsText} ifTestModeData={this.state.ifTestMode} /> { /* displays info instead of alert */ }
 
 					
 			    </div>
 			</div>
 			
 			<ErrorLayout/> { /* error gif animation component */ }  
-			<TopSectionButtons/> { /* displays buttons (change theme, test mode)*/ } 
+			<TopSectionButtons liftTestModeStatustHandler = {liftTestModeStatustHandler.bind(this)} /> { /* displays buttons (change theme, test mode button)*/ } 
 		</div>
 	
 	

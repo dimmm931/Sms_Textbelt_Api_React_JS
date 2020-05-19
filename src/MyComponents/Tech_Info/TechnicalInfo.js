@@ -52,7 +52,7 @@ class TechnicalInfo extends Component {
       return (
 		<div className="col-sm-12 col-xs-12"> 	 
           <div className="dropdown">
-              <input type="button" className="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" value="Technical Info" />
+              <input type="button" className="btn btn-primary border-x" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" value="Technical Info" />
 			       
 			
 				  
@@ -61,7 +61,7 @@ class TechnicalInfo extends Component {
 				     {/* {constructed_answer} */} {/* alerts goes there */}
 					 
 					 {/* <LiftedFrom_Component handleToUpdate = {handleToUpdate.bind(this)}/>  */ } { /* LiftedComponent component, send/uplift value onClick to App.js */ }
-					 <LiftedTo_Component liftedSmsValue={this.props.smsTextData}  liftedPhoneNumberValue={this.props.phoneNumberData} />               { /* LiftedComponent component for catching lifted state from LiftedFrom_Component to App.js */ }
+					 <LiftedTo_Component liftedSmsValue={this.props.smsTextData}  liftedPhoneNumberValue={this.props.phoneNumberData} liftedIfTestModeValue={this.props.ifTestModeData} />               { /* LiftedComponent component for catching lifted state from LiftedFrom_Component to App.js */ }
 					 {/*<State_Array_List_Builder numbers={this.props.numbers}/>  */ }         {/*techInfoHandler={techInfoHandler.bind(this)}*/}   {/* Component creates List from State Array*/}
               </div>
 			 

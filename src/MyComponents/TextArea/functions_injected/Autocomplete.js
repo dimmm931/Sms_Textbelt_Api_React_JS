@@ -1,3 +1,5 @@
+//USED in <TextArea/> as injected function 
+
 import React, { Component } from 'react';
 import $ from 'jquery';
 import 'jquery-ui/ui/widgets/autocomplete';

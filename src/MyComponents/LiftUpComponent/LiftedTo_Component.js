@@ -9,6 +9,7 @@ class LiftedTo_Component extends Component {
 	constructor(props) {
         super(props);
         this.state = {
+			
         };
    }
   
@@ -22,7 +23,15 @@ class LiftedTo_Component extends Component {
 	   <div className="lifted-to">
 		   <h5>
 		       <p className="underline">
-		           LiftedTo_Components (lifted from parent) are (displays parent App states, which are updated/uplifted from TextArea => 
+		           Displays parent App.js states, which are updated/uplifted from TextArea.js and TopSectionButtons.js  => 
+			   </p>
+		       
+			   <p className="underline">
+		           Phone number and sms are uplifted from TextArea to App.js just for test control, as when sending a sms, this app uses state values from Textarea, while TestMode Status is used from App.js (and passed from App.js to TextArea.js as props)
+			   </p>
+			   
+		       <p className="underline">
+		           Passed States (passed from parent App.js) are:
 			   </p>
 			   
 			    <p>
@@ -32,6 +41,11 @@ class LiftedTo_Component extends Component {
 			   <p>
 			   {this.props.liftedSmsValue} {/* here goes lifted from Parent app.js value*/}
 			   </p>
+			   
+			   <p>
+			   Test: {this.props.liftedIfTestModeValue.toString()} {/* uses .toString() otherwise boolean won't be displayed */}
+			   </p>
+			   
 			   
 		   </h5>   
 		   
