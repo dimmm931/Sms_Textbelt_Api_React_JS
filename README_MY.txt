@@ -40,6 +40,10 @@ Content
 17. Cors in Ajax (Cross-origin resource sharing)(Same-Origin-Policy) 
 18. How to toggle boolean state of react component?
 19. How to change button text (any text) based on boolean state of react component
+20. Error when using setState in ajax success section
+21. Multiple classes 
+  
+
 
 99. Troubleshoots
 
@@ -275,9 +279,8 @@ this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }))
 
 =============================================== 
 17. Cors in Ajax (Cross-origin resource sharing)(Same-Origin-Policy) 
+To see ajax requests -> F12-> Network -> XHR
 
-1. Add this on server side (if u create Resr Api via Yii2 headers are added by frameform and u won't encounter any CORS problems) =>
-   header("Access-Control-Allow-Origin: *");
    
 This will work if your Ajax request is simple, i.e =>
   Запросы: GET,POST
@@ -287,8 +290,15 @@ This will work if your Ajax request is simple, i.e =>
     multipart/form-data
 
 Others request requires preliminary requests (preflight request).
-   
+ If you have access to Rest Server you do ajax request, you can do:
+  17.1 Add header on Rest Server => header("Access-Control-Allow-Origin: *");
+  17.2 Use XDomain Library
+  
  --------  
+17.1 Add header on Rest Server => header("Access-Control-Allow-Origin: *");
+If u create Resr Api via Yii2, headers are added by framework and u won't encounter any CORS problems) =>
+   
+
 Working config =>
 $.ajax({
   url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
@@ -297,8 +307,8 @@ $.ajax({
   dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
   crossDomain: true,  
 
-  Server => 
-header("Access-Control-Allow-Origin: *");
+ On Rest Server => 
+header("Access-Control-Allow-Origin: *"); //must-have CORS header
 //header('Content-Type: application/json); //header('Content-Type: application/json; charset=utf-8'); // <= MUST BE TURNED OFF, THIS CAUSED CRASH IN CORS JSON
 header("Access-Control-Allow-Headers", "Content-Type"); //DOES NOT MATTER
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -306,7 +316,15 @@ echo json_encode($result);
 
 
 
-
+------------------
+17.2 Use XDomain Library => https://github.com/jpillora/xdomain/blob/gh-pages/README.md 
+ 17.2.1 Add to your index.html => 
+   <script src="//unpkg.com/xdomain@0.8.2/dist/xdomain.min.js" slave="http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/proxy.html"></script>
+	 
+ 17.2.2 Add file Proxy.html (at Rest Api Server)	 
+<!DOCTYPE HTML>
+<!-- Not used, but working ==> Anti Cors https://github.com/jpillora/xdomain/blob/gh-pages/README.md -->
+<script src="//unpkg.com/xdomain@0.8.2/dist/xdomain.min.js" master="http://localhost:3000/"></script>
 
 
 ======================================================
@@ -342,10 +360,33 @@ echo json_encode($result);
 			   this.setState({testButtonText: "Prod Mode"});
 		   };
        });
+  
+
+  
+  
+  
+ =======================================================  
+20. Error when using setState in ajax success section  
+ https://stackoverflow.com/questions/43582971/react-setstate-doesnt-rerender-in-ajax-success
+ 
+ Variant 1: => bind the "success" callback function to your React Component => 
+  $.ajax({
+    success: function(data) {
+      this.setState({toRender: renderArray});
+    }.bind(this)
+  });  
+
+ Variant 2: =>  use arrow function to bind this object because function syntax is the older es5 syntax which does not work with es6 => 
+     success: (data) => {
+        this.setState({toRender: renderArray});
+     },
+ 
    
    
    
-   
+ //===================================================  
+ 21. Multiple classes 
+  <div className={'collapsible' + (active? ' active': '')}>  
    
    
 ======================================================

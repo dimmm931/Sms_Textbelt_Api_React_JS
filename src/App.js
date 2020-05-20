@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+//import logo from './images/logox.jpg';
 import './css/App.css';
 import TextAreaX from './MyComponents/TextArea/TextArea';
 import ErrorLayout from './MyComponents/Error/ErrorLayout';  //display error gif
@@ -34,9 +35,9 @@ class App extends Component {
 			//baseState : []
         };
 	   
-	    var liftPhoneNumberHandler = this.liftPhoneNumberHandler.bind(this); //gets state (phone number) from child <Textarea/> and sets as state here, in this class
-	    var liftSmsTextHandler = this.liftSmsTextHandler.bind(this); //gets state (sms text) from child <Textarea/> and sets as state here, in this class
-	   	var liftTestModeStatustHandler = this.liftTestModeStatustHandler.bind(this); //gets state (if Test button is ON) from child <TopSectionButtons/> and sets as state here, in this class
+	    //var liftPhoneNumberHandler = this.liftPhoneNumberHandler.bind(this); //gets state (phone number) from child <Textarea/> and sets as state here, in this class
+	    //var liftSmsTextHandler = this.liftSmsTextHandler.bind(this); //gets state (sms text) from child <Textarea/> and sets as state here, in this class
+	   	//var liftTestModeStatustHandler = this.liftTestModeStatustHandler.bind(this); //gets state (if Test button is ON) from child <TopSectionButtons/> and sets as state here, in this class
 
 	   
 	   /*
@@ -147,7 +148,7 @@ class App extends Component {
 	            <div className="row row1">
 				
                     <div className="col-sm-12 col-xs-12 divX App change-head-style"> 
-		                <h4 className="header-x"> {this.props.name} {/* props are set in index.js */} <i className="fa fa-envelope-o" ></i>
+		                <h4 className="header-x shadow-xx"> {this.props.name} {/* props are set in index.js */} <i className="fa fa-envelope-o" ></i>
 						    <img src={logo}  className="react-logo-static" alt="logo" />
 						</h4>
 			            

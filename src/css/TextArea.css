@@ -1,4 +1,4 @@
-/* Submit clear buttons */
+/* Submit and clear buttons */
 .buttonsX {margin-top:1em;  }
 .buttonsX .el{
 	float: left; 
@@ -24,8 +24,8 @@
 }
 
 
-.err-mess-wrong {background:red;} /* Message => {IMCOMPLETE UA NUMBER} */
-.err-mess-ok    {background:#10e649;} /* green */ /* Message => {NUMBER IS OK} */
+.err-mess-wrong {background:red;     -webkit-transition:  .1s linear; } /* Message => {IMCOMPLETE UA NUMBER} */
+.err-mess-ok    {background:#10e649; -webkit-transition:  .1s linear;  } /* green */ /* Message => {NUMBER IS OK} */
 .phone-error{ padding:0.1em 0.5em; margin-bottom:3em; border: 1px solid white;}
 
 .err-message-div{margin-bottom: 0.6em;} /* Div with messages {IMCOMPLETE UA NUMBER}/{NUMBER IS OK} */
@@ -52,6 +52,8 @@
 /*  ----------------Mobile */
 
 
+/* displays response from textBelt Api */
+.textbelt-answer{border:1px solid white; padding:0.5em;margin-top:0.3em; -webkit-transition:  1.5s linear; }
 
 
 

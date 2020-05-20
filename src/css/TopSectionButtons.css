@@ -26,5 +26,5 @@
 
 
  /* Class for button "Test Mode" toggle */
-.btn-test-mode {background: red;    }
-.btn-dev-mode {background: #10e649; border:2px solid white;} /* green */
+.btn-test-mode {background: red;  -webkit-transition: 0.1s linear;   }
+.btn-dev-mode {background: #10e649; border:2px solid white; -webkit-transition: 0.1s linear; } /* green */

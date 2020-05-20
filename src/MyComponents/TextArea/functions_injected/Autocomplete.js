@@ -1,6 +1,6 @@
 //USED in <TextArea/> as injected function 
 
-import React, { Component } from 'react';
+//import React, { Component } from 'react';
 import $ from 'jquery';
 import 'jquery-ui/ui/widgets/autocomplete';
 import 'jquery-ui/themes/base/autocomplete.css';  //according to folder stucture in node_modules

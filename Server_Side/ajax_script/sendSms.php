@@ -1,5 +1,8 @@
 <?php 
-header("Access-Control-Allow-Origin: *");
+//handles ajax request from smsSendStatusArea.js (sends SMS  via ajax)
+
+//headers
+header("Access-Control-Allow-Origin: *"); //must-have CORS header
 //header('Content-Type: application/json); //header('Content-Type: application/json; charset=utf-8'); // <= MUST BE TURNED OFF, THIS CAUSED CRASH IN CORS JSON
 header("Access-Control-Allow-Headers", "Content-Type"); //DOES NOT MATTER
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -9,51 +12,52 @@ header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 //header("Access-Control-Allow-Headers:  Origin, X-Requested-With, Content-Type, Accept"); //Content-Type, Authorization, Accept, Origin, 
 //header("Access-Control-Allow-Credentials : false");
 
+$result = array(); //test array to monitor
 
 
-
-$result = array('status' => 'OK!!!');
-$result['cellar'] = $_POST['serverPhone']; //cell number from ajax
-$result['smsText'] = $_POST['serverSms']; 
-$result['ifTestMode'] = $_POST['serverIfTestStatus']; //switch between test/prod mode, when in test mode, Api uses on server side TextBelt test key {"textbelt_test"}
-
-
-
-//decides whether include test or prod credentials based on value from ajax
+//decides whether include test or prod credentials based on $_POST['serverIfTestStatus'] value from ajax
 if ($_POST['serverIfTestStatus'] === 'true') {
-    $result['inclue'] = "Will include Credentials/test_credentials.php";
+	//by default $_POST['serverIfTestStatus'] is TRUE (i.e require test credentials)
+	require_once '../Credentials/test_credentials.php';
+    $result['includeFile'] = "Will include Credentials/test_credentials.php";
 } else {
-	$result['inclue'] = "Will include Will include Credentials/prod_credentials.php";
+	require_once '../Credentials/prod_credentials.php';
+	$result['includeFile'] = "Will include Will include Credentials/prod_credentials.php";
 }
 
 
-//Server regExp check 
+require_once '../Classes/SendSms.php';
+require_once '../Classes/RegExpCheck.php';
+include '../Classes/autoload.php'; //uses autoload instead of manual includin each class-> Error if it is included in 2 files=only1 is accepted 
 
-//checking  phone number input
-$RegExp_Phone = '/^[+][\d]{8,9}[0-9]+$/'; //phone number regExp for world wide
-$RegExp_Phone_UA = '/^[+]380[\d]{2}[0-9]{7}$/'; //phone number regExp for Ukraine //must have strict +380 & 9 digits ///^[+]380[\d]{1,4}[0-9]+$/;
-$RegExp_Sms = '/.*[a-zA-Z0-9].*/';
+if (isset($_POST['serverPhone']) && isset($_POST['serverSms'])){
+	
+    //Server regExp check 
+    $RegExpChecking = new MySmsTetxBelt\Classes\RegExpCheck();
+    $checked = $RegExpChecking ->check($_POST['serverPhone'], $_POST['serverSms']);
 
-if (preg_match('/^[+]3/' , $_POST['serverPhone'])){
-    if (!preg_match($RegExp_Phone_UA, $_POST['serverPhone'])){ 
-         $result['errorPhone'] = 'UA Phone number is not OK';
-	} else {
-		$result['errorPhone'] = 'UA Phone number is Good';}
+
+    //Sending SMS
+    $sms = new MySmsTetxBelt\Classes\SendSms();
+	$smsSendStatus = $sms->sendingSms($_POST['serverPhone'], $_POST['serverSms']);
+	
 } else {
-	if (!preg_match($RegExp_Phone, $_POST['serverPhone'])){ 
-         $result['errorPhone'] = 'EU Phone number is not OK';
-	} else {
-		$result['errorPhone'] = 'EU Phone number is Good';}
+	$smsSendStatus = "Phone number or sms smsSendStatus is missing";
 }
- 
- 
-//checks sms is at least 1 char_from_digit
-if (!preg_match($RegExp_Sms, $_POST['serverSms'])){
-	$result['errorSms'] = "Sms is NOT OK";
-} else {
-	$result['errorSms'] = "Sms is Good";
-}
-  
+
+
+
+
+$result['cellar'] = $_POST['serverPhone']; //cell number from ajax
+$result['smssmsSendStatus'] = $_POST['serverSms']; 
+$result['ifTestMode'] = $_POST['serverIfTestStatus']; //switch between test/prod mode, when in test mode, Api uses on server side smsSendStatusBelt test key {"smsSendStatusbelt_test"}
+
+
+
+
+
+
+$result = array_merge($result, $checked, $smsSendStatus); 
 
 //returns json 
 echo json_encode($result);

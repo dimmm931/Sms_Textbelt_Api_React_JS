@@ -15,6 +15,8 @@ import DisplayPhoneRegExpMessage from './child_components/DisplayPhoneRegExpMess
 import CountSmsText from './child_components/CountSmsText';
 import FlashMessage from './child_components/FlashMessage';
 import AjaxLoader from './child_components/AjaxLoader';
+import ResultFromTextbeltApi from './child_components/ResultFromTextbeltApi';
+
 
 
 
@@ -43,9 +45,9 @@ class TextAreaX extends Component {
 		limitForSmstext : this.limitLatin, //limit for chats in sms text, set by ifCyrillicSmsCheck(), by default limit is 120
 		//testMode Status is uplifted from <TopSectionButtons/> to <App/> and passed there to <TerxAreaX/> as this.props.ifTestModeData
 		//testMode : true,  //true by default, updated/uplifted from <TopSectionButtons/> //used to switch between test/prod mode, when in test mode, Api uses on server side TextBelt test key {"textbelt_test"}
-		
+		answerFromTextbelt : '',
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
-		//coordinateArray: [],  //this state will hold array with ready coordinates returned by axios
+	
     };
  
     // This binding is necessary to make `this` work in the callback
@@ -241,8 +243,8 @@ class TextAreaX extends Component {
 	   };
 	   
 	   
-	   
-	    //------ Variant_1 (ajax without contentType/dataType) => Works!!!! (but with text nly )
+	   /*
+	    //------ Variant_1 (ajax without contentType/dataType) => Works!!!! (but with text only-> can not parse json )
 	   
 	      $.ajax({
             url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
@@ -267,16 +269,18 @@ class TextAreaX extends Component {
             }	
         });
 		
-	   
+	   */
 	   
 	   
 	   
 	   //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)!!!!!!!!!!!!!!!!
 	          //http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php
-	      $(".ajax-loader").show().hide(3000);
+	      $(".ajax-loader").show(); //show loader
+		  
+		  
 		  
 	      $.ajax({
-            url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+             url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
             type: 'POST',
 			//contentType: "application/json",
 			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
@@ -297,15 +301,24 @@ class TextAreaX extends Component {
 			  alert("Variant_2 " + data.cellar);
 			  alert(JSON.stringify(data));
 			  console.log(data);
-            },  //end success
+			  if(data.success){
+			      this.setState({answerFromTextbelt : data.success});
+			  } else {
+				  this.setState({answerFromTextbelt : data.errorX});
+			  }
+			
+			  $(".ajax-loader").fadeOut(5000); //hide loader
+            }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			error: function (error) {
 				alert("Variant_2 failed");
-            }	
+				$(".ajax-loader").fadeOut(5000); //hide loader
+				this.setState({answerFromTextbelt : error});
+            }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
 		
 		
 		
-	   
+	   /*
 	   //------ Variant_3  JSONP1 => DOES NOT WORK!!!!
 	   $.ajax({
             url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php?callback=photos',//my ajax url //'https://textbelt.com/quota/textbelt',
@@ -354,7 +367,7 @@ class TextAreaX extends Component {
           alert('photo is OK Variant_3 JSONP1 ');
           console.log(data);
        }
-	   
+	   */
    }
   
 
@@ -554,8 +567,9 @@ class TextAreaX extends Component {
 				
              </form>
 			 
-			 <AjaxLoader/>
+			 <ResultFromTextbeltApi answer={this.state.answerFromTextbelt}/>
 			 
+			 <AjaxLoader/>
 		     <FlashMessage/>  {/* Left 0 chars */}
 		</div>
 	  
