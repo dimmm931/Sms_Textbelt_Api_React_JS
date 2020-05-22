@@ -24,9 +24,11 @@
 }
 
 
-.err-mess-wrong {background:red;     -webkit-transition:  .1s linear; } /* Message => {IMCOMPLETE UA NUMBER} */
-.err-mess-ok    {background:#10e649; -webkit-transition:  .1s linear;  } /* green */ /* Message => {NUMBER IS OK} */
-.phone-error{ padding:0.1em 0.5em; margin-bottom:3em; border: 1px solid white;}
+
+ /* --------------------------------------- <DisplayPhoneRegExpMessage/> ---------------------------- */
+.err-mess-wrong {background:red; }     /* Message => {IMCOMPLETE UA NUMBER}  -webkit-transition:  .1s linear; */
+.err-mess-ok    {background:#10e649; } /* green */ /* Message => {NUMBER IS OK}   -webkit-transition:  .1s linear; */
+.phone-error{ padding:0.1em 0.5em; margin-bottom:3em; border: 1px solid white; border-radius:2px;}
 
 .err-message-div{margin-bottom: 0.6em;} /* Div with messages {IMCOMPLETE UA NUMBER}/{NUMBER IS OK} */
 
@@ -36,24 +38,48 @@
 	/* padding: 2em; */
 }
 
+
+
+/* --------------------------------------- <AjaxLoader/> ---------------------------- */
 /* ajax loader, works on click */
 .ajax-loader{position:absolute; top:23em; left:0.5%; display:none;}
 .ajax-loader img{width:18%;}
-
-
 
 /*  ----------------Mobile */
 @media screen and (max-width: 640px) {
 	.ajax-loader{position:absolute; top:28.6em; left:3%;display:none;}
     .ajax-loader img{width:45%;}
-
 }  
  
 /*  ----------------Mobile */
 
 
+
+
+
+/* ----------------------------------------- <ResultFromTextbeltApi/> ----------------- */
 /* displays response from textBelt Api */
-.textbelt-answer{border:1px solid white; padding:0.5em;margin-top:0.3em; -webkit-transition:  1.5s linear; }
+.textbelt-answer{border:1px solid white; padding:0.5em;margin-top:0.3em; -webkit-transition:  1.5s linear; margin:0 auto; word-wrap: break-word;}
+.sms-sent{background:#10e649;} /* green */ 
+.sms-not-sent{background:red;}
+
+/* show/hide delivery check status */
+.show-delivery-button{display:block;}
+.hide-delivery-button{display:none;}
+
+.el{border:1px solid white; margin:0.2em 0em; ;}
+.font-small{font-size:0.8em;}
+
+/* show/hide All response/answer block, works based on this.state.ifUserClickedSendSms, set in <TextArea/. and passes as props to <ResultFromTextbeltApi/> */
+.hide-div{display:none;  -webkit-transition:  2.5s linear;}
+.show-div{dispaly:block;  -webkit-transition:  2.5s linear;}
+
+.deliv-ok{background:#10e649;} /* green */ 
+.deliv-fail{background:red;}
+
+
+
+
 
 
 

@@ -54,8 +54,8 @@ $result['ifTestMode'] = $_POST['serverIfTestStatus']; //switch between test/prod
 
 
 
-
-
+//DO THIS IN CLASSES?SendSms.php
+//$smsSendStatus2 = json_decode($smsSendStatus, true);
 
 $result = array_merge($result, $checked, $smsSendStatus); 
 

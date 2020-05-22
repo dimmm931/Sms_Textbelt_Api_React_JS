@@ -9,7 +9,9 @@ import 'jquery-ui';
 import 'jquery-ui/themes/base/autocomplete.css';  //according to folder structure in node_modules
 
 import {AutocompleteFunction} from './functions_injected/Autocomplete'; //import my function
-//import Autocomplete from 'react-autocomplete'; //???
+import {sendSmsMessage} from './functions_injected/sendSmsMessage'; //import my function to send sms
+import {scrollResults} from './functions_injected/scrollResults'; //import my function to scroll
+
 
 import DisplayPhoneRegExpMessage from './child_components/DisplayPhoneRegExpMessage';
 import CountSmsText from './child_components/CountSmsText';
@@ -41,11 +43,13 @@ class TextAreaX extends Component {
 		phoneNumberChild : "+380",
 		smsTextChild : "I am set manually in state in child <Textarea/>",
 		phoneNumberErrorMessage : "phone number message",
-		isEnable: false, //true/false state for submit button
+		isEnable: false, //true/false state to deisable/enable submit button  (tempo disabled)
 		limitForSmstext : this.limitLatin, //limit for chats in sms text, set by ifCyrillicSmsCheck(), by default limit is 120
 		//testMode Status is uplifted from <TopSectionButtons/> to <App/> and passed there to <TerxAreaX/> as this.props.ifTestModeData
 		//testMode : true,  //true by default, updated/uplifted from <TopSectionButtons/> //used to switch between test/prod mode, when in test mode, Api uses on server side TextBelt test key {"textbelt_test"}
-		answerFromTextbelt : '',
+		ifTestMode: this.props.ifTestModeData,  //test/prod flag (set in <TopSectionButtons/>, uplifted to <App/> and passed here)
+		answerFromTextbelt : {success:false, textId:'', quotaRemaining: '', clientMessage:'', errorFromApi: ''},
+		ifUserClickedSendSms : false, //to detect if used clicked sendind sms (to decide if to show Div with "Message sent/not sent")
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
 	
     };
@@ -56,11 +60,13 @@ class TextAreaX extends Component {
 	this.handlePhoneNumberKeyPress = this.handlePhoneNumberKeyPress.bind(this); //sends this.state.phoneNumberChild to parent <App/> to set it in parent's state {state.phoneNumber}
 	this.handleTextAreaKeyPress = this.handleTextAreaKeyPress.bind(this); //sends this.state.smsTextChild to parent <App/> to set it in parent's state {state.smsText}
     this.resetFields = this.resetFields.bind(this);
-	this.myValidate = myValidate.bind(this); //for injected from files function
+	this.myValidate = myValidate.bind(this); //for injected from files function, for non-injected function use {this.myValidate.bind(this);}
 	this.AutocompleteFunction = AutocompleteFunction.bind(this); //for binding this class/file functions
 	this.ifCyrillicSmsCheck = this.ifCyrillicSmsCheck.bind(this);
 	this.handleTextAreaPaste = this.handleTextAreaPaste.bind(this);
-	this.sendSmsMessage = this.sendSmsMessage.bind(this);
+	this.sendSmsMessage = sendSmsMessage.bind(this); //for injected from files function
+    this.scrollResults = scrollResults.bind(this); //for injected from files function
+	
 	
 	
 	/*this.runAjax = this.runAjax.bind(this);
@@ -117,7 +123,7 @@ class TextAreaX extends Component {
 		  
 	  } else if(this.getFormValue(/*promises,temp*/) === true) {
 	  
-	  
+	      
 	      //send the sms message with axios if this.getFormValue == TRUE
           this.sendSmsMessage();
 	 }
@@ -188,12 +194,12 @@ class TextAreaX extends Component {
   // **************************************************************************************
    
    
-   
+   //NOT USED HERE, transfered to /functions_injected/sendSmsMessage. Can delete here.
    // **************************************************************************************
   // **************************************************************************************
   //                                                                                     **
    
-   sendSmsMessage(){
+   sendSmsMessagePREVV(){
 	   
 	    const headers = {
         //'Content-Type' : 'application/x-www-form-urlencoded',
@@ -235,11 +241,13 @@ class TextAreaX extends Component {
 	   
 	   */
 	   
+	   
+	   
 	   //data to send via ajax
 	   var myData = { 
-	      serverPhone: this.state.phoneNumberChild, 
-		  serverSms: this.state.smsTextChild, 
-		  serverIfTestStatus: this.props.ifTestModeData
+	      serverPhone: this.state.phoneNumberChild,     //number
+		  serverSms: this.state.smsTextChild,           //sms text
+		  serverIfTestStatus: this.props.ifTestModeData //test/prod flag (set in <TopSectionButtons/>, uplifted to <App/> and passed here)
 	   };
 	   
 	   
@@ -279,8 +287,8 @@ class TextAreaX extends Component {
 		  
 		  
 		  
-	      $.ajax({
-             url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+	      $.ajax({ //use {http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php'} to test on localhost, use {../Server_Side/ajax_script/sendSms.php} on real hosting
+            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
             type: 'POST',
 			//contentType: "application/json",
 			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
@@ -301,31 +309,93 @@ class TextAreaX extends Component {
 			  alert("Variant_2 " + data.cellar);
 			  alert(JSON.stringify(data));
 			  console.log(data);
-			  if(data.success){
-			      this.setState({answerFromTextbelt : data.success});
-			  } else {
-				  this.setState({answerFromTextbelt : data.errorX});
+			  
+			  if(data.textBeltResponse){ //textBeltResponse array is set in Classes/SendSms.php
+			      
+				   //this.setState({answerFromTextbelt : data.textBeltResponse.success});
+				   
+				  //update this.state.answerFromTextbelt (Variant for array)
+				 /* this.setState(prevState => ({
+                      answerFromTextbelt: [prevState.array, data.textBeltResponse.success, data.textBeltResponse.textId, data.textBeltResponse.quotaRemaining]
+                  })); */
+				  
+				  alert("textBeltResponse " + data.textBeltResponse.success);
+				  
+				  if(data.textBeltResponse.success === true){ //if sent
+				      //update this.state.answerFromTextbelt (Variant for Object)
+				      this.setState(prevState => ({
+                          answerFromTextbelt: {    // object that we want to update
+                              ...prevState.answerFromTextbelt,    // keep all other key-value pairs
+                              success: data.textBeltResponse.success, textId:data.textBeltResponse.textId,  // update the Object with key:value
+						      quotaRemaining:data.textBeltResponse.quotaRemaining, clientMessage:'Sms sent successfully',
+                              errorFromApi: data.textBeltResponse.errorX						
+                          }
+                      }));
+				  } else {
+					  //update this.state.answerFromTextbelt (Variant for Object)
+				      this.setState(prevState => ({
+                          answerFromTextbelt: {    // object that we want to update
+                              ...prevState.answerFromTextbelt,    // keep all other key-value pairs
+                              success: data.textBeltResponse.success, textId:'',  // update the Object with key:value
+						      quotaRemaining:'', clientMessage:'Sms was not sent successfully',
+                              errorFromApi: data.textBeltResponse.errorX						
+                          }
+                      }));
+					  
+				  }
+				  
+			     
+			  } else { //if NO data.textBeltResponse, i.e no response from TextBelt Api
+				  /*this.setState(prevState => ({
+                      answerFromTextbelt: [prevState.array, data.errorX]
+                  })); */
+				  //this.setState({answerFromTextbelt : data.errorX});
+				  
+				   //update this.state.answerFromTextbelt (Variant for Object)
+				  this.setState(prevState => ({
+                      answerFromTextbelt: {    // object that we want to update
+                        ...prevState.answerFromTextbelt,    // keep all other key-value pairs
+                        success: false, textId:'', quotaRemaining:'', // update the Object with key:value
+						clientMessage:'Sms message was not send', errorFromApi: data.errorX  
+                     }
+                  }));
 			  }
 			
 			  $(".ajax-loader").fadeOut(5000); //hide loader
-            }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
-			error: function (error) {
+			  
+			  //set true to show Div with result in <ResultFromTextbeltApi/>
+		     this.setState({ifUserClickedSendSms: true});
+			 
+             }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
+			 error: function (error) {
 				alert("Variant_2 failed");
 				$(".ajax-loader").fadeOut(5000); //hide loader
-				this.setState({answerFromTextbelt : error});
+				
+				//update this.state.answerFromTextbelt (Variant for Object)
+				this.setState(prevState => ({
+                    answerFromTextbelt: {    // object that we want to update
+                        ...prevState.answerFromTextbelt,    // keep all other key-value pairs
+                        success: false, textId:'', quotaRemaining:'', clientMessage:'Sms message crashed'  // update the Object with key:value
+                    }
+                }));
+				
+			   //set true to show Div with result in <ResultFromTextbeltApi/>
+		      this.setState({ifUserClickedSendSms: true});
+		
             }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
+		
 		
 		
 		
 	   /*
 	   //------ Variant_3  JSONP1 => DOES NOT WORK!!!!
 	   $.ajax({
-            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php?callback=photos',//my ajax url //'https://textbelt.com/quota/textbelt',
+            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
             type: 'POST',
 			//contentType: "application/json; charset=utf-8",
 			dataType: 'JSONP', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
-			//jsonpCallback: 'photos',
+			jsonpCallback: 'photos',
             jsonp: 'photos',
 			crossDomain: true,
 			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
@@ -335,16 +405,16 @@ class TextAreaX extends Component {
             success: function(data) {
                
 			    alert("OK Variant_3 JSONP1 ");
-			    alert(data);
+				alert(JSON.stringify(data));
             },  //end success
 			error: function (error) {
 				alert("Variant_3 JSONP1 failed");
             }	
         });
+		*/
 		
 		
-		
-		
+		/*
 		//---------Variant_4 JSONP2  => DOES NOT WORK!!!!
 		$.getJSON("http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php?jsoncallback=?",
         {
@@ -516,6 +586,7 @@ class TextAreaX extends Component {
 	   this.setState({phoneNumberChild: ""}); //reset phone number
 	   this.setState({smsTextChild: ""});     //reset sms text
 	   this.setState({phoneNumberErrorMessage: ""}); //reset error message for phone number
+	   this.setState({ifUserClickedSendSms: false}); //set false to hide Div with result in <ResultFromTextbeltApi/>
 	   //$('.phone-error').html("");
            
    }
@@ -547,8 +618,9 @@ class TextAreaX extends Component {
 	         <form className="textarea-my">
 			     
 				 <div className="form-group">
+				 
 				     <DisplayPhoneRegExpMessage status={this.state.isEnable} phoneNumberErrorMessageX={this.state.phoneNumberErrorMessage}/> {/* Message if RegExp founds cell number OK/or NOT*/}
-						 {/*<span className={this.state.isEnable ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.state.phoneNumberErrorMessage} </span> */ }  {/* Message if RegExp founds cell number OK/or NOT*/}
+					 {/*<span className={this.state.isEnable ? 'err-mess-wrong phone-error' : 'err-mess-ok phone-error'} > {this.state.phoneNumberErrorMessage} </span> */ }  {/* Message if RegExp founds cell number OK/or NOT*/}
                      
 					 <input type="text" id="cellNumberInput"  placeholder="Cell number" className="form-control shadow-xx shadow-text" value={this.state.phoneNumberChild} onChange={this.handlePhoneNumberKeyPress}/> 
 				 </div>
@@ -567,7 +639,7 @@ class TextAreaX extends Component {
 				
              </form>
 			 
-			 <ResultFromTextbeltApi answer={this.state.answerFromTextbelt}/>
+			 <ResultFromTextbeltApi answer={this.state.answerFromTextbelt} ifTestModeData2={this.state.ifTestMode}  showHideDivData={this.state.ifUserClickedSendSms}/>
 			 
 			 <AjaxLoader/>
 		     <FlashMessage/>  {/* Left 0 chars */}

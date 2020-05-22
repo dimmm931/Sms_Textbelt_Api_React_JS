@@ -10,6 +10,16 @@ class SendSms
     {
 		$resultX = array();
 		
+		 //Uncomment below to test on localhost, as cURL does not work on localhost
+		 /*
+		$response = array('success'=>true, 'textId' => 888888888, 'quotaRemaining' => 1 , 'errorX' => 'No cURL error');
+		$response = json_encode($response, true); //manually turn array to json, as we get json in real answer from textbelt
+		$response = json_decode($response, true);  //manually turn json to array, as we do in real
+		$resultX['textBeltResponse'] = $response;
+		return $resultX;
+		*/
+		//End Uncomment below to test on localhost, as cURL does not work on localhost
+		
 		$ch = curl_init('https://textbelt.com/text');
                 $data = array(
                     'phone' =>  $phoneNumber, //'+380976641342',
@@ -32,10 +42,13 @@ class SendSms
                   //echo "cURL Error #:" . $err;
 			      $resultX['errorX'] = $err; //'<p class="bg-warning">Sms not sent.</p>' . $err;
               } else {
-		          $resultX['errorX'] = "No error detected";
+		          $resultX['errorX'] = "No cURL error detected";
               }
 			  
-			  $resultX['textBeltResponse'] = $response;
+			  //MEGA FIX, $response is already JSON, but later in ajax/sendSms we do it json encode once again that cause crash. So, firstly we deJSON it!!!!
+			  $response2 = json_decode($response, true); 
+			  
+			  $resultX['textBeltResponse'] = $response2;
 			  return $resultX;
 		
 		      /*

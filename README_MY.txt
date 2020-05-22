@@ -8,7 +8,8 @@ Structure of this project
 			                | -- <TextAreaX/> ----| -- inputs (cell number, sms text)
                             |					  |	-- <CountSmsText smsText
 							|                     | -- buttons (submit, reset)
-							|                     | -- <FlashMessage/> 
+							|                     | -- <FlashMessage/> -> animated pop-up image on error
+                            |                     | -- <ResultFromTextbeltApi/>							
 							|                     | -- functions_injected --> Autocomplete + Validate_RegExp
                             |
 							| -- <TechnicalInfo/>
@@ -41,7 +42,10 @@ Content
 18. How to toggle boolean state of react component?
 19. How to change button text (any text) based on boolean state of react component
 20. Error when using setState in ajax success section
-21. Multiple classes 
+21. Multiple CSS classes 
+22. Use State in Render, if State type is array[]/object{} 
+23. SetState/Update State if State typeof is Array/Object (how add new value to array/object))
+
   
 
 
@@ -63,8 +67,7 @@ If don't have in your package.json section "scripts", add:
  "scripts": {
     "start": "react-scripts start",
 
-
-	
+Server will be running at => http://localhost:3000/	
 	
 ==============================
 How it works:
@@ -225,6 +228,7 @@ handleClick (event) {
 ================================================
 13. Change CSS class based on state value, 
 see details at https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TextArea/TextArea.js
+               https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TextArea/child_components/DisplayPhoneRegExpMessage.js
 
 1. Set flag state =>
      this.state = {
@@ -385,10 +389,59 @@ echo json_encode($result);
    
    
  //===================================================  
- 21. Multiple classes 
+ 21. Multiple CSS classes 
   <div className={'collapsible' + (active? ' active': '')}>  
+  <div className={'col-sm-12 col-xs-12 textbelt-answer' + (this.props.answer.success? ' sms-sent': ' sms-not-sent')}>
    
-   
+ 
+
+ //=================================================== 
+
+22. Use State in Render, if State typeof is array[]/object{} 
+
+22.1 (if State typeOf is array)(if(typeof(state)==Array))
+  render() {
+	const newV = this.props.answer.map(function(item, i){
+	   return <li key={i}>{item}</li>
+    });
+	  
+      return (
+		<div className="col-sm-12 col-xs-12 textbelt-answer">
+          {newV }  
+		</div>
+    );
+  }
+ 
+ 22.2 (if State typeof is Object) (if(typeof(state)==OBJECT))
+ 
+  //iterate over state Object{}, if  typeof(state) == OBJECT
+   var myObjX = this.props.answer;   
+   const itteratedArray = Object.keys(myObjX).map(function(key, index) {
+      return <li key={index}> {key} => {myObjX[key]}  </li>  //index is i++;  key is Object key name;  myObjX[key] is the value of key
+   });
+ 
+ 
+ 
+
+  
+//=================================================== 
+23. SetState/Update State if State typeof is Array/Object (how add new value to array/object))
+23.1 SetState/Update State if State typeof is Array (how add new value to array))
+
+ this.setState(prevState => ({
+        stateName: [...prevState.array, someNewValue1, someNewValue2]
+  }));
+
+
+23.2 SetState/Update State if State typeof is Object (how add new value to object))
+    this.setState(prevState => ({
+        answerFromTextbelt: {    // object that we want to update
+           ...prevState.answerFromTextbelt,    // keep all other key-value pairs
+           success: data.textBeltResponse.success, textId: data.textBeltResponse.textId      // add new values(key:value)/update the value of specific key
+         }
+    }));
+  
+  
 ======================================================
 
 # To run smth at start => componentDidMount(){}, place after constructor(props) {	
