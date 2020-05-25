@@ -24,7 +24,7 @@ if (isset($_GET['serverTextID'])){
 	
     //
     $delivery = new MySmsTetxBelt\Classes\CheckSmsDeliveryStat();
-    $deliveryResult = $delivery->checkSmsStatus($_POST['serverTextID']);
+    $deliveryResult = $delivery->checkSmsStatus($_GET['serverTextID']);
 } else {
 	$deliveryResult = "Sms ID is missing";
 }

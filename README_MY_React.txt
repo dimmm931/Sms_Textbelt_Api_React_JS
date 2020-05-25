@@ -9,8 +9,8 @@ Structure of this project
                             |					  |	-- <CountSmsText smsText
 							|                     | -- buttons (submit, reset)
 							|                     | -- <FlashMessage/> -> animated pop-up image on error
-                            |                     | -- <ResultFromTextbeltApi/>							
-							|                     | -- functions_injected --> Autocomplete + Validate_RegExp
+                            |                     | -- <ResultFromTextbeltApi/>	-> shows response from Api, handles check delivery status						
+							|                     | -- functions_injected --> Autocomplete + Validate_RegExp + sendSms
                             |
 							| -- <TechnicalInfo/>
 							|
@@ -68,6 +68,9 @@ If don't have in your package.json section "scripts", add:
     "start": "react-scripts start",
 
 Server will be running at => http://localhost:3000/	
+
+
+
 	
 ==============================
 How it works:
@@ -132,6 +135,7 @@ Known Problem Issue: path to js,css in BUILD should be without "/" in beginning 
  1. "static/js/...", not "/static/js/" (in index.html) (4 times)
  2. "favicon"
  3.GIF imge was not loading => change to {e.exports=/*a.p+*/"static/media/loading2.f7ccc9e1.gif"} in build/static/js/main.91b5d174.chunk.js
+     Var2 => /*s.p+*/
 
 
 

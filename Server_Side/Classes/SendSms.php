@@ -6,6 +6,10 @@ namespace MySmsTetxBelt\Classes;
 
 class SendSms 
 {
+	
+    /**
+     * @return Array
+     */
     public function sendingSms($phoneNumber, $sms_text)
     {
 		$resultX = array();

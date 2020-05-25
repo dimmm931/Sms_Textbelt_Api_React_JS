@@ -17,11 +17,25 @@ import $ from 'jquery';
 //                                                                                     ** 
 export function sendSmsMessage (){
 	
-	 const headers = {
+	//disable send button
+	$("#sendButton").prop( "disabled", true );
+	
+	
+	$(".resultScroll").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	
+	/*if(this.setState.ifUserClickedSendSms == true){
+	    //set true to show Div with result in <ResultFromTextbeltApi/>
+	    this.setState({ifUserClickedSendSms: false});
+		alert('changed');
+	} else {
+		alert('not changed');
+	}*/
+		
+	 /*const headers = {
         //'Content-Type' : 'application/x-www-form-urlencoded',
 		'Content-Type':  'application/json',
 		//'Accept': 'application/json'
-       };
+       }; */
 	   
 	   //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 	   
@@ -104,7 +118,7 @@ export function sendSmsMessage (){
 		  
 		  
 	      $.ajax({ //use {http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php'} to test on localhost, use {../Server_Side/ajax_script/sendSms.php} on real hosting
-            url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+           url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
             type: 'POST',
 			//contentType: "application/json",
 			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
@@ -153,8 +167,8 @@ export function sendSmsMessage (){
                           answerFromTextbelt: {    // object that we want to update
                               ...prevState.answerFromTextbelt,    // keep all other key-value pairs
                               success: data.textBeltResponse.success, textId:'',  // update the Object with key:value
-						      quotaRemaining:'', clientMessage:'Sms was not sent successfully',
-                              errorFromApi: data.textBeltResponse.errorX						
+						      quotaRemaining:'', clientMessage:'Sms  not sent successfully',
+                              errorFromApi: data.textBeltResponse.error						
                           }
                       }));
 					  
@@ -187,6 +201,9 @@ export function sendSmsMessage (){
 	            this.scrollResults(".resultScroll"); //scroll the page down to weather results
 		     }
 			 
+			 //enable send button
+	         $("#sendButton").prop( "disabled", false );
+			 
              }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			 error: function (error) {
 				alert("Variant_2 failed");
@@ -207,7 +224,10 @@ export function sendSmsMessage (){
 		     if(window.screen.width <= 640){ 
 	            this.scrollResults(".resultScroll"); //scroll the page down to weather results
 		     }
-		
+		     
+			 //enable send button
+	         $("#sendButton").prop( "disabled", false );
+			 
             }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
 		

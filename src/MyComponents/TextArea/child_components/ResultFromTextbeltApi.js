@@ -32,6 +32,14 @@ class ResultFromTextbeltApi extends Component {
    //function to run ajax to check delivery status
    checkSmsDeliveryStatus(){
 	 
+	   this.setState({deliveryStatus: ''});
+	   //$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	   
+	   //animation
+	   //$(".del-st").stop().fadeOut("slow",function(){ $(this).addClass("temp");/*$(this).html(finalText) */ }).fadeIn(2000);
+
+	   
+	   
 	
 	   //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)!!!!!!!!!!!!!!!!
 	      $(".ajax-loader").show(); //show loader
@@ -52,14 +60,14 @@ class ResultFromTextbeltApi extends Component {
 			    serverTextID: this.props.answer.textId 
 			},
             success: function(data) {
-               
-			  alert("check delivery OK");
-			  alert(JSON.stringify(data));
+               $(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(2000);
+			  //alert("check delivery OK");
+			  //alert(JSON.stringify(data));
 			  console.log(data);
 			  
 			  if(data.status){ //textBeltResponse array is set in Classes/SendSms.php
 				  
-				  alert("textBeltResponse " + data.status);
+				  //alert("textBeltResponse " + data.status);
 				  
 				  //update this.state.deliveryStatus -> gets the relivery response status from Api
 				  this.setState({deliveryStatus : data.status}); 
@@ -70,11 +78,11 @@ class ResultFromTextbeltApi extends Component {
 			     
 			  } else { //if NO data.textBeltResponse, i.e no response from TextBelt Api
 				  //update this.state.deliveryStatus
-				  this.setState({deliveryStatus : 'error happened'});	   
+				  this.setState({deliveryStatus : 'error happened, may be a test message???'});	   
 				 
 			  }
 			
-			  $(".ajax-loader").fadeOut(5000); //hide loader
+			  $(".ajax-loader").fadeOut(3000); //hide loader
 			  
 			 //set true to show Div with Delivery result in <ResultFromTextbeltApi/>
 		     this.setState({ifUserClickedCheckDelivery: true});
@@ -84,10 +92,13 @@ class ResultFromTextbeltApi extends Component {
 	            this.scrollResults(".btn-scroll"); //scroll the page down to .btn-scroll
 		     }
 			 
+			  var text = $(".del-st").html();
+	          $(".del-st").stop().addClass('temp').fadeOut("slow",function(){ $(this).html(text).removeClass('temp')  }).fadeIn(2000);
+			 
              }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			 error: function (error) {
 				alert("Check Delivery  failed");
-				$(".ajax-loader").fadeOut(5000); //hide loader
+				$(".ajax-loader").fadeOut(3000); //hide loader
 				
 				//update this.state.deliveryStatus
 				this.setState({deliveryStatus : error});
@@ -100,10 +111,16 @@ class ResultFromTextbeltApi extends Component {
 	            this.scrollResults(".btn-scroll"); //scroll the page down to .btn-scroll
 		     }
 			 
+			
+			 
+			 
             }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
 		
+
+		
 	   //
+	  
    }
   
   
@@ -157,7 +174,7 @@ class ResultFromTextbeltApi extends Component {
 		   
 		   
 		   {/* Div to show sms delivery status */}
-		    <div className={'col-sm-12 col-xs-12 textbelt-answer' + (this.state.ifUserClickedCheckDelivery? ' show-div': ' hide-div') + (this.state.deliveredOK? ' deliv-ok': ' deliv-fail')}>
+		    <div className={'col-sm-12 col-xs-12 textbelt-answer del-st' + (this.state.ifUserClickedCheckDelivery? ' show-div': ' hide-div') + (this.state.deliveredOK? ' deliv-ok': ' deliv-fail')}>
 			   <p><i className="fa fa-envelope-o" ></i></p>
 			   {this.state.deliveryStatus}
 		    </div>

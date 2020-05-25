@@ -198,8 +198,10 @@ class TextAreaX extends Component {
    // **************************************************************************************
   // **************************************************************************************
   //                                                                                     **
-   
+  
    sendSmsMessagePREVV(){
+	   
+	    
 	   
 	    const headers = {
         //'Content-Type' : 'application/x-www-form-urlencoded',
@@ -438,6 +440,8 @@ class TextAreaX extends Component {
           console.log(data);
        }
 	   */
+	   
+	   
    }
   
 

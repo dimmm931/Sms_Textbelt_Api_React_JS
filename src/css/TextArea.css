@@ -59,23 +59,34 @@
 
 /* ----------------------------------------- <ResultFromTextbeltApi/> ----------------- */
 /* displays response from textBelt Api */
-.textbelt-answer{border:1px solid white; padding:0.5em;margin-top:0.3em; -webkit-transition:  1.5s linear; margin:0 auto; word-wrap: break-word;}
+
+/* show/hide All response/answer block, works based on this.state.ifUserClickedSendSms, set in <TextArea/. and passes as props to <ResultFromTextbeltApi/> */
+.hide-div{  display:none; height:0;     -webkit-transition:  4.5s linear;  transition:  4.5s linear; border-radius:1em;}
+.show-div{  display:block; height:auto;  -webkit-transition:  4.5s linear; transition:  4.5s linear; border-radius:1em;}
+
+.textbelt-answer{
+	  border:1px solid white; padding:0.5em; margin-top:0.9em;
+      -webkit-transition:  1.5s linear; margin:0 auto; 
+	  word-wrap: break-word;
+	  border-radius:1em;}
+	  
 .sms-sent{background:#10e649;} /* green */ 
 .sms-not-sent{background:red;}
 
-/* show/hide delivery check status */
+/* button to show/hide delivery check status */
 .show-delivery-button{display:block;}
 .hide-delivery-button{display:none;}
 
 .el{border:1px solid white; margin:0.2em 0em; ;}
 .font-small{font-size:0.8em;}
 
-/* show/hide All response/answer block, works based on this.state.ifUserClickedSendSms, set in <TextArea/. and passes as props to <ResultFromTextbeltApi/> */
-.hide-div{display:none;  -webkit-transition:  2.5s linear;}
-.show-div{dispaly:block;  -webkit-transition:  2.5s linear;}
 
-.deliv-ok{background:#10e649;} /* green */ 
-.deliv-fail{background:red;}
+/* Div to show/hide delivery check status */
+.del-st{ margin-top:0.3em}.
+.temp{background:yellow;}
+
+.deliv-ok  {background:#10e649; } /* green */ 
+.deliv-fail{background:red;     }
 
 
 

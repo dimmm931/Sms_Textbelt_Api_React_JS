@@ -6,6 +6,9 @@ namespace MySmsTetxBelt\Classes;
 
 class CheckSmsDeliveryStat 
 {
+	 /**
+     * @return array[]
+     */
     public function checkSmsStatus($smsID)
     {
 		//$resultX = array();
@@ -48,7 +51,8 @@ class CheckSmsDeliveryStat
 			  }*/
 			  
 			  
-			  return $messageAnswer['status'];
+			  //return $messageAnswer['status'];
+			  return $messageAnswer;
     }
 
 }
