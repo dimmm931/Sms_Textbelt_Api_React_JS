@@ -10,7 +10,7 @@ Structure of this project
 							|                     | -- buttons (submit, reset)
 							|                     | -- <FlashMessage/> -> animated pop-up image on error
                             |                     | -- <ResultFromTextbeltApi/>	-> shows response from Api, handles check delivery status						
-							|                     | -- functions_injected --> Autocomplete + Validate_RegExp + sendSms
+							|                     | -- functions_injected --> Autocomplete + Validate_RegExp + sendSmsMessage
                             |
 							| -- <TechnicalInfo/>
 							|
@@ -45,8 +45,9 @@ Content
 21. Multiple CSS classes 
 22. Use State in Render, if State type is array[]/object{} 
 23. SetState/Update State if State typeof is Array/Object (how add new value to array/object))
-
-  
+24. Using parent's state in child component (as a new child's component state)
+25. React imitation of animation with overlay div, i.e analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
+ 
 
 
 99. Troubleshoots
@@ -445,7 +446,29 @@ echo json_encode($result);
          }
     }));
   
-  
+ 
+
+
+//=================================================== 
+24. Using parent's state in child component (as a new child's component state)
+If u want to pass parent's state to child component, DON"T ASSIGN it to new state in child's component, use in child's code directly {this.props.ifTestModeData}.
+E.g => 
+  In Parent we have state =>
+       //......
+           this.state = {ifTestMode : true,} 
+       //......
+       render() { return 	   
+           <TechnicalInfo  ifTestModeData={this.state.ifTestMode} />
+		   
+  In child component DO NOT DO  =>
+      //......
+           this.state = {ifTest : this.props.ifTestModeData} //DO NOT DO THIS, use in child's code directly {this.props.ifTestModeData}
+      
+
+
+
+
+ 
 ======================================================
 
 # To run smth at start => componentDidMount(){}, place after constructor(props) {	

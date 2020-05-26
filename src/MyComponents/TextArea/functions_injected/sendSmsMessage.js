@@ -21,7 +21,13 @@ export function sendSmsMessage (){
 	$("#sendButton").prop( "disabled", true );
 	
 	
-	$(".resultScroll").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	//$(".resultScroll").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	
+	//update this state in case in was set TRUE prev (to decide if to show Div with "Delivered/NotDelivered" Status). Value is used in <ResultFromTextbeltApi/>. Updated/uplifted from there too.
+	 this.setState({ifUserClickedCheckDelivery: false});
+	 
+	 $(".child-div-sms").css('opacity', '1'); //shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	
 	
 	/*if(this.setState.ifUserClickedSendSms == true){
 	    //set true to show Div with result in <ResultFromTextbeltApi/>
@@ -118,7 +124,7 @@ export function sendSmsMessage (){
 		  
 		  
 	      $.ajax({ //use {http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php'} to test on localhost, use {../Server_Side/ajax_script/sendSms.php} on real hosting
-           url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+            url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
             type: 'POST',
 			//contentType: "application/json",
 			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
@@ -161,6 +167,9 @@ export function sendSmsMessage (){
                               errorFromApi: data.textBeltResponse.errorX						
                           }
                       }));
+					  
+					
+	
 				  } else {
 					  //update this.state.answerFromTextbelt (Variant for Object)
 				      this.setState(prevState => ({
@@ -204,6 +213,11 @@ export function sendSmsMessage (){
 			 //enable send button
 	         $("#sendButton").prop( "disabled", false );
 			 
+			 //shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+			 setTimeout(function() {
+	              $(".child-div-sms").css('opacity', '0'); //hides yellow opacity div -> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	          }, 3000);
+			 
              }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			 error: function (error) {
 				alert("Variant_2 failed");
@@ -227,6 +241,11 @@ export function sendSmsMessage (){
 		     
 			 //enable send button
 	         $("#sendButton").prop( "disabled", false );
+			 
+			  //shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+			  setTimeout(function() {
+	              $(".child-div-sms").css('opacity', '0'); //hides yellow opacity div -> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	          }, 3000);
 			 
             }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
@@ -284,5 +303,8 @@ export function sendSmsMessage (){
           console.log(data);
        }
 	   */
+	   
+	   
+
 	
 }

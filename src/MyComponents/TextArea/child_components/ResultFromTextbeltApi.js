@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import {scrollResults} from '../functions_injected/scrollResults'; //import my function to scroll
+import loaderX from '../../../images/loaddd.gif'
+import loaderX1 from '../../../images/loaddd_PREV.gif'
 
 //import '../../css/Technical_Info.css';
 //import LiftedTo_Component from '../LiftUpComponent/LiftedTo_Component';
@@ -20,24 +22,32 @@ class ResultFromTextbeltApi extends Component {
 	     deliveryStatus:'here will be status',
 		 textIfTestModeOn: this.props.ifTestModeData2, // ? 'Test mode ON' : ' Test OFF, it"s Prod',  //just for test, to show if it is TEST or Prod
 		 deliveryStatus: 'some status',
-		 ifUserClickedCheckDelivery: false, //to detect if used clicked "Check Delivery" (to decide if to show Div with "Delivered/NotDelivered")CSS styling
+		 //ifUserClickedCheckDelivery: this.props.ifUserClickedCheckDeliveryData, //false by default, //to detect if used clicked "Check Delivery" (to decide if to show Div with "Delivered/NotDelivered" Status). Value is used in <ResultFromTextbeltApi/>
 		 deliveredOK: false, //deivery status for CSS styling (red or green bg)
       };
 	  
 	 // This binding is necessary to make `this` work in the callback
-	 this.checkSmsDeliveryStatus = this.checkSmsDeliveryStatus.bind(this); //runs all functions together
+	 this.checkSmsDeliveryStatus = this.checkSmsDeliveryStatus.bind(this); //runs checkong delivery
+	 this.runSomeActionsOnAjaxResult = this.runSomeActionsOnAjaxResult.bind(this); //runs checkong delivery
      this.scrollResults = scrollResults.bind(this); //for injected from files function
   }
   
+  
+  
+  
    //function to run ajax to check delivery status
+  // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
    checkSmsDeliveryStatus(){
-	 
-	   this.setState({deliveryStatus: ''});
-	   //$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+       
+	   //alert(this.props.ifUserClickedCheckDeliveryData);
 	   
-	   //animation
-	   //$(".del-st").stop().fadeOut("slow",function(){ $(this).addClass("temp");/*$(this).html(finalText) */ }).fadeIn(2000);
-
+	   //set false to hide Div with Delivery result in <ResultFromTextbeltApi/> (if was shown prev)
+		//this.setState({ifUserClickedCheckDelivery: false});
+			 
+	   
+	   $(".child-div").css('opacity', '1'); //shows yellow overlay div-> react imitation of animation, analogue of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
 	   
 	   
 	
@@ -60,7 +70,7 @@ class ResultFromTextbeltApi extends Component {
 			    serverTextID: this.props.answer.textId 
 			},
             success: function(data) {
-               $(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(2000);
+               //$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(2000);
 			  //alert("check delivery OK");
 			  //alert(JSON.stringify(data));
 			  console.log(data);
@@ -81,38 +91,17 @@ class ResultFromTextbeltApi extends Component {
 				  this.setState({deliveryStatus : 'error happened, may be a test message???'});	   
 				 
 			  }
-			
-			  $(".ajax-loader").fadeOut(3000); //hide loader
-			  
-			 //set true to show Div with Delivery result in <ResultFromTextbeltApi/>
-		     this.setState({ifUserClickedCheckDelivery: true});
 			 
-			 //Scroll to results in Mobile only
-		     if(window.screen.width <= 640){ 
-	            this.scrollResults(".btn-scroll"); //scroll the page down to .btn-scroll
-		     }
-			 
-			  var text = $(".del-st").html();
-	          $(".del-st").stop().addClass('temp').fadeOut("slow",function(){ $(this).html(text).removeClass('temp')  }).fadeIn(2000);
+			 this.runSomeActionsOnAjaxResult();
 			 
              }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			 error: function (error) {
 				alert("Check Delivery  failed");
-				$(".ajax-loader").fadeOut(3000); //hide loader
 				
 				//update this.state.deliveryStatus
 				this.setState({deliveryStatus : error});
 				
-			    //set true to show Div with Delivery result in <ResultFromTextbeltApi/>
-		       this.setState({ifUserClickedCheckDelivery: true});
-		       
-			 //Scroll to results in Mobile only
-		     if(window.screen.width <= 640){ 
-	            this.scrollResults(".btn-scroll"); //scroll the page down to .btn-scroll
-		     }
-			 
-			
-			 
+				this.runSomeActionsOnAjaxResult();
 			 
             }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
@@ -123,12 +112,32 @@ class ResultFromTextbeltApi extends Component {
 	  
    }
   
+  //run some action both on ajax success/fail
+  // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
+   runSomeActionsOnAjaxResult(){
+       $(".ajax-loader").fadeOut(3000); //hide loader
+			  
+	   //update/uplift {this.state.ifUserClickedCheckDelivery} in <TextArea/>, which is passed here as {this.props.ifUserClickedCheckDeliveryData} 
+	    this.props.handleToUpdateIfDeliverClicked(true);
+			 
+	   //Scroll to results in Mobile only
+	   if(window.screen.width <= 640){ 
+	       this.scrollResults(".btn-scroll"); //scroll the page down to .btn-scroll
+	   }
+			 
+	   setTimeout(function() {
+	       $(".child-div").css('opacity', '0'); //hides yellow overlay div -> react imitation of animation, analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	   }, 3000);
+	   
+   }
+  
   
   
   
   //RENDER ------------------------------------------------
   render() {
-	  
 	
 	//iterate over state Array[], if  typeof(state) == ARRAY
 	/* const itteratedArray = this.props.answer.map(function(item, i){
@@ -146,7 +155,7 @@ class ResultFromTextbeltApi extends Component {
       return (
 	  <div className='col-sm-12 col-xs-12 resultScroll'>
 	    
-		<div className='col-sm-3 col-xs-0'></div>
+		<div className='col-sm-3 col-xs-0'></div>  {/*  just to center */}
 	 
 	 
 	    <div className={'col-sm-6 col-xs-12' + (this.props.showHideDivData ? ' show-div': ' hide-div')}>
@@ -158,14 +167,30 @@ class ResultFromTextbeltApi extends Component {
 		    </div> 
 		  
 		  
-		    {/* Message for client, My custom message: Sent/was not sent */}
-		    <div className={'col-sm-12 col-xs-12 textbelt-answer' + (this.props.answer.success? ' sms-sent': ' sms-not-sent')}> {/* if this.state.answerFromTextbelt.success is set as TRUE in Textarea.js, set css class 'sns-sent' */}
-		      {this.props.answer.clientMessage} {/* Shows=> My custom: Sent/was not sent*/} 
-			  <p> Api Success: {this.props.answer.success.toString()}</p> {/* True/false status from TextBelt */} 
-			  <p> Api error: {this.props.answer.errorFromApi}</p>  {/* error status from Classes/SendSms.php, value from($errorX)*/} 
-			  <p> ifTest: {this.state.textIfTestModeOn.toString()} </p>
-		    </div> 
+		  
+		  
+		   {/* Message for client, My custom message: Sent/was not sent */}
+		    <div className={'col-sm-12 col-xs-12  parent-div-sms'}>
+		  
+		         <div className="child-div-sms">{/* overlay loader, hidden by default */}
+                      <p>This should be over the parent</p>
+				      <img src={loaderX1}  className="delivery-loader-sms" alt="logo" />  
+                 </div>
+			
+		        {/* Message for client, My custom message: Sent/was not sent */}
+		        <div className={'col-sm-12 col-xs-12 textbelt-answer' + (this.props.answer.success? ' sms-sent': ' sms-not-sent')}> {/* if this.state.answerFromTextbelt.success is set as TRUE in Textarea.js, set css class 'sns-sent' */}
+		           {this.props.answer.clientMessage} {/* Shows=> My custom: Sent/was not sent*/} 
+			       <p> Api Success: {this.props.answer.success.toString()}</p> {/* True/false status from TextBelt */} 
+			       <p> Api error: {this.props.answer.errorFromApi}</p>  {/* error status from Classes/SendSms.php, value from($errorX)*/} 
+			       <p> if Test Sms: {this.props.ifTestModeData2.toString()} </p>
+		        </div> 
+				
+			</div> {/* parent-div-sms */}
 		    
+			
+			
+			
+			
 			
 		    {/* If sms is sent, show button "check delivery" */}
 		    <div className={'col-sm-12 col-xs-12 btn-scroll' + (this.props.answer.success? ' show-delivery-button': ' hide-delivery-button')}>
@@ -174,9 +199,16 @@ class ResultFromTextbeltApi extends Component {
 		   
 		   
 		   {/* Div to show sms delivery status */}
-		    <div className={'col-sm-12 col-xs-12 textbelt-answer del-st' + (this.state.ifUserClickedCheckDelivery? ' show-div': ' hide-div') + (this.state.deliveredOK? ' deliv-ok': ' deliv-fail')}>
-			   <p><i className="fa fa-envelope-o" ></i></p>
-			   {this.state.deliveryStatus}
+		    <div id="delivText" className={'col-sm-12 col-xs-12 textbelt-answer del-st parent-div' + ((this.props.answer.success && this.props.ifUserClickedCheckDeliveryData)? ' show-div': ' hide-div') + (this.state.deliveredOK? ' deliv-ok': ' deliv-fail')}>
+			   
+			   <div className="child-div">{/* overlay loader, hidden by default */}
+                   <p>This should be over the parent</p>
+				   <img src={loaderX}  className="delivery-loader" alt="logo" />  
+               </div>
+			   
+			   {/* Show delivery text*/}
+			   <p><i className="fa fa-envelope-o fa-2x" ></i></p>
+			   <p>{this.state.deliveryStatus}</p>
 		    </div>
 		   
 		

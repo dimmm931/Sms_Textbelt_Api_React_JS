@@ -69,7 +69,8 @@
       -webkit-transition:  1.5s linear; margin:0 auto; 
 	  word-wrap: break-word;
 	  border-radius:1em;}
-	  
+
+/* Div to show "Sms sent"/"Sms was not sent" */	  
 .sms-sent{background:#10e649;} /* green */ 
 .sms-not-sent{background:red;}
 
@@ -82,11 +83,71 @@
 
 
 /* Div to show/hide delivery check status */
-.del-st{ margin-top:0.3em}.
-.temp{background:yellow;}
+.del-st{ margin-top:0.3em; color:white;}.
+.temp{background:yellow !important;}
 
 .deliv-ok  {background:#10e649; } /* green */ 
 .deliv-fail{background:red;     }
+
+
+
+/* Creating CSS overlay over Div with delivery status text -> imitation of  $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000); */
+/* Parent div that contains Delivery status text */
+.parent-div {
+  background-color: red;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Overlay to show when running Delivery check function, invisible by default */
+.child-div {
+  background-color: yellow;
+  height: 100%;
+  position: absolute; top:0px;left:0px;
+  width: 100%;
+  z-index: 999;
+  border-radius:1em;
+  opacity:0;
+  -webkit-transition:  0.5s linear; transition:  0.5s linear;
+}
+
+.delivery-loader{width:10%}
+
+
+
+
+
+
+/* Creating CSS overlay over Div with Sms Results i.e{Sent/Not sent} -> imitation of  $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000); */
+/* Parent div that contains Sms Results i.e{Sent/Not sent} */
+.parent-div-sms {
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Overlay to show when running Sending sms, invisible by default */
+.child-div-sms {
+  background-color: yellow;
+  height: 100%;
+  position: absolute; top:0px;left:0px;
+  width: 100%;
+  z-index: 999;
+  border-radius:1em;
+  opacity:0;
+  -webkit-transition:  0.5s linear; transition:  0.5s linear;
+}
+.delivery-loader-sms{width:20%}
+/* ----------------------------------------- END <ResultFromTextbeltApi/> ----------------- */
+
+
+
+
+
+
 
 
 

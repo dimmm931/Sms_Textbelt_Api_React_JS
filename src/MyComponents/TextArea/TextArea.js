@@ -22,6 +22,7 @@ import ResultFromTextbeltApi from './child_components/ResultFromTextbeltApi';
 
 
 
+
 /*import error from '../../images/error.gif';
 import CopyLayout from '../Copy/CopyLayout';
 */
@@ -50,6 +51,7 @@ class TextAreaX extends Component {
 		ifTestMode: this.props.ifTestModeData,  //test/prod flag (set in <TopSectionButtons/>, uplifted to <App/> and passed here)
 		answerFromTextbelt : {success:false, textId:'', quotaRemaining: '', clientMessage:'', errorFromApi: ''},
 		ifUserClickedSendSms : false, //to detect if used clicked sendind sms (to decide if to show Div with "Message sent/not sent")
+		ifUserClickedCheckDelivery: false, //to detect if used clicked button "Check delivery status" (to decide if to show Div with "Delivered/Not Delivered" Status). used in <ResultFromTextbeltApi/>. Updated/uplifted from there too.
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
 	
     };
@@ -66,6 +68,8 @@ class TextAreaX extends Component {
 	this.handleTextAreaPaste = this.handleTextAreaPaste.bind(this);
 	this.sendSmsMessage = sendSmsMessage.bind(this); //for injected from files function
     this.scrollResults = scrollResults.bind(this); //for injected from files function
+
+	
 	
 	
 	
@@ -86,7 +90,11 @@ class TextAreaX extends Component {
    }
    
    
-
+    //uplifting
+    handleToUpdateIfDeliverClicked(someArg){
+		this.setState({ifUserClickedCheckDelivery:someArg});
+	}
+	
    
    //just runs all functions together on submit button click
   // **************************************************************************************
@@ -591,6 +599,15 @@ class TextAreaX extends Component {
 	   this.setState({smsTextChild: ""});     //reset sms text
 	   this.setState({phoneNumberErrorMessage: ""}); //reset error message for phone number
 	   this.setState({ifUserClickedSendSms: false}); //set false to hide Div with result in <ResultFromTextbeltApi/>
+	   
+	   //reset vallues in this.state.answerFromTextbelt (Variant for Object).In order to hide prev Delivery status
+	   this.setState(prevState => ({
+           answerFromTextbelt: {    // object that we want to update
+                ...prevState.answerFromTextbelt,    // keep all other key-value pairs
+                success: false, textId:'',  // update the Object with key:value
+			    quotaRemaining:'', clientMessage:'',errorFromApi: ''					
+                          }
+       }));
 	   //$('.phone-error').html("");
            
    }
@@ -614,6 +631,8 @@ class TextAreaX extends Component {
   //RENDER ------------------------------------------------
   render() {
       //var liftFinalCoordsHandler  =   this.props.liftFinalCoordsHandler ; //for lifting state up to parent
+	  var handleToUpdateIfDeliverClicked  = this.handleToUpdateIfDeliverClicked; //uplift to <TextArea/>
+
 	  
       return (
 	   
@@ -643,7 +662,9 @@ class TextAreaX extends Component {
 				
              </form>
 			 
-			 <ResultFromTextbeltApi answer={this.state.answerFromTextbelt} ifTestModeData2={this.state.ifTestMode}  showHideDivData={this.state.ifUserClickedSendSms}/>
+	        <ResultFromTextbeltApi answer={this.state.answerFromTextbelt} ifTestModeData2={this.props.ifTestModeData}  
+			                       showHideDivData={this.state.ifUserClickedSendSms} ifUserClickedCheckDeliveryData={this.state.ifUserClickedCheckDelivery} 
+			                       handleToUpdateIfDeliverClicked = {handleToUpdateIfDeliverClicked.bind(this)}/>
 			 
 			 <AjaxLoader/>
 		     <FlashMessage/>  {/* Left 0 chars */}

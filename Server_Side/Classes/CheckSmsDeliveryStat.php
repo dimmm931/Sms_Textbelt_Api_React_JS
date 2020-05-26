@@ -16,13 +16,13 @@ class CheckSmsDeliveryStat
 		
 		
 		 //Uncomment below to test on localhost, as cURL does not work on localhost
-		 /*
+		 
 		$response = array('status' => 'SENT', 'errorX' => 'No cURL error');
 		$response = json_encode($response, true); //manually turn array to json, as we get json in real answer from textbelt
 		$response = json_decode($response, true);  //manually turn json to array, as we do in real
 		//$resultX['textBeltResponse'] = $response;
 		return $response;
-		*/
+		
 		//End Uncomment below to test on localhost, as cURL does not work on localhost
 		
 		

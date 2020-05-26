@@ -8,20 +8,21 @@ class SendSms
 {
 	
     /**
-     * @return Array
+	 * @param string $_POST[]
+     * @return array $text 
      */
     public function sendingSms($phoneNumber, $sms_text)
     {
 		$resultX = array();
 		
 		 //Uncomment below to test on localhost, as cURL does not work on localhost
-		 /*
+		 
 		$response = array('success'=>true, 'textId' => 888888888, 'quotaRemaining' => 1 , 'errorX' => 'No cURL error');
 		$response = json_encode($response, true); //manually turn array to json, as we get json in real answer from textbelt
 		$response = json_decode($response, true);  //manually turn json to array, as we do in real
 		$resultX['textBeltResponse'] = $response;
 		return $resultX;
-		*/
+		
 		//End Uncomment below to test on localhost, as cURL does not work on localhost
 		
 		$ch = curl_init('https://textbelt.com/text');
