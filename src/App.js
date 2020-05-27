@@ -29,6 +29,7 @@ class App extends Component {
 			smsText : "Sms text:I am set manually in state in parent <App/>",          //this state is to display in <TechnicalInfo/> only, when sms is sent, value is taken from <TerxAreaX/> state => smsTextChild
 		    ifTestMode : true, //true by default, it is uplifted from <TopSectionButtons/> and passed to <TerxAreaX/>, IT IS USED IN <TerxAreaX/> when sendinf Sms //used to switch between test/prod mode, when in test mode, Api uses on server side TextBelt test key {"textbelt_test"}
 			
+			//techInfo:[], //just tech info, instead of alert
 			//arg1: [],  //this state will hold lifted up var(onClick) or  array with coordinates
 		    //finalCoords:[], //not used???
 			//techInfoState:[], //state to store alert info

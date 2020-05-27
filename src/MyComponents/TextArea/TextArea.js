@@ -53,7 +53,7 @@ class TextAreaX extends Component {
 		ifUserClickedSendSms : false, //to detect if used clicked sendind sms (to decide if to show Div with "Message sent/not sent")
 		ifUserClickedCheckDelivery: false, //to detect if used clicked button "Check delivery status" (to decide if to show Div with "Delivered/Not Delivered" Status). used in <ResultFromTextbeltApi/>. Updated/uplifted from there too.
 		//addressArray: [],  //this state will hold array with separ addresses from textarea input
-	
+	   
     };
  
     // This binding is necessary to make `this` work in the callback
@@ -202,15 +202,14 @@ class TextAreaX extends Component {
   // **************************************************************************************
    
    
-   //NOT USED HERE, transfered to /functions_injected/sendSmsMessage. Can delete here.
+   //NOT USED HERE, transfered to /functions_injected/sendSmsMessage. Complete version is there. Can delete here.
    // **************************************************************************************
   // **************************************************************************************
   //                                                                                     **
   
-   sendSmsMessagePREVV(){
-	   
-	    
-	   
+  /*
+   sendSmsMessage(){
+	      
 	    const headers = {
         //'Content-Type' : 'application/x-www-form-urlencoded',
 		'Content-Type':  'application/json',
@@ -218,38 +217,6 @@ class TextAreaX extends Component {
        };
 	   
 	   //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-	   
-	   /*
-       axios.post('http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',
-	   {
-		   serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild 
-	   },
-	    {headers} )
-       .then(res => {
-		   //const posts = res.data.data.children.map(obj => obj.data);
-           //this.setState({ posts });
-          return res;
-       });
-	   */
-	   
-	   
-	   /*
-	   axios({ 
-	       method: 'GET', url:'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', 
-		   crossDomain: true, 
-		   data: { serverPhone: this.state.phoneNumberChild, serverSms: this.state.smsTextChild }, 
-		    headers: headers
-		   }) 
-	       .then(res => {
-		     //const posts = res.data.data.children.map(obj => obj.data);
-             //this.setState({ posts });
-			 console.log(res);
-            return res;
-       })
-	   .catch((error) => { console.log(error)});
-	   
-	   
-	   */
 	   
 	   
 	   
@@ -260,34 +227,6 @@ class TextAreaX extends Component {
 		  serverIfTestStatus: this.props.ifTestModeData //test/prod flag (set in <TopSectionButtons/>, uplifted to <App/> and passed here)
 	   };
 	   
-	   
-	   /*
-	    //------ Variant_1 (ajax without contentType/dataType) => Works!!!! (but with text only-> can not parse json )
-	   
-	      $.ajax({
-            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
-            type: 'POST',
-			//contentType: "text/plain",
-			//dataType: 'text/html', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
-	
-			crossDomain: true,
-			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
-			//headers: { 'Content-Type': 'application/json' },
-			//passing some data.....
-            data: myData,
-            success: function(data) {
-               
-			  alert("OK -> Variant_1");
-			  alert(data);
-			  alert("Variant_1 can work with plain text only, so it cant get JSON by keys");
-			  alert("Variant_1 " + data.status);
-            },  //end success
-			error: function (error) {
-				alert("Variant_1 failed");
-            }	
-        });
-		
-	   */
 	   
 	   
 	   
@@ -308,11 +247,7 @@ class TextAreaX extends Component {
 			//headers: { 'Content-Type': 'application/json' }, //NO HEADERS -> it will crash
 			//passing some data.....
             data: myData,
-			/*{ 
-			    serverPhone: this.state.phoneNumberChild, 
-				serverSms: this.state.smsTextChild, 
-				serverIfTestStatus: this.props.ifTestModeData //testMode Status is uplifted from <TopSectionButtons/> to <App/> and passed there to <TerxAreaX/> as this.props.ifTestModeData
-			},*/
+		
             success: function(data) {
                
 			  alert("OK -> Variant_2");
@@ -324,10 +259,6 @@ class TextAreaX extends Component {
 			      
 				   //this.setState({answerFromTextbelt : data.textBeltResponse.success});
 				   
-				  //update this.state.answerFromTextbelt (Variant for array)
-				 /* this.setState(prevState => ({
-                      answerFromTextbelt: [prevState.array, data.textBeltResponse.success, data.textBeltResponse.textId, data.textBeltResponse.quotaRemaining]
-                  })); */
 				  
 				  alert("textBeltResponse " + data.textBeltResponse.success);
 				  
@@ -356,9 +287,7 @@ class TextAreaX extends Component {
 				  
 			     
 			  } else { //if NO data.textBeltResponse, i.e no response from TextBelt Api
-				  /*this.setState(prevState => ({
-                      answerFromTextbelt: [prevState.array, data.errorX]
-                  })); */
+				
 				  //this.setState({answerFromTextbelt : data.errorX});
 				  
 				   //update this.state.answerFromTextbelt (Variant for Object)
@@ -395,63 +324,10 @@ class TextAreaX extends Component {
             }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
 		
-		
-		
-		
-	   /*
-	   //------ Variant_3  JSONP1 => DOES NOT WORK!!!!
-	   $.ajax({
-            url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//my ajax url //'https://textbelt.com/quota/textbelt',
-            type: 'POST',
-			//contentType: "application/json; charset=utf-8",
-			dataType: 'JSONP', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
-			jsonpCallback: 'photos',
-            jsonp: 'photos',
-			crossDomain: true,
-			//headers: {  'Access-Control-Allow-Origin': 'http://The web site allowed to access' }, 
-			//headers: { 'Content-Type': 'application/json' },
-			//passing some data.....
-            data: myData,
-            success: function(data) {
-               
-			    alert("OK Variant_3 JSONP1 ");
-				alert(JSON.stringify(data));
-            },  //end success
-			error: function (error) {
-				alert("Variant_3 JSONP1 failed");
-            }	
-        });
-		*/
-		
-		
-		/*
-		//---------Variant_4 JSONP2  => DOES NOT WORK!!!!
-		$.getJSON("http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php?jsoncallback=?",
-        {
-            format: "json"
-        },
-       //RETURNED RESPONSE DATA IS LOOPED AND ONLY IMAGE IS APPENDED TO IMAGE DIV
-       function(data) {
-       //$.each(data.items, function(i,item){
-		  alert("OK Variant_4 JSONP2 ");
-		  alert(data);
-       //$("<img/>").attr("src", item.media.m).appendTo("#images");
-       //});
-	   });
-		//-----------------
-		
-		
-		
-		
-		function photos (data) {
-          alert('photo is OK Variant_3 JSONP1 ');
-          console.log(data);
-       }
-	   */
 	   
 	   
    }
-  
+  */
 
 
 

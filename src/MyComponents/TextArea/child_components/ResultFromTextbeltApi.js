@@ -52,12 +52,23 @@ class ResultFromTextbeltApi extends Component {
 	   
 	
 	   //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)!!!!!!!!!!!!!!!!
-	      $(".ajax-loader").show(); //show loader
+	      $(".ajax-loader").show(); //show gif loader
 		  
+		  //decide which url to use, switching ajax url when running on localHost or real Hosting
+		  var localhostURL = 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php';
+		  var realServerProdURL = '../Server_Side/ajax_script/getSmsDeliveryStatus.php'; //can't use this on LocalHost as it'll redirect to http://localhost:3000/Server_Side/ajax_script/sendSms.php
+		  var ajaxURL = '';
+		  
+		  //if finds "localhost" in current url
+		  if(window.location.href.match(/localhost/)){  
+			  ajaxURL = localhostURL; 
+		  } else {
+			  ajaxURL = realServerProdURL;
+		  }
 		  
 		  
 	      $.ajax({ //use {http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php'} to test on localhost, use {../Server_Side/ajax_script/getSmsDeliveryStatus.php} on real hosting
-            url: '../Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: '../Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+            url: ajaxURL, //'../Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: '../Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
             type: 'GET',
 			//contentType: "application/json",
 			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
@@ -84,6 +95,8 @@ class ResultFromTextbeltApi extends Component {
 				  
 				  if(data.status == 'DELIVERED'){
 				      this.setState({deliveredOK : true});  //for CSS styling 
+				  } else {
+					  this.setState({deliveredOK : false});  //for CSS styling 
 				  }
 			     
 			  } else { //if NO data.textBeltResponse, i.e no response from TextBelt Api
@@ -99,7 +112,7 @@ class ResultFromTextbeltApi extends Component {
 				alert("Check Delivery  failed");
 				
 				//update this.state.deliveryStatus
-				this.setState({deliveryStatus : error});
+				this.setState({deliveryStatus : 'Check delivery error'});
 				
 				this.runSomeActionsOnAjaxResult();
 			 
@@ -160,7 +173,7 @@ class ResultFromTextbeltApi extends Component {
 	 
 	    <div className={'col-sm-6 col-xs-12' + (this.props.showHideDivData ? ' show-div': ' hide-div')}>
 	   
-	       {/* Shows this.state.answerFromTextbelt (type Object*) from Textarea.js */}
+	       {/* Shows this.state.answerFromTextbelt (type Object*) from Textarea.js. Most technical info */}
 		    <div className={'col-sm-12 col-xs-12 textbelt-answer font-small' + (this.props.answer.success? ' sms-sent': ' sms-not-sent')}> {/* if this.state.answerFromTextbelt.success is set as TRUE in Textarea.js, set css class 'sns-sent' */}
 		      {/*this.props.answer */} 
 		      {itteratedArray} {/* Shows => success => true textId => 888888888 quotaRemaining => 1 */} 
@@ -169,19 +182,20 @@ class ResultFromTextbeltApi extends Component {
 		  
 		  
 		  
-		   {/* Message for client, My custom message: Sent/was not sent */}
+		   {/* Message for client, My custom message: Message Sent/was not sent */}
 		    <div className={'col-sm-12 col-xs-12  parent-div-sms'}>
 		  
-		         <div className="child-div-sms">{/* overlay loader, hidden by default */}
+		         <div className="col-sm-12 col-xs-12 textbelt-answer child-div-sms">{/* overlay loader, hidden by default */}
                       <p>This should be over the parent</p>
 				      <img src={loaderX1}  className="delivery-loader-sms" alt="logo" />  
                  </div>
 			
 		        {/* Message for client, My custom message: Sent/was not sent */}
 		        <div className={'col-sm-12 col-xs-12 textbelt-answer' + (this.props.answer.success? ' sms-sent': ' sms-not-sent')}> {/* if this.state.answerFromTextbelt.success is set as TRUE in Textarea.js, set css class 'sns-sent' */}
-		           {this.props.answer.clientMessage} {/* Shows=> My custom: Sent/was not sent*/} 
+		           <p>{this.props.answer.clientMessage}</p>{/* Shows=> My custom: Sent/was not sent*/} 
 			       <p> Api Success: {this.props.answer.success.toString()}</p> {/* True/false status from TextBelt */} 
 			       <p> Api error: {this.props.answer.errorFromApi}</p>  {/* error status from Classes/SendSms.php, value from($errorX)*/} 
+				   <p> Left: {this.props.answer.quotaRemaining} quota</p> 
 			       <p> if Test Sms: {this.props.ifTestModeData2.toString()} </p>
 		        </div> 
 				

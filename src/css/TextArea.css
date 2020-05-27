@@ -94,7 +94,7 @@
 /* Creating CSS overlay over Div with delivery status text -> imitation of  $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000); */
 /* Parent div that contains Delivery status text */
 .parent-div {
-  background-color: red;
+  /*background-color: red;*/
   height: 100%;
   position: relative;
   width: 100%;
@@ -112,7 +112,6 @@
   opacity:0;
   -webkit-transition:  0.5s linear; transition:  0.5s linear;
 }
-
 .delivery-loader{width:10%}
 
 
@@ -141,6 +140,9 @@
   -webkit-transition:  0.5s linear; transition:  0.5s linear;
 }
 .delivery-loader-sms{width:20%}
+
+
+
 /* ----------------------------------------- END <ResultFromTextbeltApi/> ----------------- */
 
 

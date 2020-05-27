@@ -4,13 +4,13 @@ Uses React JS version 16.6.3 (was released on 23/10/2018),  last version is 16.1
 Structure of this project
 
  Index.js --|
-            |--- App.js ----|                     | -- <DisplayPhoneRegExpMessage/>
+            |--- App.js ----|                     | -- <DisplayPhoneRegExpMessage/> - shows green/red message {"Vallid UA/EU phone number"}, diffrent regExp for EU/EU
 			                | -- <TextAreaX/> ----| -- inputs (cell number, sms text)
-                            |					  |	-- <CountSmsText smsText
+                            |					  |	-- <CountSmsText/> - counts sms chars left (160 or 120 based on Ru or Eng input)
 							|                     | -- buttons (submit, reset)
-							|                     | -- <FlashMessage/> -> animated pop-up image on error
-                            |                     | -- <ResultFromTextbeltApi/>	-> shows response from Api, handles check delivery status						
-							|                     | -- functions_injected --> Autocomplete + Validate_RegExp + sendSmsMessage
+							|                     | -- <FlashMessage/> - animated pop-up image on error
+                            |                     | -- <ResultFromTextbeltApi/>	-> shows all responses from Api, handles check delivery status						
+							|                     | -- functions_injected -- Autocomplete + Validate_RegExp + sendSmsMessage
                             |
 							| -- <TechnicalInfo/>
 							|
@@ -46,11 +46,12 @@ Content
 22. Use State in Render, if State type is array[]/object{} 
 23. SetState/Update State if State typeof is Array/Object (how add new value to array/object))
 24. Using parent's state in child component (as a new child's component state)
-25. React imitation of animation with overlay div, i.e analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
+25. React imitation of fadeIn/fadeOut animation with overlay div, i.e analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
  
 
 
 99. Troubleshoots
+100. How this project works
 
 ===============================
 1. Install
@@ -72,15 +73,7 @@ Server will be running at => http://localhost:3000/
 
 
 
-	
-==============================
-How it works:
-1. Index.js is a JS entry point, it contains <App/> Component, 
-which contains all the rest component { <Header nameX = "ReactJS"/> , <ButtonsLayout/> , <Instructions/>, <TextAreaX/>}
 
-2. All core logic is in <TextAreaX/> Component.
-
-3.3 <TextArea/> - core component
 
 
 
@@ -463,7 +456,30 @@ E.g =>
   In child component DO NOT DO  =>
       //......
            this.state = {ifTest : this.props.ifTestModeData} //DO NOT DO THIS, use in child's code directly {this.props.ifTestModeData}
-      
+  
+
+
+
+
+  
+
+========================================================
+25. React imitation of fadeIn/fadeOut animation with overlay div, i.e analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
+
+The idea is to create an invisible overlay div class="child-div" with opacity:0 with any gif loader u wish inside div class="parent-div", which contains any visible text.
+Div class="child-div" must overlay .parent-div with the same width/height + position:absolute.
+When u need to show gif loader, i.e on Click, set .child-div opacity:1, to hide set .child-div opacity:0. May hide with setTimeout for more effect
+      setTimeout(function() {
+	       $(".child-div").css('opacity', '0'); 
+	   }, 3000);
+
+See example implementation =>
+  #Html at =>https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TextArea/child_components/ResultFromTextbeltApi.js
+  #CSS at => https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/css/TextArea.css => section <ResultFromTextbeltApi/> (.parent-div, .child-div)
+
+
+
+
 
 
 
@@ -477,4 +493,20 @@ E.g =>
 =================================================
 99. Troubleshoots
 1. If 	  
-2. React autocomplete => https://github.com/reactjs/react-autocomplete 
+2. React autocomplete => https://github.com/reactjs/react-autocomplete or use JQ UI autocomplete, see => https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TextArea/functions_injected/Autocomplete.js
+
+
+
+
+
+
+================================================================
+100. How this project works
+
+How it works:
+1. Index.js is a JS entry point, it contains <App/> Component, 
+which contains all the rest component { <Header nameX = "ReactJS"/> , <ButtonsLayout/> , <Instructions/>, <TextAreaX/>}
+
+2. All core logic is in <TextAreaX/> Component.
+
+3.3 <TextArea/> - core component

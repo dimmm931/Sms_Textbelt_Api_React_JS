@@ -118,13 +118,24 @@ export function sendSmsMessage (){
 	   
 	   
 	      //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)!!!!!!!!!!!!!!!!
-	      //http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php
+
 	      $(".ajax-loader").show(); //show loader
 		  
+		  //decide which url to use, switching ajax url when running on localHost or real Hosting
+		  var localhostURL = 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php';
+		  var realServerProdURL = '../Server_Side/ajax_script/sendSms.php'; //can't use this on LocalHost as it'll redirect to http://localhost:3000/Server_Side/ajax_script/sendSms.php
+		  var ajaxURL = '';
+		  
+		  //if finds "localhost" in current url
+		  if(window.location.href.match(/localhost/)){  
+			  ajaxURL = localhostURL; 
+		  } else {
+			  ajaxURL = realServerProdURL;
+		  }
 		  
 		  
 	      $.ajax({ //use {http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php'} to test on localhost, use {../Server_Side/ajax_script/sendSms.php} on real hosting
-            url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+            url: ajaxURL, //'../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
             type: 'POST',
 			//contentType: "application/json",
 			dataType: 'JSON', //'JSON', 'text/html' // without this it returned string(that can be alerted), now it returns object
@@ -141,9 +152,9 @@ export function sendSmsMessage (){
 			},*/
             success: function(data) {
                
-			  alert("OK -> Variant_2");
-			  alert("Variant_2 " + data.cellar);
-			  alert(JSON.stringify(data));
+			  //alert("OK -> Variant_2");
+			  //alert("Variant_2 " + data.cellar);
+			  alert("OK -> Variant_2\n" +  "Variant_2 " + data.cellar + "\n" +  JSON.stringify(data));
 			  console.log(data);
 			  
 			  if(data.textBeltResponse){ //textBeltResponse array is set in Classes/SendSms.php
