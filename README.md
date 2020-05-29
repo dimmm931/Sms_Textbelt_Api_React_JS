@@ -2,8 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Additional info can be found at => 
 
-[README_MY_React](https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_React.txt).<br>
-[README_MY_This_Project](https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_This_Project.txt).
+[README_MY_React_Commom_Commands](https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_React_Com_Commands.txt).<br>
+[README_MY_This_Project_itself](https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_This_Project.txt).
 
 ## Available Scripts
 

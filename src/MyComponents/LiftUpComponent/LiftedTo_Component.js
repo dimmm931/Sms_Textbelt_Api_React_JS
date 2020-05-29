@@ -18,6 +18,11 @@ class LiftedTo_Component extends Component {
   //RENDER ------------------------------------------------
   render() {
 	  
+	  //iterate over array to form list 
+	  const newV = this.props.passedtechInfoValue.map(function(item, i){
+	     return <li key={i}>{item}</li>
+      });
+	  
     return (
 	   
 	   <div className="lifted-to">
@@ -35,17 +40,21 @@ class LiftedTo_Component extends Component {
 			   </p>
 			   
 			    <p>
-			   {this.props.liftedPhoneNumberValue} {/* here goes lifted from Parent app.js value*/}
+			      {this.props.passedPhoneNumberValue} {/* here goes lifted from Parent app.js value*/}
 			   </p>
 			   
 			   <p>
-			   {this.props.liftedSmsValue} {/* here goes lifted from Parent app.js value*/}
+			       {this.props.passedSmsValue} {/* here goes lifted from Parent app.js value*/}
 			   </p>
 			   
 			   <p>
-			   Test: {this.props.liftedIfTestModeValue.toString()} {/* uses .toString() otherwise boolean won't be displayed */}
+			     <b>Test:</b> {this.props.passedIfTestModeValue.toString()} {/* uses .toString() otherwise boolean won't be displayed */}
 			   </p>
 			   
+			   {/* Shows alerts info */}
+			   <p>
+			       <b>TechInfo:</b> {newV} {/* */}
+			   </p>
 			   
 		   </h5>   
 		   

@@ -1,5 +1,5 @@
 <?php 
-//handles ajax request from smsSendStatusArea.js (sends SMS  via ajax)
+//this is ENDPOINT, handles ajax request from smsSendStatusArea.js (sends SMS  via ajax)
 
 //headers
 header("Access-Control-Allow-Origin: *"); //must-have CORS header
@@ -28,7 +28,7 @@ if ($_POST['serverIfTestStatus'] === 'true') {
 
 require_once '../Classes/SendSms.php';
 require_once '../Classes/RegExpCheck.php';
-include '../Classes/autoload.php'; //uses autoload instead of manual includin each class-> Error if it is included in 2 files=only1 is accepted 
+require_once '../Classes/autoload.php'; //uses autoload instead of manual includin each class-> Error if it is included in 2 files=only1 is accepted 
 
 if (isset($_POST['serverPhone']) && isset($_POST['serverSms'])){
 	

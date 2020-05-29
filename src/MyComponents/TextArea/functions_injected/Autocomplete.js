@@ -4,9 +4,9 @@
 import $ from 'jquery';
 import 'jquery-ui/ui/widgets/autocomplete';
 import 'jquery-ui/themes/base/autocomplete.css';  //according to folder stucture in node_modules
+import swal from 'sweetalert';
 
 /*
-import swal from 'sweetalert';
 import error from '../../images/error.gif';
 import '../../css/TextArea.css';
 import axios from 'axios';
@@ -24,7 +24,9 @@ import CopyLayout from '../Copy/CopyLayout';
 //export const AutocompleteFunction =() =>{ 
 export function AutocompleteFunction (){ 
 
-  alert('Autocomplete is ON');
+  //alert('Autocomplete is ON');
+  swal("Phone numbers autocomplete is ON", "---", "warning");
+
    
    var availablePhoneTags = [ //"+38097664", "+38097854",
 		                    {label: "+3809766", value : "Dm"},

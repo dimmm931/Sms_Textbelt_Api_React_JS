@@ -1,3 +1,4 @@
+//Shows gif spinner loader, when user clicks "Send sms"
 import React, { Component } from 'react';
 import loaderX from '../../../images/loaddd.gif'
 //import '../../css/Technical_Info.css';

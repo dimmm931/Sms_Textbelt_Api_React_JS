@@ -116,7 +116,7 @@ export function sendSmsMessage (){
 	   */
 	   
 	   
-	   
+	      //===========================================
 	      //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)!!!!!!!!!!!!!!!!
 
 	      $(".ajax-loader").show(); //show loader
@@ -152,10 +152,12 @@ export function sendSmsMessage (){
 			},*/
             success: function(data) {
                
-			  //alert("OK -> Variant_2");
-			  //alert("Variant_2 " + data.cellar);
-			  alert("OK -> Variant_2\n" +  "Variant_2 " + data.cellar + "\n" +  JSON.stringify(data));
+
 			  console.log(data);
+			  
+			  //alert("OK -> Variant_2\n" +  "Variant_2 " + data.cellar + "\n" +  JSON.stringify(data)); //reassinged to liftTechAlertsInfoHandler
+			  //uplift to TechInfo/use it instead of alert
+			  this.props.liftTechAlertsInfoHandler("OK -> Variant_2\n" +  "Variant_2 " + data.cellar + "\n" +  JSON.stringify(data));
 			  
 			  if(data.textBeltResponse){ //textBeltResponse array is set in Classes/SendSms.php
 			      
@@ -166,8 +168,10 @@ export function sendSmsMessage (){
                       answerFromTextbelt: [prevState.array, data.textBeltResponse.success, data.textBeltResponse.textId, data.textBeltResponse.quotaRemaining]
                   })); */
 				  
-				  alert("textBeltResponse " + data.textBeltResponse.success);
-				  
+				  //alert("textBeltResponse " + data.textBeltResponse.success); //reassinged to liftTechAlertsInfoHandler
+				  //uplift to TechInfo/use it instead of alert
+			      this.props.liftTechAlertsInfoHandler("textBeltResponse " + data.textBeltResponse.success);
+			  
 				  if(data.textBeltResponse.success === true){ //if sent
 				      //update this.state.answerFromTextbelt (Variant for Object)
 				      this.setState(prevState => ({
@@ -232,6 +236,9 @@ export function sendSmsMessage (){
              }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			 error: function (error) {
 				alert("Variant_2 failed");
+				//uplift to TechInfo/use it instead of alert
+			     this.props.liftTechAlertsInfoHandler("Variant_2 failed");
+				  
 				$(".ajax-loader").fadeOut(5000); //hide loader
 				
 				//update this.state.answerFromTextbelt (Variant for Object)

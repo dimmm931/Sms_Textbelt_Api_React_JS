@@ -5,18 +5,19 @@ Structure of this project
 
  Index.js --|
             |--- App.js ----|                     | -- <DisplayPhoneRegExpMessage/> - shows green/red message {"Vallid UA/EU phone number"}, diffrent regExp for EU/EU
-			                | -- <TextAreaX/> ----| -- inputs (cell number, sms text)
-                            |					  |	-- <CountSmsText/> - counts sms chars left (160 or 120 based on Ru or Eng input)
-							|                     | -- buttons (submit, reset)
-							|                     | -- <FlashMessage/> - animated pop-up image on error
-                            |                     | -- <ResultFromTextbeltApi/>	-> shows all responses from Api, handles check delivery status						
-							|                     | -- functions_injected -- Autocomplete + Validate_RegExp + sendSmsMessage
+                            | -- <TextArea/> ---- | -- inputs (cell number, sms text)
+                            |                     |	-- <CountSmsText/> - counts sms chars left (160 or 120 based on Ru or Eng input)
+                            |                     | -- buttons (submit, reset)
+                            |                     | -- <FlashMessage/> - animated pop-up image on error
+                            |                     | -- <ResultFromTextbeltApi/>	-> shows all responses from Api, handles check delivery status	
+                            |                     | -- <AjaxLoader/> -- Shows gif spinner loader, when user clicks "Send sms"							
+                            |                     | -- functions_injected --> functions used in <TextAreaX/> --> Autocomplete + Validate_RegExp + sendSmsMessage
                             |
-							| -- <TechnicalInfo/>
-							|
-							| -- <ErrorLayout/>
-							|
-							| -- <TopSectionButtons/> ---- functions_injected + changeThemeInjected
+                            | -- <TechnicalInfo/> -- uses LiftUpComponent/<LiftedTo_Component/>
+                            |
+                            | -- <ErrorLayout/>
+                            |
+                            | -- <TopSectionButtons/> ---- functions_injected -> changeThemeInjected
 							
 =============================================================
 
@@ -96,7 +97,7 @@ Server will be running at => http://localhost:3000/
 
 3.How to uplift var value from child component to Parent state manually(without onClick), triggered in some child function by direct function calling:
 1. In Child comp in a place u want, call the parent method and pass to its arg neccessary values data {this.props.liftFinalCoordsHandler(this.state.coordinateArray[0])}
-2. In Parent comp add  binding to constructor(props){} =>var liftFinalCoordsHandler = this.liftFinalCoordsHandler.bind(this);  //for catching lifted state from TextArea Comp
+2. NOT NECESSARILY!! => In Parent comp add  binding to constructor(props){} =>var liftFinalCoordsHandler = this.liftFinalCoordsHandler.bind(this);  //for catching lifted state from TextArea Comp
 3. In Parent comp describe the method and what to do with passed argument=>
    //method for catching lifted state from TextArea.js Component, triggered manually by {this.props.liftFinalCoordsHandler(this.state.coordinateArray[0])} in TerxArea.js
     liftFinalCoordsHandler(someArgCoords){
@@ -410,7 +411,7 @@ echo json_encode($result);
     );
   }
  
- 22.2 (if State typeof is Object) (if(typeof(state)==OBJECT))
+ 22.2 (if State typeof is Object) (if(typeof(state)==OBJECT)) , see details at => https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TextArea/child_components/ResultFromTextbeltApi.js
  
   //iterate over state Object{}, if  typeof(state) == OBJECT
    var myObjX = this.props.answer;   
@@ -424,6 +425,7 @@ echo json_encode($result);
   
 //=================================================== 
 23. SetState/Update State if State typeof is Array/Object (how add new value to array/object))
+
 23.1 SetState/Update State if State typeof is Array (how add new value to array))
 
  this.setState(prevState => ({
@@ -501,12 +503,4 @@ See example implementation =>
 
 
 ================================================================
-100. How this project works
-
-How it works:
-1. Index.js is a JS entry point, it contains <App/> Component, 
-which contains all the rest component { <Header nameX = "ReactJS"/> , <ButtonsLayout/> , <Instructions/>, <TextAreaX/>}
-
-2. All core logic is in <TextAreaX/> Component.
-
-3.3 <TextArea/> - core component
+100. How this project works => see https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_This_Project.txt
