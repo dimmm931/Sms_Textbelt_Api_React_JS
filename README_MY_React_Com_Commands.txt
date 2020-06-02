@@ -48,7 +48,7 @@ Content
 23. SetState/Update State if State typeof is Array/Object (how add new value to array/object))
 24. Using parent's state in child component (as a new child's component state)
 25. React imitation of fadeIn/fadeOut animation with overlay div, i.e analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
- 
+26. 2 functions inside one file injected to component
 
 
 99. Troubleshoots
@@ -481,7 +481,11 @@ See example implementation =>
 
 
 
-
+  
+  
+========================================================
+26. 2 functions inside one file injected to component
+See details at => https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/src/MyComponents/TextArea/functions_injected/sendSmsMessage.js
 
 
 

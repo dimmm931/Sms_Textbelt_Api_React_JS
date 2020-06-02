@@ -29,10 +29,16 @@ export function AutocompleteFunction (){
 
    
    var availablePhoneTags = [ //"+38097664", "+38097854",
-		                    {label: "+3809766", value : "Dm"},
-							{label: "+3809785", value : "Sh"},
-							{label: "+453112",  value : "Cph"},
-							{label: "+44791755",  value : "UK"},
+							{label: "+420", value : "Czech"},
+							{label: "+45",  value : "Denmark"},
+							{label: "+49",  value : "Germany"},
+							{label: "+972", value : "Israel"},
+                            {label: "+48",  value : "Poland"},
+                            {label: "+46",  value : "Sweden"},							
+							{label: "+38",  value : "Ukraine"},
+							{label: "+44",  value : "United Kingdom"},
+							
+							
 
 							  
         ];

@@ -42,7 +42,7 @@ class TextAreaX extends Component {
 	
     this.state = {
 		phoneNumberChild : "+380",
-		smsTextChild : "I am set manually in state in child <Textarea/>",
+		smsTextChild : "", //I am set manually in state in child <Textarea/>
 		phoneNumberErrorMessage : "phone number message",
 		isEnable: false, //true/false state to deisable/enable submit button  (tempo disabled)
 		limitForSmstext : this.limitLatin, //limit for chats in sms text, set by ifCyrillicSmsCheck(), by default limit is 120

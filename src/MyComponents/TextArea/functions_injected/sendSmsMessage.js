@@ -152,7 +152,6 @@ export function sendSmsMessage (){
 			},*/
             success: function(data) {
                
-
 			  console.log(data);
 			  
 			  //alert("OK -> Variant_2\n" +  "Variant_2 " + data.cellar + "\n" +  JSON.stringify(data)); //reassinged to liftTechAlertsInfoHandler
@@ -215,23 +214,7 @@ export function sendSmsMessage (){
                   }));
 			  }
 			
-			  $(".ajax-loader").fadeOut(5000); //hide loader
-			  
-			  //set true to show Div with result in <ResultFromTextbeltApi/>
-		     this.setState({ifUserClickedSendSms: true});
-			 
-			 //Scroll to results in Mobile only
-		     if(window.screen.width <= 640){ 
-	            this.scrollResults(".resultScroll"); //scroll the page down to weather results
-		     }
-			 
-			 //enable send button
-	         $("#sendButton").prop( "disabled", false );
-			 
-			 //shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
-			 setTimeout(function() {
-	              $(".child-div-sms").css('opacity', '0'); //hides yellow opacity div -> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
-	          }, 3000);
+			  runSomeActionsOnAjaxResult(this);
 			 
              }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			 error: function (error) {
@@ -249,21 +232,7 @@ export function sendSmsMessage (){
                     }
                 }));
 				
-			   //set true to show Div with result in <ResultFromTextbeltApi/>
-		      this.setState({ifUserClickedSendSms: true});
-			  
-			 //Scroll to results in Mobile only
-		     if(window.screen.width <= 640){ 
-	            this.scrollResults(".resultScroll"); //scroll the page down to weather results
-		     }
-		     
-			 //enable send button
-	         $("#sendButton").prop( "disabled", false );
-			 
-			  //shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
-			  setTimeout(function() {
-	              $(".child-div-sms").css('opacity', '0'); //hides yellow opacity div -> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
-	          }, 3000);
+			    runSomeActionsOnAjaxResult(this);
 			 
             }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
@@ -326,3 +295,33 @@ export function sendSmsMessage (){
 
 	
 }
+
+
+
+
+
+ //run some action both on ajax success/fail
+  // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
+   function runSomeActionsOnAjaxResult(that){
+	   $(".ajax-loader").fadeOut(5000); //hide loader
+			  
+	   //set true to show Div with result in <ResultFromTextbeltApi/>
+	   that.setState({ifUserClickedSendSms: true});
+			 
+	   //Scroll to results in Mobile only
+	   if(window.screen.width <= 640){ 
+	       this.scrollResults(".resultScroll"); //scroll the page down to weather results
+	    }
+			 
+	   //enable send button
+	   $("#sendButton").prop( "disabled", false );
+			 
+	   //shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	   setTimeout(function() {
+	       $(".child-div-sms").css('opacity', '0'); //hides yellow opacity div -> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	   }, 3000);
+   }
+   
+   
