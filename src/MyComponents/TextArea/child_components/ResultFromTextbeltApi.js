@@ -136,9 +136,9 @@ class ResultFromTextbeltApi extends Component {
 	    this.props.handleToUpdateIfDeliverClicked(true);
 			 
 	   //Scroll to results in Mobile only
-	   if(window.screen.width <= 640){ 
+	   //if(window.screen.width <= 640){ 
 	       this.scrollResults(".btn-scroll"); //scroll the page down to .btn-scroll
-	   }
+	   //}
 			 
 	   setTimeout(function() {
 	       $(".child-div").css('opacity', '0'); //hides yellow overlay div -> react imitation of animation, analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
@@ -174,10 +174,10 @@ class ResultFromTextbeltApi extends Component {
 	    <div className={'col-sm-6 col-xs-12' + (this.props.showHideDivData ? ' show-div': ' hide-div')}>
 	   
 	       {/* Shows this.state.answerFromTextbelt (type Object*) from Textarea.js. Most technical info */}
-		    <div className={'col-sm-12 col-xs-12 textbelt-answer font-small' + (this.props.answer.success? ' sms-sent': ' sms-not-sent')}> {/* if this.state.answerFromTextbelt.success is set as TRUE in Textarea.js, set css class 'sns-sent' */}
+		   {/* <div className={'col-sm-12 col-xs-12 textbelt-answer font-small' + (this.props.answer.success? ' sms-sent': ' sms-not-sent')}> */} {/* if this.state.answerFromTextbelt.success is set as TRUE in Textarea.js, set css class 'sns-sent' */}
 		      {/*this.props.answer */} 
-		      {itteratedArray} {/* Shows => success => true textId => 888888888 quotaRemaining => 1 */} 
-		    </div> 
+		      {/*{itteratedArray}*/} {/* Shows => success => true textId => 888888888 quotaRemaining => 1 */} 
+		   {/* </div> */}
 		  
 		  
 		  

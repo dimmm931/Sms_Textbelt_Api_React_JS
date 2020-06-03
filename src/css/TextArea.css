@@ -42,7 +42,7 @@
 
 /* --------------------------------------- <AjaxLoader/> ---------------------------- */
 /* ajax loader, works on click */
-.ajax-loader{position:absolute; top:23em; left:0.5%; display:none;}
+.ajax-loader{position:absolute; top:23em; left:0.5%; display:none;z-index:1999;}
 .ajax-loader img{width:18%;}
 
 /*  ----------------Mobile */

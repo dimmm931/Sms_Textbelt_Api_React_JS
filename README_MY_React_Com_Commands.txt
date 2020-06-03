@@ -49,7 +49,7 @@ Content
 24. Using parent's state in child component (as a new child's component state)
 25. React imitation of fadeIn/fadeOut animation with overlay div, i.e analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
 26. 2 functions inside one file injected to component
-
+27. Troubles with {this} in sub-child functions
 
 99. Troubleshoots
 100. How this project works
@@ -489,8 +489,25 @@ See details at => https://github.com/account931/sms_Textbelt_Api_React_JS/blob/m
 
 
 
+  
+  
+  
+========================================================
+27. Troubles with {this} in sub-child functions
+Pass {this} as argument=> 
+    runSomeActionsOnAjaxResult(this);
+	
+	function runSomeActionsOnAjaxResult(that){
+			  
+	   //set true to show Div with result in <ResultFromTextbeltApi/>
+	   that.setState({ifUserClickedSendSms: true});
+			 
+	   //Scroll to results in Mobile only
+	   if(window.screen.width <= 640){ 
+	       that.scrollResults(".resultScroll");
 
- 
+
+
 ======================================================
 
 # To run smth at start => componentDidMount(){}, place after constructor(props) {	

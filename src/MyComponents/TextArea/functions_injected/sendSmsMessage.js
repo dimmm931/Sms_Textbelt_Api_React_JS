@@ -312,7 +312,7 @@ export function sendSmsMessage (){
 			 
 	   //Scroll to results in Mobile only
 	   if(window.screen.width <= 640){ 
-	       this.scrollResults(".resultScroll"); //scroll the page down to weather results
+	       that.scrollResults(".resultScroll"); //scroll the page down to weather results
 	    }
 			 
 	   //enable send button
