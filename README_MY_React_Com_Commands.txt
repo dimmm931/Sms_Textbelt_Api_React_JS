@@ -1,6 +1,10 @@
 Sms Api React version.
 Uses React JS version 16.6.3 (was released on 23/10/2018),  last version is 16.13.1 
 
+#IMPORTANT: WHEN DEPLOYING ON REAL HOSTING, DO NOT FORGET TO CHECK IF {Classes/SendSms.php} and {Classes/ CheckSmsDeliveryStat.php} Line 18 is commented,
+ ie.artificial json response is disabled
+
+
 Structure of this project
 
  Index.js --|

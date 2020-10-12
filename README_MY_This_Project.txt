@@ -1,5 +1,8 @@
 TextBelt Api React Js
 
+IMPORTANT: WHEN DEPLOYING ON REAL HOSTING, DO NOT FORGET TO CHECK IF {Classes/SendSms.php} and {Classes/ CheckSmsDeliveryStat.php} Line 18 is commented,
+ ie.artificial json response is disabled.
+
 1.General info
 2. Testing on localhost vs real hosting.
 3.1 How it works
@@ -26,9 +29,10 @@ which contains all the rest component { <TextArea/>, <TopSectionButtons/> etc}
 =====================================================
 
 2.Testing on localhost vs real hosting.
-#Server side php uses cURL, and as long as localhost does not support cURL, you can not test it on localhost normally. The fix it to test on localhost (when u using live localhost://3000, not build folder) is: a.)uncomment Line 18  in Classes/SendSms.php (this will create artificial json response) 
-
-b) do the same uncommenting in Classes/ CheckSmsDeliveryStat.php
+#Server side php uses cURL, and as long as localhost does not support cURL, you can not test it on localhost normally. 
+The fix it to test on localhost (when u using live localhost://3000, not build folder) is: 
+  a.)uncomment Line 18  in Classes/SendSms.php (this will create artificial json response) 
+  b) do the same uncommenting in Classes/ CheckSmsDeliveryStat.php
 
 c)Now there is No need to make changes
  in ajax url (in /TextArea/functions_injected/sendSmsMessage.js. Previously we had to switch between localhost/Server ajax url  {../ServerSide/ajax/sendsms.php}/And/  'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php.
