@@ -54,6 +54,8 @@ Content
 25. React imitation of fadeIn/fadeOut animation with overlay div, i.e analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
 26. 2 functions inside one file injected to component
 27. Troubles with {this} in sub-child functions
+28. Updating state on props change
+77. V.A - Miscellaneous
 
 99. Troubleshoots
 100. How this project works
@@ -512,10 +514,38 @@ Pass {this} as argument=>
 
 
 
+
+
 ======================================================
+28. Updating state on props change (when user clicks "Example" button)
+	componentWillReceiveProps(nextProps) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        if (nextProps.exampleCoord !== this.state.textAreaInputX) {
+            this.setState({ textAreaInputX: nextProps.exampleCoord });
+        }
+    }
+	
+
+======================================================
+77. V.A - Miscellaneous
 
 # To run smth at start => componentDidMount(){}, place after constructor(props) {	
 # Comments in render can be only in this format => {/* Comments*/}
+	   
+	
+	
+#React Ternary	
+<p> Ajax Status {this.state.ifAjaxSuccess ? ' true' : 'false'}</p>
+
+
+#Store Credentials in React
+Set => .env => REACT_APP_MAPBOX_API_ACCESS_TOKEN=TOKEN_HERE + add .env to git ignore
+Use => let key = process.env.REACT_APP_MAPBOX_API_ACCESS_TOKEN;	   
+	   
+	   
+	   
+	   
+	   
 	   
 =================================================
 99. Troubleshoots
