@@ -81,9 +81,9 @@ export function sendSmsMessage (){
 	   
 	   //data to send via ajax
 	   var myData = { 
-	      serverPhone: this.state.phoneNumberChild,     //number
-		  serverSms: this.state.smsTextChild,           //sms text
-		  serverIfTestStatus: this.props.ifTestModeData //test/prod flag (set in <TopSectionButtons/>, uplifted to <App/> and passed here)
+	      serverPhone:        this.state.phoneNumberChild,  //number
+		  serverSms:          this.state.smsTextChild,      //sms text
+		  serverIfTestStatus: this.props.ifTestModeData     //test/prod flag (set in <TopSectionButtons/>, uplifted to <App/> and passed here)
 	   };
 	   
 	   
@@ -121,8 +121,11 @@ export function sendSmsMessage (){
 
 	      $(".ajax-loader").show(); //show loader
 		  
+          alert(document.URL);
+           return;
+
 		  //decide which url to use, switching ajax url when running on localHost or real Hosting
-		  var localhostURL = 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php';
+		  var localhostURL = 'http://localhost/CLEANSED_GIT_HUB/Sms_Textbelt_Api_React_JS/Server_Side/ajax_script/sendSms.php';
 		  var realServerProdURL = '../Server_Side/ajax_script/sendSms.php'; //can't use this on LocalHost as it'll redirect to http://localhost:3000/Server_Side/ajax_script/sendSms.php
 		  var ajaxURL = '';
 		  

@@ -5,11 +5,11 @@
 	top:3em; left:28%;
 	/*z-index:999999 !important;*/
 	overflow:hidden; /* no scroll to shake page */
-	} 
+} 
 
-.error-img{width:70%;}
-
-	
+.error-img{
+    width:70%;
+}
 	
 /*  ----------------Mobile */
 @media screen and (max-width: 640px) {
@@ -17,7 +17,5 @@
 	.error-img{width:99%;}
 
 }  
- 
-/*  ----------------Mobile */
-	
+ 	
 	

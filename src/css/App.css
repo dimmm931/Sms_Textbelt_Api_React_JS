@@ -48,26 +48,30 @@ body{
 	/*margin-top:50px;margin-left:30px;
 	width:77%;*/
 	box-shadow: inset 0 0 1em white, 0 0 8em black;
-	}
+}
 
-.font-12{font-size:12px;}
+.font-12{
+    font-size:12px;
+}
 
-.row1{margin-top:50px;}
+.row1{
+    margin-top:50px;
+}
 
-.red-color{color:red;}
-
-
-	
+.red-color{
+    color:red;
+}
 
 .react-logo-static{
 	width:12%;
 	animation: App-logo-spin infinite 20s linear;
     /*height: 40vmin;*/
-  }
+}
   
- .header-x{color:white; font-size:3em;}
- 
- 
+.header-x{
+     color:white; font-size:3em;
+}
+     
  /*  ----------------Mobile */
 @media screen and (max-width: 460px) {  
     .divX{}
@@ -75,7 +79,6 @@ body{
 	.select-my{margin-top:10px;}
 	/*.divX h4{display:none}*/
 	.react-logo-static{ width: 55%;}
-	
     .header-x{font-size:2.2em;}
 }
 /*  ----------------Mobile */

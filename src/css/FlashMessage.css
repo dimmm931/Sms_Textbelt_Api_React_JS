@@ -6,11 +6,8 @@
 	top: 0px;
 	display:none;
     text-shadow: 2px 2px #FFF;
-	} 
+} 
 
-
-	
-	
 /*  ----------------Mobile */
 @media screen and (max-width: 640px) {
 	
@@ -19,10 +16,7 @@
 		font-size:4em;
 		left:0.1em;
 	}
-	
-
 }  
- 
-/*  ----------------Mobile */
+
 	
 	

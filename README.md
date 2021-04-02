@@ -1,10 +1,73 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://drive.google.com/file/d/1ZFVArThP2i3Safr_zsAC9BqTaC1eRpyi/view?usp=sharing
 
-## Additional info can be found at => 
+https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=sharing Geocod
 
-[README_MY_React_Commom_Commands](https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_React_Com_Commands.txt).<br>
-[README_MY_This_Project_itself](https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_This_Project.txt).
 
+## TextBelt Api React Js
+
+- <p>A React application to send sms messages via TextBelt API.</p>
+- <p>App works on React library, to run the application on <b>http://localhost:3000</b>, copy the repository code and run <b>npm install</b> to load all dependencies. </p>
+- <p>Then use <b>npm start</b> to run the app on <b>http://localhost:3000</b>.
+- <p>Use command <b>`npm run build`</b> to build the app for production to the `build` folder, while source code to edit is located in <b>/src</b> folder.</p>
+- <p>Rename <b>.env_example</b> to <b>.env</b> and enter your TextBelt Api access token (contact TextBelt to get one if you don't have yet )</p>
+- <p>Enter your TextBelt Api access token at <b>/Server_Side/Credentials/prod_credentials.php</b></p>
+- <p> To test on localhost, apart from above you must have PHP installed and  Web server running on your machine </p>
+
+## Brief overview of application
+
+![Screenshot](images/ScreenShots/1.png)
+
+### Autocomplete dropdown for a phone number.
+
+![Screenshot](images/ScreenShots/2.png)
+
+### RegExp check for phone number (Ukrainian or international). 
+
+![Screenshot](images/ScreenShots/3.png)
+
+### Control for sms text length (120 chars for Latin, 70 for Cyrillic).
+
+![Screenshot](images/ScreenShots/4.png)
+
+### Validation for sms text input.
+
+![Screenshot](images/ScreenShots/5.png)
+
+### Disolay Sms sent status.
+
+![Screenshot](images/ScreenShots/6.png)
+
+### Sms delivery status.
+
+![Screenshot](images/ScreenShots/6.png)
+
+### Changing wallpappers.
+
+![Screenshot](images/ScreenShots/7.png)
+
+### Gif video.
+
+![image](https://drive.google.com/uc?export=view&id=1ZFVArThP2i3Safr_zsAC9BqTaC1eRpyi)
+
+### Structure.
+
+ Index.js --|
+            |--- App.js ----|                     | -- <DisplayPhoneRegExpMessage/> - shows green/red message {"Vallid UA/EU phone number"}, diffrent regExp for EU/EU
+                            | -- <TextArea/> ---- | -- inputs (cell number, sms text)
+                            |                     |	-- <CountSmsText/> - counts sms chars left (160 or 120 based on Ru or Eng input)
+                            |                     | -- buttons (submit, reset)
+                            |                     | -- <FlashMessage/> - animated pop-up image on error
+                            |                     | -- <ResultFromTextbeltApi/>	-> shows all responses from Api, handles check delivery status	
+                            |                     | -- <AjaxLoader/> -- Shows gif spinner loader, when user clicks "Send sms"							
+                            |                     | -- functions_injected --> functions used in <TextAreaX/> --> Autocomplete + Validate_RegExp + sendSmsMessage
+                            |
+                            | -- <TechnicalInfo/> -- uses LiftUpComponent/<LiftedTo_Component/>
+                            |
+                            | -- <ErrorLayout/>
+                            |
+                            | -- <TopSectionButtons/> ---- functions_injected -> changeThemeInjected
+                            
+                            
 ## Available Scripts
 
 In the project directory, you can run:

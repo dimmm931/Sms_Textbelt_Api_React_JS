@@ -1,11 +1,13 @@
 /* Submit and clear buttons */
-.buttonsX {margin-top:1em;  }
+.buttonsX {
+    margin-top:1em;  
+}
+
 .buttonsX .el{
 	float: left; 
     margin-left:0.1em; margin-bottom:0.2em;
 	border: 1px solid white;
-	}
-
+}
 
 /* working!!! */
 .buttonsX .el :after {
@@ -13,17 +15,19 @@
 }
 
 /* Count sms text length */
-.text-shadow{text-shadow: 1px 0 7px #FFF;}
+.text-shadow{
+    text-shadow: 1px 0 7px #FFF;
+}
 
-.shadow-xx{box-shadow: 0 1px 4px rgba(0, 0, 0, .3), -23px 0 20px -23px rgba(0, 0, 0, .6), 23px 0 20px -23px rgba(0, 0, 0, .6), inset 0 0 40px rgba(0, 0, 0, .1); }
+.shadow-xx{
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .3), -23px 0 20px -23px rgba(0, 0, 0, .6), 23px 0 20px -23px rgba(0, 0, 0, .6), inset 0 0 40px rgba(0, 0, 0, .1); 
+ }
 
 .shadow-text{
   color: #444444;
   background: #FFFFFF;
   text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
 }
-
-
 
  /* --------------------------------------- <DisplayPhoneRegExpMessage/> ---------------------------- */
 .err-mess-wrong {background:red; }     /* Message => {IMCOMPLETE UA NUMBER}  -webkit-transition:  .1s linear; */
@@ -38,8 +42,6 @@
 	/* padding: 2em; */
 }
 
-
-
 /* --------------------------------------- <AjaxLoader/> ---------------------------- */
 /* ajax loader, works on click */
 .ajax-loader{position:absolute; top:23em; left:0.5%; display:none;z-index:1999;}
@@ -52,8 +54,6 @@
 }  
  
 /*  ----------------Mobile */
-
-
 
 
 
@@ -115,10 +115,6 @@
 .delivery-loader{width:10%}
 
 
-
-
-
-
 /* Creating CSS overlay over Div with Sms Results i.e{Sent/Not sent} -> imitation of  $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000); */
 /* Parent div that contains Sms Results i.e{Sent/Not sent} */
 .parent-div-sms {
@@ -141,18 +137,7 @@
 }
 .delivery-loader-sms{width:20%}
 
-
-
 /* ----------------------------------------- END <ResultFromTextbeltApi/> ----------------- */
-
-
-
-
-
-
-
-
-
 
 
 
@@ -163,14 +148,12 @@
   display:block;
 
 }
-
 	
 	
 #tableResults{padding-bottom:3em;}
 td {width:100px;}
 
 #resultFinal{padding:2em;} /* padding in div */
-
 
 .App {  
    /* transition-duration: 5s; */
@@ -183,5 +166,5 @@ td {width:100px;}
      -o-filter: blur(15px);
      -webkit-filter: blur(15px);
      filter: blur(15px);
-	}
+}
 	
