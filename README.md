@@ -15,35 +15,36 @@ https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=shari
 
 ## Brief overview of application
 
-![Screenshot](images/Screenshots/1.png)
+![Screenshot](src/images/Screenshots/1.png)
+images/Screenshots
 
 ### Autocomplete dropdown for a phone number.
 
-![Screenshot](images/Screenshots/2.png)
+![Screenshot](src/images/Screenshots/2.png)
 
 ### RegExp check for phone number (Ukrainian or international). 
 
-![Screenshot](images/Screenshots/3.png)
+![Screenshot](src/images/Screenshots/3.png)
 
 ### Control for sms text length (120 chars for Latin, 70 for Cyrillic).
 
-![Screenshot](images/Screenshots/4.png)
+![Screenshot](src/images/Screenshots/4.png)
 
 ### Validation for sms text input.
 
-![Screenshot](images/Screenshots/5.png)
+![Screenshot](src/images/Screenshots/5.png)
 
 ### Disolay Sms sent status.
 
-![Screenshot](images/Screenshots/6.png)
+![Screenshot](src/images/Screenshots/6.png)
 
 ### Sms delivery status.
 
-![Screenshot](images/Screenshots/6.png)
+![Screenshot](src/images/Screenshots/6.png)
 
 ### Changing wallpappers.
 
-![Screenshot](images/Screenshots/7.png)
+![Screenshot](src/images/Screenshots/7.png)
 
 ### Gif video.
 
