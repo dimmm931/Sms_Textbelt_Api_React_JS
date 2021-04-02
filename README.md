@@ -1,4 +1,4 @@
-https://drive.google.com/file/d/1ZFVArThP2i3Safr_zsAC9BqTaC1eRpyi/view?usp=sharing
+
 
 https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=sharing Geocod
 
@@ -15,35 +15,35 @@ https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=shari
 
 ## Brief overview of application
 
-![Screenshot](images/ScreenShots/1.png)
+![Screenshot](images/Screenshots/1.png)
 
 ### Autocomplete dropdown for a phone number.
 
-![Screenshot](images/ScreenShots/2.png)
+![Screenshot](images/Screenshots/2.png)
 
 ### RegExp check for phone number (Ukrainian or international). 
 
-![Screenshot](images/ScreenShots/3.png)
+![Screenshot](images/Screenshots/3.png)
 
 ### Control for sms text length (120 chars for Latin, 70 for Cyrillic).
 
-![Screenshot](images/ScreenShots/4.png)
+![Screenshot](images/Screenshots/4.png)
 
 ### Validation for sms text input.
 
-![Screenshot](images/ScreenShots/5.png)
+![Screenshot](images/Screenshots/5.png)
 
 ### Disolay Sms sent status.
 
-![Screenshot](images/ScreenShots/6.png)
+![Screenshot](images/Screenshots/6.png)
 
 ### Sms delivery status.
 
-![Screenshot](images/ScreenShots/6.png)
+![Screenshot](images/Screenshots/6.png)
 
 ### Changing wallpappers.
 
-![Screenshot](images/ScreenShots/7.png)
+![Screenshot](images/Screenshots/7.png)
 
 ### Gif video.
 
@@ -52,19 +52,34 @@ https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=shari
 ### Structure.
 
  Index.js --|
-            |--- App.js ----|                     | -- <DisplayPhoneRegExpMessage/> - shows green/red message {"Vallid UA/EU phone number"}, diffrent regExp for EU/EU
+ 
+            |--- App.js ----| 
+                                                  | -- <DisplayPhoneRegExpMessage/> - shows green/red message {"Vallid UA/EU phone number"}, diffrent regExp for EU/EU
+                                                  
                             | -- <TextArea/> ---- | -- inputs (cell number, sms text)
+                            
                             |                     |	-- <CountSmsText/> - counts sms chars left (160 or 120 based on Ru or Eng input)
+                            
                             |                     | -- buttons (submit, reset)
+                            
                             |                     | -- <FlashMessage/> - animated pop-up image on error
+                            
                             |                     | -- <ResultFromTextbeltApi/>	-> shows all responses from Api, handles check delivery status	
-                            |                     | -- <AjaxLoader/> -- Shows gif spinner loader, when user clicks "Send sms"							
+                            
+                            |                     | -- <AjaxLoader/> -- Shows gif spinner loader, when user clicks "Send sms"	
+                            
                             |                     | -- functions_injected --> functions used in <TextAreaX/> --> Autocomplete + Validate_RegExp + sendSmsMessage
+                            
                             |
+                            
                             | -- <TechnicalInfo/> -- uses LiftUpComponent/<LiftedTo_Component/>
+                            
                             |
+                            
                             | -- <ErrorLayout/>
+                            
                             |
+                            
                             | -- <TopSectionButtons/> ---- functions_injected -> changeThemeInjected
                             
                             
