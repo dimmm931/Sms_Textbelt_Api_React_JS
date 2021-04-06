@@ -16,7 +16,6 @@ https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=shari
 ## Brief overview of application
 
 ![Screenshot](src/images/Screenshots/1.png)
-images/Screenshots
 
 ### Autocomplete dropdown for a phone number.
 
@@ -34,21 +33,25 @@ images/Screenshots
 
 ![Screenshot](src/images/Screenshots/5.png)
 
-### Disolay Sms sent status.
+### Display Sms sent status.
 
 ![Screenshot](src/images/Screenshots/6.png)
 
 ### Sms delivery status.
 
-![Screenshot](src/images/Screenshots/6.png)
+![Screenshot](src/images/Screenshots/7.png)
 
 ### Changing wallpappers.
 
-![Screenshot](src/images/Screenshots/7.png)
+![Screenshot](src/images/Screenshots/8.png)
 
 ### Gif video.
 
 ![image](https://drive.google.com/uc?export=view&id=1ZFVArThP2i3Safr_zsAC9BqTaC1eRpyi)
+
+### Watch the video.
+
+[Watch the video on Youtube]( https://youtu.be/XyTUwoJ1mkk)
 
 ### Structure.
 

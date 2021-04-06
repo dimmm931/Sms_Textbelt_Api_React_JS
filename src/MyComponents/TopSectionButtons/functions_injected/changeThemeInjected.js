@@ -1,18 +1,4 @@
-//import React, { Component } from 'react';
-//import $ from 'jquery';
-//import swal from 'sweetalert';
 
-/*import error from '../../images/error.gif';
-import '../../css/TextArea.css';
-import axios from 'axios';
-import CopyLayout from '../Copy/CopyLayout';
-*/
-
-
-
-
-
-//Function that 
 // **************************************************************************************
 // **************************************************************************************
 // 
@@ -114,88 +100,26 @@ export function changeThemeInjected () {
 		'https://www.welovesolo.com/wp-content/uploads/vector/46/Pattern-word-cloud-creative-vector-07.jpg',  //text 3
 		'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHbhzuoJFsUlWKBKqGRtReqUAcWg6TbphM3BPEzeQDJa-sqfl6',  //violet
 		'',  //EMPTY
-   ];
-   
-  
-  
-  
-   
-  
-   /*
-	function makeCounter() {
-        var currentCount = 1;
-        
-        return function() {
-           return currentCount++;
+    ];
 
-        };
-     }
-
-     */
-	 
-  
-  
-	
-	
-	//function changeBGColor() {
+    var counterX = this.state.wallPapperCount;
 		
-		//var counter = makeCounter();
-		//var c = counter();
-		//alert(c);
-		//alert( counter() ); // 1
-
-        var counterX = this.state.wallPapperCount;
+	if((counterX + 1) === wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
+	    this.setState({ wallPapperCount: 0}); //alert('Nulled');
+	} else { 
+		this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }));
+	}
 		
-		if((counterX + 1) === wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
-			//counterX = 0;
-			 this.setState({ wallPapperCount: 0}); //alert('Nulled');
-		} else { 
-		    //(makeCounter())();//
-		    this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }));
-            //alert("state " + this.state.wallPapperCount);
-
+    var cols = document.getElementsByClassName('change-head-style');
+		
+    for(var i = 0; i < cols.length; i++) {      
+	    try{
+            cols[i].style.backgroundImage = 'url(' + wallURL[this.state.wallPapperCount] + ')';
+		} catch(err) {
+		    alert(err.message);
+	    }
 			
-			//counterX++; 
-			//alert("Core " + counterX);
-		}
-		
-        var cols = document.getElementsByClassName('change-head-style');
-		
-        for(var i = 0; i < cols.length; i++) {  
-		    
-			//alert(counterX); 
-			 /* var shooter = function(self_i) { // функция shooter
-			    alert('shooter  ' + self_i);
-	          };
-			 */
-				
-			//checks if URL with image is not broaken
-			  /*var img = new Image();        
-              try {
-                 img.src  = wallURL[counter];
-                 return true;
-              } catch(err) {
-                   return false; alert('broaken');
-              }*/ 
-			  
-			  
-			//
-			try{
-               cols[i].style.backgroundImage = 'url(' + wallURL[this.state.wallPapperCount] + ')';
-			} catch(err) {
-				alert(err.message);
-			}
-			
-        }
-     //}
-	 
-	 //alert("end");
-	 
-	 
-	 
-	// changeBGColor(); 
-   
-   
+    }
 }	
 
 //export default TopSectionButtons;

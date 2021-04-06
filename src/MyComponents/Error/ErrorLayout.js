@@ -10,23 +10,9 @@ class ErrorLayout extends Component {
     this.state = {
 		//addressArray: [],  //this state will hold array with separ addresses
     };
- 
- 
-    // This binding is necessary to make `this` work in the callback
-	//this.copy_table_result = this.copy_table_result.bind(this);
   }
   
-
-  
-  
-  
-  
-   
-   
-   
-  
   //RENDER ------------------------------------------------
-  
   render() {
     return (
 	    <p className="error-parent">

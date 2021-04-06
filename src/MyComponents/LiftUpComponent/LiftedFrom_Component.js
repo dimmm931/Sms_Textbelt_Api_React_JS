@@ -1,7 +1,5 @@
 //NOT USED SO FAR!!!!!!!
 import React, { Component } from 'react';
-//import logo from '../../images/api.jpeg';
-//import '../../css/LiftedComponent.css';
 //import $ from 'jquery';
 
 //Component that passes/lifts up state to Parent Component
@@ -14,14 +12,9 @@ class LiftedFrom_Component extends Component {
 
    }
   
- 
-   
-  
-  //RENDER ------------------------------------------------
   render() {
 	  var handleToUpdate =  this.props.handleToUpdate;
-    return (
-	   
+    return (   
 	   <div>
 	       <p></p>
 		   <p></p>

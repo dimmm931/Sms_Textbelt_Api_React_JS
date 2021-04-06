@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
-//import TrendTopic from './TrendTopic';
-//import logo from '../../images/api.jpeg';
-//import '../../css/LiftedComponent.css';
 //import $ from 'jquery';
-
 
 class LiftedTo_Component extends Component {
 	constructor(props) {
         super(props);
-        this.state = {
-			
+        this.state = {	
         };
-   }
-  
- 
+    }
   
   //RENDER ------------------------------------------------
   render() {
-	  
 	  //iterate over array to form list 
 	  const newV = this.props.passedtechInfoValue.map(function(item, i){
 	     return <li key={i}>{item}</li>
       });
 	  
     return (
-	   
 	   <div className="lifted-to">
 		   <h5>
 		       <p className="underline">
@@ -56,16 +47,7 @@ class LiftedTo_Component extends Component {
 			       <b>TechInfo:</b> {newV} {/* */}
 			   </p>
 			   
-		   </h5>   
-		   
-
-
- 
-
-			   
-			   
-		  
-		   
+		   </h5>    
 	   </div>
 	  
     );
