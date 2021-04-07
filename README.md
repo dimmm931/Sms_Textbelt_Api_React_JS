@@ -43,8 +43,6 @@
 
 ### Gif video.
 
-![image](https://drive.google.com/uc?export=view&id=1ZFVArThP2i3Safr_zsAC9BqTaC1eRpyi)
-
 ![image](https://drive.google.com/uc?export=view&id=1qolb3AHfpV9Ke0h_ffA9P3g0kqEicVR_)
 
 
