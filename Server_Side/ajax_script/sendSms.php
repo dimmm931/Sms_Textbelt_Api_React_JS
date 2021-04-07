@@ -1,7 +1,6 @@
 <?php 
 //this is ENDPOINT, handles ajax request from smsSendStatusArea.js (sends SMS  via ajax)
 
-//headers
 header("Access-Control-Allow-Origin: *"); //must-have CORS header
 //header('Content-Type: application/json); //header('Content-Type: application/json; charset=utf-8'); // <= MUST BE TURNED OFF, THIS CAUSED CRASH IN CORS JSON
 header("Access-Control-Allow-Headers", "Content-Type"); //DOES NOT MATTER
@@ -30,14 +29,16 @@ if (isset($_POST['serverPhone']) && isset($_POST['serverSms'])){
     //Sending SMS
     $sms = new MySmsTetxBelt\Classes\SendSms();
 	$smsSendStatus = $sms->sendingSms($_POST['serverPhone'], $_POST['serverSms']);
-	
+    
+    $result['cellar']           = $_POST['serverPhone']; //cell number from ajax
+    $result['smssmsSendStatus'] = $_POST['serverSms']; 
+    $result['ifTestMode']       = $_POST['serverIfTestStatus']; //switch between test/prod mode, when in test mode, Api uses on server side smsSendStatusBelt test key {"smsSendStatusbelt_test"}
+
 } else {
 	$smsSendStatus = "Phone number or sms smsSendStatus is missing";
+    $checked  = false;
 }
 
-$result['cellar']           = $_POST['serverPhone']; //cell number from ajax
-$result['smssmsSendStatus'] = $_POST['serverSms']; 
-$result['ifTestMode']       = $_POST['serverIfTestStatus']; //switch between test/prod mode, when in test mode, Api uses on server side smsSendStatusBelt test key {"smsSendStatusbelt_test"}
 
 $result = array_merge($result, $checked, $smsSendStatus); 
 

@@ -2,8 +2,6 @@
 import $ from 'jquery';
 import swal from 'sweetalert';
 
-
-
  /*
  |--------------------------------------------------------------------------
  | Function that sends Sms via ajax
@@ -16,7 +14,6 @@ export function sendSmsMessage (){
 	$("#sendButton").prop( "disabled", true );	
 	//update this state in case in was set TRUE prev (to decide if to show Div with "Delivered/NotDelivered" Status). Value is used in <ResultFromTextbeltApi/>. Updated/uplifted from there too.
 	this.setState({ifUserClickedCheckDelivery: false});
-	 
 	$(".child-div-sms").css('opacity', '1'); //shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000); 
 	   
 	//data to send via ajax
@@ -31,7 +28,7 @@ export function sendSmsMessage (){
 		  
     //decide which url to use, switching ajax url when running on localHost or real Hosting
 	var localhostURL = 'http://localhost/' + process.env.REACT_APP_APPLICATION_DIRECTORY + '/Server_Side/ajax_script/sendSms.php';
-    var realServerProdURL = '../Server_Side/ajax_script/sendSms.php'; //can't use this on LocalHost as it'll redirect to http://localhost:3000/Server_Side/ajax_script/sendSms.php
+    var realServerProdURL = '../Server_Side/ajax_script/sendSms.php'; 
 	var ajaxURL = '';
 		  
 	//if finds "localhost" in current url
@@ -40,18 +37,14 @@ export function sendSmsMessage (){
 	} else {
 		ajaxURL = realServerProdURL;
 	}
-		  
-	alert(ajaxURL);
-    alert(process.env.REACT_APP_APPLICATION_DIRECTORY);
-          
-	$.ajax({ //use {http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php'} to test on localhost, use {../Server_Side/ajax_script/sendSms.php} on real hosting
-        url: ajaxURL, //'../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php', //url: '../Server_Side/ajax_script/sendSms.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/sendSms.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+      
+	$.ajax({ 
+        url: ajaxURL, 
         type: 'POST',
 	    dataType: 'JSON', 
 		crossDomain: true,
         data: myData,
         success: function(data) { 
-		    console.log(data);  
 		    //uplift to TechInfo/use it instead of alert
 	        this.props.liftTechAlertsInfoHandler("OK -> Variant_2\n" +  "Variant_2 " + data.cellar + "\n" +  JSON.stringify(data));
 		    if (data.textBeltResponse) { //textBeltResponse array is set in Classes/SendSms.php  
@@ -82,7 +75,6 @@ export function sendSmsMessage (){
 			    }	  
 			     
 		    } else { //if NO data.textBeltResponse, i.e no response from TextBelt Api
-				 
 		        //update this.state.answerFromTextbelt (Variant for Object)
 		        this.setState(prevState => ({
                     answerFromTextbelt: {    // object that we want to update
@@ -98,10 +90,10 @@ export function sendSmsMessage (){
         }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
         
 		error: function (error) {
+            //console.log(error);
             swal("Error!", "Sending sms failed!", "error");
 		    //uplift to TechInfo/use it instead of alert
 			this.props.liftTechAlertsInfoHandler("Variant_2 failed");
-				  
 		    $(".ajax-loader").fadeOut(5000); //hide loader
 				
 		    //update this.state.answerFromTextbelt (Variant for Object)
@@ -144,7 +136,7 @@ function runSomeActionsOnAjaxResult(that){
 			 
 	//shows yellow opacity div-> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
 	setTimeout(function() {
-	    $(".child-div-sms").css('opacity', '0'); //hides yellow opacity div -> react imitation of {$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
+	    $(".child-div-sms").css('opacity', '0'); 
 	}, 3000);
 }
    

@@ -1,16 +1,12 @@
 
-
-https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=sharing Geocod
-
-
 ## TextBelt Api React Js
 
 - <p>A React application to send sms messages via TextBelt API.</p>
 - <p>App works on React library, to run the application on <b>http://localhost:3000</b>, copy the repository code and run <b>npm install</b> to load all dependencies. </p>
 - <p>Then use <b>npm start</b> to run the app on <b>http://localhost:3000</b>.
 - <p>Use command <b>`npm run build`</b> to build the app for production to the `build` folder, while source code to edit is located in <b>/src</b> folder.</p>
-- <p>Rename <b>.env_example</b> to <b>.env</b> and enter your TextBelt Api access token (contact TextBelt to get one if you don't have yet )</p>
-- <p>Enter your TextBelt Api access token at <b>/Server_Side/Credentials/prod_credentials.php</b></p>
+- <p>Rename <b>.env_example</b> to <b>.env</b> and change the name of your root directory in <b>REACT_APP_APPLICATION_DIRECTORY</b> </p>
+- <p>Enter your TextBelt Api access token at <b>/Server_Side/Credentials/prod_credentials.php</b> (contact TextBelt to get one if you don't have yet)</p>
 - <p> To test on localhost, apart from above you must have PHP installed and  Web server running on your machine </p>
 
 ## Brief overview of application
@@ -49,9 +45,10 @@ https://drive.google.com/file/d/1Rxv2zWJrBoAamcrI9wqQFZJhcb4bKzOW/view?usp=shari
 
 ![image](https://drive.google.com/uc?export=view&id=1ZFVArThP2i3Safr_zsAC9BqTaC1eRpyi)
 
-### Watch the video.
+![image](https://drive.google.com/uc?export=view&id=1qolb3AHfpV9Ke0h_ffA9P3g0kqEicVR_)
 
-[Watch the video on Youtube]( https://youtu.be/XyTUwoJ1mkk)
+
+[Watch this video on Youtube]( https://youtu.be/XyTUwoJ1mkk)
 
 ### Structure.
 

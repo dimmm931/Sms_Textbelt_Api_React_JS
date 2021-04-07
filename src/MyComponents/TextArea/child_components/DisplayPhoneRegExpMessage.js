@@ -8,7 +8,6 @@ class DisplayPhoneRegExpMessage extends Component {
         };
     }
 
-  
     //RENDER -----------------------
     render() {
         return (

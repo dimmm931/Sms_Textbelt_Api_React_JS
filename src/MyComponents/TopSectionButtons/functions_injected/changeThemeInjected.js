@@ -6,7 +6,6 @@
 export function changeThemeInjected () {
 	
 	var wallURL = [
-	
 	    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQsQf2-zwuStKf6u2V2HE_nCy9rRvk5M8ag043FAenQbOrCXY3tA', //violat blocks
 		'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Color_icon_purple.svg/2000px-Color_icon_purple.svg.png', //same in HD
 		//'http://www.sensationalcolor.com/wp-content/uploads/2009/12/purple350x350.jpg', //same HD
@@ -34,10 +33,7 @@ export function changeThemeInjected () {
 		'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTekHPENYuvbwRmIXKoff5JHA1z3vC_XoAwbVXGgyCRE8uX6f26',
 		'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQiLABN0zBTJV8kVyBdef307WbrYkANbnLa03aWcjZ9Dj2l8cL',
 		'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTjMtl9M8g5BwuOBIWTWCcAVJFLeiGWifLEYl8i2JakRBXXZto',
-		'https://st2.depositphotos.com/4724153/11516/v/950/depositphotos_115160878-stock-illustration-vector-hand-drawn-pattern-for.jpg', //fml portrait
-		
-		
-		 
+		'https://st2.depositphotos.com/4724153/11516/v/950/depositphotos_115160878-stock-illustration-vector-hand-drawn-pattern-for.jpg', //fml portrait 
 	    //'https://i.pinimg.com/originals/08/58/d6/0858d6df28c34239fe8e0077e19be750.png',  //cash
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQvp8gXVXK0Vb7ctlANuwugGW13OTnAWqriztJUGoBRXd0CXK8',    //blue
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfDxrC1c4GaaJmBlciFeUZ8bsHheWefJXbGiUOFYOnXR5oGrVhAg',  //steel
@@ -56,7 +52,6 @@ export function changeThemeInjected () {
 		'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzEPWGOzxTXCXYCBi4WajukuQQ7Q7PlOA-FGzQsKV_cxjT2fPvxw', //sunset
 		'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPIBUy2Ru9gOD3vJUrRnWqCojmEftftOM0K_WvmW6fi70MDAl8',  //search
 		//'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvwOeUhq4-8t_xS98RZyj6Atk-tWNIXiZphHolDpusOAAj607S', //road
-		
 		//'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1OpSRjwhd0nyJcTZYZ6lUo4v46eYVpZkSJgOizuVk0ldeFffg', //islam
 		//'https://banner2.kisspng.com/20180308/oze/kisspng-islamic-architecture-motif-pattern-islamic-traditional-decorative-patterns-5aa104eb92d7b2.2841900615205019956015.jpg',
 		'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYsQ04RfZT4vWwxrfTCXuBAmeG6YSpzJZtT-bPhVbxj9u0CfyZ',
@@ -104,16 +99,16 @@ export function changeThemeInjected () {
 
     var counterX = this.state.wallPapperCount;
 		
-	if((counterX + 1) === wallURL.length){  //if counter == array length , {+1 as counter starts with 0}
-	    this.setState({ wallPapperCount: 0}); //alert('Nulled');
+	if ((counterX + 1) === wallURL.length) {  
+	    this.setState({ wallPapperCount: 0}); 
 	} else { 
 		this.setState(prevState => ({ wallPapperCount: prevState.wallPapperCount + 1 }));
 	}
 		
     var cols = document.getElementsByClassName('change-head-style');
 		
-    for(var i = 0; i < cols.length; i++) {      
-	    try{
+    for (var i = 0; i < cols.length; i++) {      
+	    try {
             cols[i].style.backgroundImage = 'url(' + wallURL[this.state.wallPapperCount] + ')';
 		} catch(err) {
 		    alert(err.message);

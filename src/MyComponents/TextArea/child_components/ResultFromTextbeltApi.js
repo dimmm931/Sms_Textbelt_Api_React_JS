@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import swal from 'sweetalert';
 import {scrollResults} from '../functions_injected/scrollResults'; //import my function to scroll
 import loaderX from '../../../images/loaddd.gif'
 import loaderX1 from '../../../images/loaddd_PREV.gif'
@@ -27,18 +28,16 @@ class ResultFromTextbeltApi extends Component {
     // **************************************************************************************
     //                                                                                     **
     checkSmsDeliveryStatus() {
-	   
 	    $(".child-div").css('opacity', '1'); 
-	    //------ Variant_2 (ajax withcontentType/dataType) => Works!!!! (The most correct)!!!!!!!!!!!!!!!!
 	    $(".ajax-loader").show(); //show gif loader
 		  
 		//decide which url to use, switching ajax url when running on localHost or real Hosting
-		var localhostURL = 'http://localhost/CLEANSED_GIT_HUB/Sms_Textbelt_Api_React_JS/Server_Side/ajax_script/getSmsDeliveryStatus.php';
+		var localhostURL = 'http://localhost/' + process.env.REACT_APP_APPLICATION_DIRECTORY + '/Server_Side/ajax_script/getSmsDeliveryStatus.php';
 		var realServerProdURL = '../Server_Side/ajax_script/getSmsDeliveryStatus.php'; //can't use this on LocalHost as it'll redirect to http://localhost:3000/Server_Side/ajax_script/sendSms.php
 		var ajaxURL = '';
 		  
 		//if finds "localhost" in current url
-		if(window.location.href.match(/localhost/)){  
+		if (window.location.href.match(/localhost/)) {  
 			ajaxURL = localhostURL; 
 		} else {
 			ajaxURL = realServerProdURL;
@@ -46,7 +45,7 @@ class ResultFromTextbeltApi extends Component {
 		  
 		  
 	    $.ajax({ 
-            url: ajaxURL, //'../Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: '../Server_Side/ajax_script/getSmsDeliveryStatus.php', //url: 'http://localhost/sms_Textbelt_Api_React_JS/sms-api-react/Server_Side/ajax_script/getSmsDeliveryStatus.php',//url: 'http://dimmm931.000webhostapp.com/sms_react_js/Server_Side/ajax_script/sendSms.php',//
+            url: ajaxURL, 
             type: 'GET',
 			dataType: 'JSON', 
 			crossDomain: true,
@@ -55,12 +54,11 @@ class ResultFromTextbeltApi extends Component {
 			    serverTextID: this.props.answer.textId 
 			},
             success: function(data) {
-			    console.log(data);
-			    if(data.status){ //textBeltResponse array is set in Classes/SendSms.php
+			    if (data.status) { //textBeltResponse array is set in Classes/SendSms.php
 				    //update this.state.deliveryStatus -> gets the relivery response status from Api
 				    this.setState({deliveryStatus : data.status}); 
 				  
-				    if(data.status == 'DELIVERED'){
+				    if (data.status == 'DELIVERED') {
 				        this.setState({deliveredOK : true});  //for CSS styling 
 				    } else {
 					    this.setState({deliveredOK : false});  //for CSS styling 
@@ -75,14 +73,13 @@ class ResultFromTextbeltApi extends Component {
 			 
             }.bind(this),  //end success //{.bind(this)} is a must otherwise setState won't work in success
 			    error: function (error) {
-				    alert("Check Delivery  failed");
+                    swal("Error!", "Failed to check delivery!", "error");
 				    //update this.state.deliveryStatus
 				    this.setState({deliveryStatus : 'Check delivery error'});
 				    this.runSomeActionsOnAjaxResult();
 			 
                 }.bind(this) //{.bind(this)} is a must otherwise setState won't work in success	
         });
-		
 	  
     }
   
@@ -100,14 +97,11 @@ class ResultFromTextbeltApi extends Component {
 	        this.scrollResults(".btn-scroll"); //scroll the page down to .btn-scroll
 	     //}
 			 
-	    setTimeout(function() {
+	    setTimeout(function(){
 	        $(".child-div").css('opacity', '0'); //hides yellow overlay div -> react imitation of animation, analogue of{$(".del-st").stop().fadeOut("slow",function(){ /*$(this).html(finalText) */}).fadeIn(3000);
 	    }, 3000);
 	   
     }
-  
-  
-  
   
     //RENDER ------------------------------------------------
     render() {
@@ -115,7 +109,7 @@ class ResultFromTextbeltApi extends Component {
         //iterate over state Object{}, if  typeof(state) == OBJECT
         var myObjX = this.props.answer;   
         const itteratedArray = Object.keys(myObjX).map(function(key, index) {
-            return <span key={index}> #{key} => {myObjX[key]/*.toString()*/} &nbsp;&nbsp; </span> //index is i++;  key is Object key name;  myObjX[key] is the value of key //toString() is do display Boolean true/false
+            return <span key={index}> #{key} => {myObjX[key]} &nbsp;&nbsp; </span> //index is i++;  key is Object key name;  myObjX[key] is the value of key //toString() is do display Boolean true/false
         });
 
 	 

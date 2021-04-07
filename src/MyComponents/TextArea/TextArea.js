@@ -161,7 +161,7 @@ class TextAreaX extends Component {
 		    var messageOK = "EU";
 	    }
 	 
-        this.myValidate(inputPhone, this.id, regExpp, 'sendButton', messageError, messageOK, event);   //{e} new must have arg, otherwise not visible
+        this.myValidate(inputPhone, this.id, regExpp, 'sendButton', messageError, messageOK, event);   //{e} new must have arg
 	   
 	    //asynchronous
         this.setState({phoneNumberChild: event.target.value} 
