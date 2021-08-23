@@ -2,15 +2,10 @@
 //Server regExp check for phone number and sms text
 namespace MySmsTetxBelt\Classes;
 
+
+
 class RegExpCheck 
 {
-    /**
-     * Checks input by RegExp.
-     * @param string $phoneNumber
-     * @param string $sms_text
-	 * @return array
-     */
-	 
     public function check($phoneNumber, $sms_text)
     {
         $checkedResult = array();
@@ -35,10 +30,12 @@ class RegExpCheck
  
         //checks sms is at least 1 char_from_digit
         if (!preg_match($RegExp_Sms, $_POST['serverSms'])){
- 	        $checkedResult['errorSms'] = "Sms is NOT OK";
+ 	        $checkedResult['errorSms'] = "Sms is Cyrillic"; //Fix Aug_2021
         } else {
-	        $checkedResult['errorSms'] = "Sms is Good";
+	        $checkedResult['errorSms'] = "Sms is Good. Pure Latin letters";
         }
-		return $checkedResult;  
+		return $checkedResult;
+       
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
-//Tset credentials for SMS API
-define ("SMS_API_KEY", "textbelt_test"); 
+//Credentials for SMS API
+
+define ("SMS_API_KEY", "textbelt_test"); //"textbelt" //"textbelt_test"
 ?>
